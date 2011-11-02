@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" type="text/css"  href="/stylesheets/print.css"/>
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0; padding: 0 }
+  #map { float: left; height: 50%; width: 70%;  }
+  #panel { float: right; height: 50%; width: 30%;  }
+  #textarea { height: 100%; width: 90%;  }
+</style>
+<script
+    src="http://maps.googleapis.com/maps/api/js?sensor=false">
+</script>
+<script
+  src="http://code.jquery.com/jquery-1.6.1.js">
+</script>
+<script>
+  $(document).ajaxSend(function(event, xhr, settings) {
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+    }
+    function sameOrigin(url) {
+    // url could be relative or scheme relative or absolute
+    var host = document.location.host; // host + port
+    var protocol = document.location.protocol;
+    var sr_origin = '//' + host;
+    var origin = protocol + sr_origin;
+    // Allow absolute or scheme relative URLs to same origin
+    return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+        (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+        // or any other URL that isn't scheme relative or absolute i.e relative.
+        !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    function safeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+  });
+
+  var map;
+  var route = [];
+  var directionService = new google.maps.DirectionsService();
+  var directionDisplay;
+  var geocoder; 
+  var rendererOptions = {
+    draggable: true
+  };
+  var start_position;
+  var end_position;
+  var a = [];
+  function initialize() {
+    directionDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+    var latlng = new google.maps.LatLng(41.850033, -87.6500523);
+    var myOptions = {
+      zoom: 8,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById("map"),
+        myOptions);
+        directionDisplay.setMap(map);
+    google.maps.event.addListener(directionDisplay, "directions_changed", function(){
+        displayResult(directionDisplay.directions);
+      })
+    geocoder = new google.maps.Geocoder();
+    
+  }
+
+  function displayResult(result){
+      var myRoute = result.routes[0].legs[0];
+      var str = "";
+      for(var i = 0; i < myRoute.steps.length; i++){
+          route.push(myRoute.steps[i].start_point.lat() + "," + myRoute.steps[i].start_point.lng());
+      }
+      $('#textarea').val(route.join("\n"));
+  }
+  function calcRoute(){
+      $("#save").removeAttr("disabled");
+      var start = $('#start').val();
+      var end = $('#end').val();
+      var request = {
+          origin:start,
+          destination: end,
+          travelMode: google.maps.TravelMode.DRIVING
+      };
+      directionService.route(request, function (result, status){
+        if (status == google.maps.DirectionsStatus.OK){
+            directionDisplay.setDirections(result);
+        }
+        });
+  }
+  function saveRoute (){
+    var s = $("#start").val();
+    var e = $("#end").val();
+    if(route.length > 0){
+      $.post("http://localhost:8000/save/", {start: s, 
+        end: e,
+        waypoints: route.join("\n")},
+          function(data){
+            if(data == 1){
+              $("#save").attr("disabled", "disabled");
+            }else{
+              alert(data.message);
+            }
+          });
+    }else{
+        alert("Route is null !")
+    }
+
+  }
+  var counter = 0;
+  function aaa(position){
+    if(counter == 0){
+        start_position = position;
+        alert(start_position.lng());
+        counter++;
+    }else{
+      counter = 0;
+      end_position = position;
+    }
+  }
+
+  function findPosition(address, callback){
+    geocoder.geocode({'address': address}, function(results, status){
+        if(status = google.maps.GeocoderStatus.OK){
+          var position = results[0].geometry.location;
+          callback(position);
+        }
+    });
+  }
+  function searchRoute(){
+      var s = $("#start").val();
+      var e = $("#end").val();
+      var d = 10;
+      findPosition(s,function (p){
+        start_position = p;
+      });
+      findPosition(s,function (p){
+        end_position = p;
+      });
+     alert(start_position.lng()); 
+     $.post("{% url world-search-route %}", {lat1:start_position.lat(),
+            lng1:start_position.lng(),
+            lat2:end_position.lat(),
+            lng2:end_position.lng(),
+            distance: d}, function (data){
+              
+              alert(data.content);
+              $("#content").html(data.content); 
+            
+            });
+  }
+  $(document).ready(function ()
+  {
+    $("#save").attr("disabled", "disabled");
+    $("#route").click(calcRoute);
+    $("#save").click(saveRoute);
+  });
+
+
+</script>
+</head>
+<body onload="initialize()">
+  <div id="navigation">
+    <ul>
+      <li><a href="{% url world-index %}">Save Route</a></li>
+      <li><a href="{% url world-search %}">Search Route</a></li>
+    </ul>
+  </div>
+  <div>
+  <b>Start: </b>
+  <input type=text id="start">
+  <b>End: </b>
+  <input type=text id="end">
+  <input type=button id="route" value="Show Route">
+  <input type=button id="save" value="Save">
+  </div>
+  <div id="map"></div>
+  <div id="panel">
+      <textarea id = "textarea"> </textarea>
+  </div>
+  <div id="content">
+  </div>
+</body>
+</html>

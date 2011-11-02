@@ -1,0 +1,5 @@
+{% for waypoint in waypoints %}
+    <div id={{waypoint.id}} class='waypoint linkOFF'>
+        {{waypoint.name}} ({{waypoint.geometry.x}}, {{waypoint.geometry.y}})
+    </div>
+{% endfor %}
