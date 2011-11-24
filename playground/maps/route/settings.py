@@ -12,8 +12,8 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'routes',                      # Or path to database file if using sqlite3.
-        'USER': 'serhat',                      # Not used with sqlite3.
+        'NAME': 'geotemp',                      # Or path to database file if using sqlite3.
+        'USER': 'ahmetcan',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
@@ -56,7 +56,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/home/serhat/maps/route/template/compass/'
+STATIC_ROOT = '/home/ahmetcan/proje/routeme/playgound/maps/route/template/compass/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -69,7 +69,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    "/home/serhat/maps/route/template/compass/stylesheets",
+    "/home/ahmetcan/proje/routeme/playgound/maps/route/template/compass/stylesheets",
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -105,7 +105,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'route.urls'
 
 TEMPLATE_DIRS = (
-    "/home/serhat/maps/route/template/"
+    "/home/ahmetcan/proje/routeme/playground/maps/route/template/"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -119,7 +119,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
-    'djcompass',
+#    'djcompass',
     'world',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
