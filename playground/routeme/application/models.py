@@ -26,6 +26,7 @@ class RouteInformation(models.Model):
     baggage = models.BooleanField()
     pet = models.BooleanField()
     route = models.LineStringField()
+    people = models.ManyToManyField(User)
 
 class ProfilePhoto(models.Model):
     photo = models.ImageField(upload_to = "images")
@@ -36,7 +37,7 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length = 1, choices = GENDER_CHOICES)
     route = models.ManyToManyField(RouteInformation)
     experience = models.IntegerField()
-    friends = models.ManyToManyField('self',through='Friendship',
+    friends = models.ManyToManyField('self', through='Friendship',
                                     symmetrical = False, related_name='related_to')
 
     def add_relationship(self, person, status):
@@ -74,6 +75,6 @@ class UserProfile(models.Model):
         return self.get_related_to(RELATIONSHIP_FOLLOWING)
 
 class Friendship(models.Model):
-    from_person = models.ForeignKey(UserProfile,related_name='from_people')
-    to_person = models.ForeignKey(UserProfile,related_name='to_people')
+    from_person = models.ForeignKey(User, related_name='from_people')
+    to_person = models.ForeignKey(User, related_name='to_people')
     status = models.IntegerField(choices=RELATIONSHIP_STATUSES)
