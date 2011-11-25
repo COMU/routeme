@@ -75,6 +75,6 @@ class UserProfile(models.Model):
         return self.get_related_to(RELATIONSHIP_FOLLOWING)
 
 class Friendship(models.Model):
-    from_person = models.ForeignKey(User, related_name='from_people')
-    to_person = models.ForeignKey(User, related_name='to_people')
+    from_person = models.ForeignKey(UserProfile, related_name='from_people')
+    to_person = models.ForeignKey(UserProfile, related_name='to_people')
     status = models.IntegerField(choices=RELATIONSHIP_STATUSES)
