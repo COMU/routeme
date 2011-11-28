@@ -27,6 +27,7 @@ class RouteInformation(models.Model):
     pet = models.BooleanField()
     route = models.LineStringField()
     people = models.ManyToManyField(User)
+    owner = models.ForeignKey(User)
 
 class ProfilePhoto(models.Model):
     photo = models.ImageField(upload_to = "images")
@@ -35,46 +36,39 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     birthdate = models.DateField()
     gender = models.CharField(max_length = 1, choices = GENDER_CHOICES)
-    route = models.ManyToManyField(RouteInformation)
     experience = models.IntegerField()
-    friends = models.ManyToManyField('self', through='Friendship',
-                                    symmetrical = False, related_name='related_to')
 
-    def add_relationship(self, person, status):
+    def addFriend(self, person, status):
         relationship, created = Friendship.objects.get_or_create(
-            from_person=self,
+            from_person=self.user,
             to_person=person,
             status=status)
-        return relationship
+        return created
 
 
-    def remove_relationship(self, person, status):
+    def removeFriend(self, person, status):
         Friendship.objects.filter(
-            from_person=self,
+            from_person=self.user,
             to_person=person,
             status=status).delete()
-        return
+        return true
 
-    def get_relationships(self, status):
-        return self.relationships.filter(
+    def getFriendships(self, status):
+        return Friendships.objects.filter(
             to_people__status=status,
-            to_people__from_person=self)
+            to_people__from_person=self.user)
 
-    def get_related_to(self, status):
-        return self.related_to.filter(
-            from_people__status=status,
-            from_people__to_person=self)
 
     def get_waiting(self,person,status):
-        return self.get_relationships(RELATIONSHIP_WAITING)
+        return self.getFriendships(RELATIONSHIP_WAITING)
 
     def get_following(self):
-        return self.get_relationships(RELATIONSHIP_FOLLOWING)
+        return self.getFriendships(RELATIONSHIP_FOLLOWING)
 
     def get_followers(self):
-        return self.get_related_to(RELATIONSHIP_FOLLOWING)
+        return self.getFriendShips(RELATIONSHIP_FOLLOWING)
 
 class Friendship(models.Model):
-    from_person = models.ForeignKey(UserProfile, related_name='from_people')
-    to_person = models.ForeignKey(UserProfile, related_name='to_people')
+    from_person = models.ForeignKey(User, related_name='from_people')
+    to_person = models.ForeignKey(User, related_name='to_people')
     status = models.IntegerField(choices=RELATIONSHIP_STATUSES)
