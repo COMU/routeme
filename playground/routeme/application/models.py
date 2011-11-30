@@ -27,7 +27,7 @@ class RouteInformation(models.Model):
     pet = models.BooleanField()
     route = models.LineStringField()
     people = models.ManyToManyField(User)
-    owner = models.ManyToManyField(User)
+    owner = models.ManyToManyField(User, related_name = "owner")
 
 class ProfilePhoto(models.Model):
     photo = models.ImageField(upload_to = "images")
@@ -37,7 +37,7 @@ class UserProfile(models.Model):
     birthdate = models.DateField()
     gender = models.CharField(max_length = 1, choices = GENDER_CHOICES)
     experience = models.IntegerField(default = 0, null = True)
-    profilePhoto = models.ForeignKey(ProfilePhoto)
+    profilePhoto = models.ForeignKey(ProfilePhoto, null = True)
 
     def addFriend(self, person, status):
         relationship, created = Friendship.objects.get_or_create(
