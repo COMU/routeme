@@ -24,13 +24,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request,user)
-
-                else:
-                    print "olmadi1"
-            else:
-                print "olmadi2"
-
-            return HttpResponseRedirect(reverse("index"))
+                return HttpResponseRedirect(reverse("index"))
         else:
             return render_to_response('application/login.html',{'form':LoginForm()})
     else:
