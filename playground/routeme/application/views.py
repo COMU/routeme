@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from models import UserProfile
-from django.contrib.auth import authenticate,login as auth_login 
+from django.contrib.auth import authenticate,login as auth_login
 from django.contrib.auth import logout as user_logout
 from django.contrib.auth.decorators import login_required
 def error404(request):
@@ -18,14 +18,12 @@ def index(request):
 
 def login(request):
     if request.method == "POST":
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username,password=password)
-            if user is not None:
-                if user.is_active:
-                    auth_login(request,user)
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(username=username,password=password)
+        if user is not None:
+            if user.is_active:
+                auth_login(request,user)
 
                 else:
                     print "olmadi1"
@@ -51,6 +49,7 @@ def signup(request):
             user.last_name = form.cleaned_data['lastName']
             user.username = user.email
             user.set_password(form.cleaned_data['password'])
+            user.is_active = True
             user.save()
 
             userProfile = UserProfile.objects.create(user = user,
