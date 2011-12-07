@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>{{baslik}}</title>
+    </head>
+
+     {{ user }}
+             {% if user.is_authenticated %}
+                     <h2>{{ user }} olarak giriş yaptınız.</h2>
+                     {% else %}
+
+    <form method="POST" action=login/ >
+        <input type="text" name="username" placeholder="username">
+        <input type="password" name="password" placeholder="password">
+        <input type="submit" >
+    </form>
+
+     {% endif %}
+
+</html>
