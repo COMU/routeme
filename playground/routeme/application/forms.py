@@ -34,3 +34,7 @@ class UserForm(forms.Form):
                 self._errors['Password2'] = ["Password Must Match"]
         return self.cleaned_data
 
+class LoginForm(forms.Form):
+    username = forms.CharField(label='',widget=forms.TextInput(attrs={'label':'','placeholder': 'username'}))
+    password = forms.CharField(label='',widget=forms.PasswordInput(attrs={'label':'','placeholder': 'password'}))
+

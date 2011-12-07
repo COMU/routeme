@@ -9,6 +9,7 @@ from models import UserProfile
 from django.contrib.auth import authenticate,login as auth_login
 from django.contrib.auth import logout as user_logout
 from django.contrib.auth.decorators import login_required
+
 def error404(request):
     return render_to_response("application/404.html")
 
@@ -18,13 +19,21 @@ def index(request):
 
 def login(request):
     if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(username=username,password=password)
-        if user is not None:
-            if user.is_active:
-                auth_login(request,user)
-                return HttpResponseRedirect(reverse("index"))
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username,password=password)
+            if user is not None:
+                if user.is_active:
+                    auth_login(request,user)
+
+                else:
+                    print "olmadi1"
+            else:
+                print "olmadi2"
+
+            return HttpResponseRedirect(reverse("index"))
         else:
             return render_to_response('application/login.html',{'form':LoginForm()})
     else:
