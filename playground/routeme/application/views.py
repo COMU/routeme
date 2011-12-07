@@ -1,14 +1,14 @@
 # Create your views here.
 
 from django.shortcuts import render_to_response
-from forms import UserForm
+from forms import UserForm,LoginForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from models import UserProfile
-from django.contrib.auth import authenticate,login as auth_login
+from django.contrib.auth import authenticate,login as auth_login 
+from django.contrib.auth import logout as user_logout
 from django.contrib.auth.decorators import login_required
-
 def error404(request):
     return render_to_response("application/404.html")
 
@@ -16,26 +16,31 @@ def error404(request):
 def index(request):
     return render_to_response("application/index.html")
 
-def loginpage(request):
-    return render_to_response('application/login.html',{'user':user})
-
 def login(request):
-    if request.method == "POST": 
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(username=username,password=password)
-        if user is not None:
-            if user.is_active:
-                auth_login(request,user)
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username,password=password)
+            if user is not None:
+                if user.is_active:
+                    auth_login(request,user)
 
+                else:
+                    print "olmadi1"
             else:
-                print "olmadi1"
-        else:
-            print "olmadi2"
+                print "olmadi2"
 
-        return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render_to_response('application/login.html',{'form':LoginForm()})
     else:
-        return render_to_response('application/login.html')
+        return render_to_response('application/login.html',{'form':LoginForm()})
+
+def logout(request):
+    user_logout(request)
+    return HttpResponseRedirect(reverse("login-user"))
 
 def signup(request):
     if request.method == "POST":

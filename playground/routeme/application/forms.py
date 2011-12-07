@@ -14,3 +14,7 @@ class UserForm(forms.Form):
     birthdate = forms.DateField(widget = SelectDateWidget())
     gender = forms.ChoiceField(choices = GENDER_CHOICES)
     photo = forms.ImageField(required = False)
+
+class LoginForm(forms.Form):
+    username = forms.CharField(label='',widget=forms.TextInput(attrs={'label':'','placeholder': 'username'}))
+    password = forms.CharField(label='',widget=forms.PasswordInput(attrs={'label':'','placeholder': 'password'}))

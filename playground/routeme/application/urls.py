@@ -15,6 +15,7 @@ urlpatterns = patterns('routeme.application.views',
     url(r'^error$',"error404", name = "error"),
     url(r'^signup/$', "signup", name = "save-user"),
     url(r'^index/$', "index", name = "index"),
-    url(r'login/$',"login",name = "login"),
+    url(r'login/$',"login",name = "login-user"),
+    url(r'logout/$',"logout", name = "logout"),
 )
 
