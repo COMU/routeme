@@ -24,6 +24,32 @@
   <!-- CSS: implied media=all -->
   <!-- CSS concatenated and minified via ant build script-->
   <link rel="stylesheet" href="/static/css/style.css">
+  <style type = "text/css">
+    #header
+    {
+      position:relative;
+      width :100%;
+      height:50px;
+      text-align:center
+    }
+    #main
+    {
+      margin:auto;
+      width:70%;
+    }
+    #signupForm
+    {
+      margin:auto;
+    }
+    #footer
+    {
+      position: absolute;
+      bottom: 0;
+      width :100%;
+      height: 10%;
+      text-align:center
+    }
+  </style>
   <!-- end CSS-->
 
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
@@ -36,24 +62,25 @@
 
 <body>
 
-  <div id="container">
     <div id = "header">
-
+      header
     </div>
     
     <div id="main" role="main">
-      <form action={% url save-user %} method="post" id="signupForm" >
+      <center>
+      <form enctype="multipart/form-data" action={% url save-user %} method="post" id="signupForm" >
           {{ field.errors }}
           <table>
             {{ form.as_table }}
           </table>
           <p><input type="submit" value="Join!" /></p>
-      </form>  
+      </form>
+      </center>
     </div>
     
     <div id = "footer">
+      footer
     </div>
-  </div> <!--! end of #container -->
 
 
   <!-- JavaScript at the bottom for fast page loading -->

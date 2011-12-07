@@ -5,7 +5,7 @@ from forms import UserForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from models import UserProfile
+from models import UserProfile, ProfilePhoto
 from django.contrib.auth import authenticate,login as auth_login
 
 def error404(request):
@@ -36,7 +36,7 @@ def login(request):
 
 def signup(request):
     if request.method == "POST":
-        form = UserForm(request.POST)
+        form = UserForm(request.POST, request.FILES)
         if form.is_valid():
             user = User(email = form.cleaned_data['email'])
             user.first_name = form.cleaned_data['firstName']
@@ -48,6 +48,10 @@ def signup(request):
             userProfile = UserProfile.objects.create(user = user,
                             birthdate = form.cleaned_data['birthdate'],
                             gender = form.cleaned_data['gender'])
+            if form.cleaned_data['photo']:
+                photo = ProfilePhoto.objects.create(photo = form.cleaned_data['photo'])
+                userProfile.profilePhoto = photo
+                userProfile.save()
 
             return HttpResponseRedirect(reverse("index"))
 

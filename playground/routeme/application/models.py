@@ -55,6 +55,6 @@ class UserProfile(models.Model):
         return true
 
 class Friendship(models.Model):
-    from_person = models.ForeignKey(UserProfile, related_name='from_people')
-    to_person = models.ForeignKey(UserProfile, related_name='to_people')
+    from_person = models.ForeignKey(User, related_name='from_people')
+    to_person = models.ForeignKey(User, related_name='to_people')
     status = models.IntegerField(choices=RELATIONSHIP_STATUSES)
