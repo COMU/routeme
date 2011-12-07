@@ -6,12 +6,33 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from models import UserProfile
+from django.contrib.auth import authenticate,login as auth_login
 
 def error404(request):
     return render_to_response("application/404.html")
 
 def index(request):
     return render_to_response("application/index.html")
+
+def loginpage(request):
+    return render_to_response('application/login.html',{'user':user})
+
+def login(request):
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+   # print username
+   # print password
+    user = authenticate(username=username,password=password)
+    if user is not None:
+        if user.is_active:
+            auth_login(request,user)
+
+        else:
+            print "olmadi1"
+    else:
+        print "olmadi2"
+
+    return render_to_response('application/login.html',{'user':user})
 
 def signup(request):
     if request.method == "POST":
