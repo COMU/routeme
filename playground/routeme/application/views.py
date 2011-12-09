@@ -54,7 +54,7 @@ def signup(request):
                             birthdate = form.cleaned_data['birthdate'],
                             gender = form.cleaned_data['gender'])
 
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("login-user"))
 
     else:
         form = UserForm()
