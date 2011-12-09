@@ -16,7 +16,7 @@ def userNameValidator(value):
     raise ValidationError('Email %s is already taken.' % value)
 
 class UserForm(forms.Form):
-    firstName = forms.CharField(max_length = 30, widget=forms.TextInput(attrs={'placeholder': "First Name"}))
+    firstName = forms.CharField(max_length = 30, widget=forms.TextInput(attrs={'title':"FirstName", 'placeholder': "First Name"}))
     lastName = forms.CharField(max_length = 30, widget=forms.TextInput(attrs={'placeholder': "Last Name"}))
     email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': "Email"}),
             validators = [userNameValidator])
