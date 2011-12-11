@@ -33,7 +33,8 @@ def login(request):
             return render_to_response('application/login.html',{'form':LoginForm()})
     else:
         return render_to_response('application/login.html',{'form':LoginForm()})
-
+def foursq(request):
+    HttpResponseRedirect(reverse("foursq"))
 def logout(request):
     user_logout(request)
     return HttpResponseRedirect(reverse("login-user"))
