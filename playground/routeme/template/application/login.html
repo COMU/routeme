@@ -4,10 +4,10 @@
     </head>
 
 
-    <form method="POST" action={% url login-user %} >
+    <form method="POST" action="/application/login" >
         {{form.as_table}}
         <input type="submit" >
     </form>
-
+    <a href="/foursq_auth/auth/">foursquare</a>
 
 </html>
