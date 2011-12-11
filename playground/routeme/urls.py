@@ -6,8 +6,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^', include('routeme.application.urls'))
     # Examples:
+    url(r'^application/', include('routeme.application.urls')),
+    url(r'^foursq_auth/', include('routeme.foursq.urls')),
     # url(r'^$', 'routeme.views.home', name='home'),
     # url(r'^routeme/', include('routeme.foo.urls')),
 

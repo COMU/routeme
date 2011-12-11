@@ -5,6 +5,8 @@ AUTH_PROFILE_MODULE = 'application.UserProfile'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+BASE_URL = 'http://127.0.0.1:8000'
+
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -15,7 +17,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'routeme',                      # Or path to database file if using sqlite3.
+        'NAME': 'routemedb',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -122,11 +124,21 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'application',
+    'facebook',
+    'twitter_app',
+    'foursq',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+
+#required client id and secret
+FOURSQ_CLIENT_ID = '1OVOPIR5HS5XEXJYNB4B1QNCPLFLIVULYCGHT3BFSNCG5HMR'
+FOURSQ_CLIENT_SECRET = 'JKYYZB5FIDQEHIE3MB4VZARVWWTEZTN1ICOAK1IPFBCHSSQH'
+
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
