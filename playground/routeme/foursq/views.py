@@ -87,13 +87,14 @@ def done(request):
     #check whether this user has logged before, if not create a default User object for it
     foursq_user = Foursq_User.objects.filter(foursq_id=id)
     if not foursq_user:
-        user = User.objects.create(username=email, email=email)
+        user, created = User.objects.get_or_create(username=email, email=email)
         Foursq_User.objects.create(foursq_id=id, user=user)
         #create a default password for the system users, no need to reflect it to the user, the user can change it anytime from the dashboard
-        password = User.objects.make_random_password()
-        print "password", password
-        user.set_password(password)
-        user.save()
+        if created:
+            password = User.objects.make_random_password()
+            print "password", password
+            user.set_password(password)
+            user.save()
     else:
         user = foursq_user[0].user
 
