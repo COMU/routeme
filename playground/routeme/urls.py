@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^application/', include('routeme.application.urls')),
     url(r'^foursq_auth/', include('routeme.foursq.urls')),
+    url(r'^twitter/', include('routeme.twitter_app.urls')),
+    url(r'^facebook/', include('routeme.facebook.urls')),
     # url(r'^$', 'routeme.views.home', name='home'),
     # url(r'^routeme/', include('routeme.foo.urls')),
 
