@@ -15,7 +15,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 from foursq.models import Foursq_User, Foursq_Friend
-
+from foursq.fakeauth import FakeAuthBackend
 CLIENT_ID = settings.FOURSQ_CLIENT_ID
 CLIENT_SECRET = settings.FOURSQ_CLIENT_SECRET
 
@@ -100,7 +100,7 @@ def done(request):
 
     print "authenticating", user.email, user.password
     #authenticated user object
-    auth_user = authenticate(username=user.email, password=user.password)
+    auth_user = authenticate(username=user.username , password = user.password)
     if auth_user is not None:
         if auth_user.is_active:
               login(request, auth_user)

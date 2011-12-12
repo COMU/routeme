@@ -139,6 +139,11 @@ FOURSQ_CLIENT_ID = '1OVOPIR5HS5XEXJYNB4B1QNCPLFLIVULYCGHT3BFSNCG5HMR'
 FOURSQ_CLIENT_SECRET = 'JKYYZB5FIDQEHIE3MB4VZARVWWTEZTN1ICOAK1IPFBCHSSQH'
 
 
+AUTHENTICATION_BACKENDS = (
+    'foursq.fakeauth.FakeAuthBackend',
+    'facebook.backend.FacebookBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

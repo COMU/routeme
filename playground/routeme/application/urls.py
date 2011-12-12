@@ -17,6 +17,5 @@ urlpatterns = patterns('routeme',
     url(r'^index/$', "application.views.index", name = "index"),
     url(r'login/$',"application.views.login",name = "login-user"),
     url(r'logout/$',"application.views.logout", name = "logout"),
-    #url(r'auth/$',"foursq.view.auth",name = "login-forusq"),
 )
 

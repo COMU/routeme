@@ -33,8 +33,6 @@ def login(request):
             return render_to_response('application/login.html',{'form':LoginForm()})
     else:
         return render_to_response('application/login.html',{'form':LoginForm()})
-def foursq(request):
-    HttpResponseRedirect(reverse("foursq"))
 def logout(request):
     user_logout(request)
     return HttpResponseRedirect(reverse("login-user"))
@@ -51,7 +49,7 @@ def signup(request):
             user.is_active = True
             user.save()
 
-            userProfile = UserProfile.objects.create(user = user,
+            userProfile = UserProfile.objects.get_or_create(user = user,
                             birthdate = form.cleaned_data['birthdate'],
                             gender = form.cleaned_data['gender'])
 
