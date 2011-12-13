@@ -13,7 +13,7 @@ def userNameValidator(value):
         user = User.objects.get(username = value)
     except User.DoesNotExist:
         return True
-    raise ValidationError('Email %s is already taken.' % value)
+    raise ValidationError('Email zaten var.')
 
 class UserForm(forms.Form):
     firstName = forms.CharField(max_length = 30, widget=forms.TextInput(attrs={'title':"FirstName", 'placeholder': "First Name"}))
@@ -30,8 +30,8 @@ class UserForm(forms.Form):
         super(forms.Form, self).clean()
         if 'password' in self.cleaned_data and 'password2' in self.cleaned_data:
             if self.cleaned_data['password'] != self.cleaned_data['password2']:
-                self._errors['password'] = ["Password Must Match"]
-                self._errors['Password2'] = ["Password Must Match"]
+                self._errors['password'] = ["Parololar eşleşmeli."]
+                self._errors['Password2'] = ["Parololar eşleşmeli."]
         return self.cleaned_data
 
 class LoginForm(forms.Form):
