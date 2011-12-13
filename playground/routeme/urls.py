@@ -7,7 +7,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^application/', include('routeme.application.urls')),
+    url(r'^email/', include('routeme.application.urls')),
     url(r'^foursq_auth/', include('routeme.foursq.urls')),
     url(r'^twitter/', include('routeme.twitter_app.urls')),
     url(r'^facebook/', include('routeme.facebook.urls')),
