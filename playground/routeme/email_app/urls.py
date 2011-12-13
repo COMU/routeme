@@ -12,10 +12,10 @@ urlpatterns = patterns('routeme',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^error$',"application.views.error404", name = "error"),
-    url(r'^signup/$', "application.views.signup", name = "save-user"),
-    url(r'^index/$', "application.views.index", name = "index"),
-    url(r'login/$',"application.views.login",name = "login-user"),
-    url(r'logout/$',"application.views.logout", name = "logout"),
+    url(r'^error$',"email.views.error404", name = "error"),
+    url(r'^signup/$', "email.views.signup", name = "save-user"),
+    url(r'^index/$', "email.views.index", name = "index"),
+    url(r'login/$',"email.views.login",name = "login-user"),
+    url(r'logout/$',"email.views.logout", name = "logout"),
 )
 

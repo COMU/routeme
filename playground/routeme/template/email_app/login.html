@@ -4,7 +4,7 @@
     </head>
 
 
-    <form method="POST" action="/application/login/" >
+    <form method="POST" action="{% url login-user %}" >
         {{form.as_table}}
         <input type="submit" >
     </form>

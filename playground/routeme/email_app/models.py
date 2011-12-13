@@ -15,19 +15,6 @@ GENDER_CHOICES = (
     ('M', 'Male'),
     ('F', 'Female'),
 )
-#Rota bilgileri
-
-class RouteInformation(models.Model):
-    date = models.DateField()
-    time = models.TimeField()
-    arrivalTime = models.CharField(max_length=10)
-    vehicle = models.CharField(max_length=30)
-    capacity = models.IntegerField()
-    baggage = models.BooleanField()
-    pet = models.BooleanField()
-    route = models.LineStringField()
-    people = models.ManyToManyField(User)
-    owner = models.ManyToManyField(User, related_name = "owner")
 
 class ProfilePhoto(models.Model):
     photo = models.ImageField(upload_to = "images")
@@ -38,6 +25,7 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length = 1, choices = GENDER_CHOICES)
     experience = models.IntegerField(default = 0, null = True)
     profilePhoto = models.ForeignKey(ProfilePhoto, null = True)
+
 
     def addFriend(self, person, status):
         relationship, created = Friendship.objects.get_or_create(

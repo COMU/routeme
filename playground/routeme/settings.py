@@ -1,7 +1,7 @@
 import os
 # Django settings for routeme project.
 
-AUTH_PROFILE_MODULE = 'application.UserProfile'
+AUTH_PROFILE_MODULE = 'email.UserProfile'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -123,7 +123,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'email',
+    'email_app',
     'foursq',
     'facebook',
     'twitter_app',
@@ -142,7 +142,6 @@ FACEBOOK_APP_ID = "255768354473895"
 FACEBOOK_APP_SECRET = "b8f0ef66e6e88951311ea2e70dccf4fa"
 FACEBOOK_SCOPE = 'email,publish_stream'
 
-AUTH_PROFILE_MODULE = 'facebook.FacebookProfile'
 
 
 AUTHENTICATION_BACKENDS = (
