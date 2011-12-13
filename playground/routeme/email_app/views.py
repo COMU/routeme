@@ -11,11 +11,11 @@ from django.contrib.auth import logout as user_logout
 from django.contrib.auth.decorators import login_required
 
 def error404(request):
-    return render_to_response("application/404.html")
+    return render_to_response("email_app/404.html")
 
 @login_required
 def index(request):
-    return render_to_response("application/index.html")
+    return render_to_response("email_app/index.html")
 
 def login(request):
     if request.method == "POST":
@@ -30,9 +30,9 @@ def login(request):
 
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render_to_response('application/login.html',{'form':LoginForm()})
+            return render_to_response('email_app/login.html',{'form':LoginForm()})
     else:
-        return render_to_response('application/login.html',{'form':LoginForm()})
+        return render_to_response('email_app/login.html',{'form':LoginForm()})
 def logout(request):
     user_logout(request)
     return HttpResponseRedirect(reverse("login-user"))
@@ -61,5 +61,5 @@ def signup(request):
     data = {
         'form': form
     }
-    return render_to_response("application/signup.html", data)
+    return render_to_response("email_app/signup.html", data)
 
