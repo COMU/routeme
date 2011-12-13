@@ -27,12 +27,15 @@ def login(request):
             if user is not None:
                 if user.is_active:
                     auth_login(request,user)
-
-            return HttpResponseRedirect(reverse("index"))
+                else:
+                    return render_to_response('email_app/login.html',{'title':'Login', 'form'   :LoginForm()})
+            else:
+                return render_to_response('email_app/login.html',{'title':'Login', 'form':LoginForm()})
+            return HttpResponseRedirect('route/index.html')
         else:
-            return render_to_response('email_app/login.html',{'form':LoginForm()})
+            return render_to_response('email_app/login.html',{'title':'Login', 'form':LoginForm()})
     else:
-        return render_to_response('email_app/login.html',{'form':LoginForm()})
+        return render_to_response('email_app/login.html',{'title':'Login', 'form':LoginForm()})
 def logout(request):
     user_logout(request)
     return HttpResponseRedirect(reverse("login-user"))
@@ -59,7 +62,8 @@ def signup(request):
         form = UserForm()
 
     data = {
-        'form': form
+        'form': form,
+        'title': 'SignUp'
     }
     return render_to_response("email_app/signup.html", data)
 

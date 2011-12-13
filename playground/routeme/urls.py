@@ -5,12 +5,13 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 # from django.contrib import admin
 # admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns('routeme',
     # Examples:
-    url(r'^email/', include('routeme.email_app.urls')),
-    url(r'^foursq_auth/', include('routeme.foursq.urls')),
-    url(r'^twitter/', include('routeme.twitter_app.urls')),
-    url(r'^facebook/', include('routeme.facebook.urls')),
+    url(r'^email/', include('email_app.urls')),
+    url(r'^foursq_auth/', include('foursq.urls')),
+    url(r'^twitter/', include('twitter_app.urls')),
+    url(r'^facebook/', include('facebook.urls')),
+    url(r'^', include('route.urls')),
     # url(r'^$', 'routeme.views.home', name='home'),
     # url(r'^routeme/', include('routeme.foo.urls')),
 

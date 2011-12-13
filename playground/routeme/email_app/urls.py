@@ -14,7 +14,6 @@ urlpatterns = patterns('routeme',
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^error$',"email_app.views.error404", name = "error"),
     url(r'^signup/$', "email_app.views.signup", name = "save-user"),
-    url(r'^index/$', "email_app.views.index", name = "index"),
     url(r'login/$',"email_app.views.login",name = "login-user"),
     url(r'logout/$',"email_app.views.logout", name = "logout"),
 )

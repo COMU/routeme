@@ -124,6 +124,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'email_app',
+    'route',
     'foursq',
     'facebook',
     'twitter_app',
