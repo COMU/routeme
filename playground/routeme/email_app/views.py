@@ -18,6 +18,8 @@ def index(request):
     return render_to_response("email_app/index.html")
 
 def login(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/')
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -31,7 +33,7 @@ def login(request):
                     return render_to_response('email_app/login.html',{'title':'Login', 'form'   :LoginForm()})
             else:
                 return render_to_response('email_app/login.html',{'title':'Login', 'form':LoginForm()})
-            return HttpResponseRedirect('route/index.html')
+            return HttpResponseRedirect('/')
         else:
             return render_to_response('email_app/login.html',{'title':'Login', 'form':LoginForm()})
     else:
