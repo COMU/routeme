@@ -105,7 +105,7 @@ def done(request):
         if auth_user.is_active:
               login(request, auth_user)
               # show the page with the user's name to show they've logged in
-              return render_to_response('foursq/done.html', {'name':name})
+              return HttpResponseRedirect('/')
         else:
             return render_to_response('errors/disabled_account.html', {'name', name})
     else:

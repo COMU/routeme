@@ -4,12 +4,13 @@
         <div id="banner" class = "grid_3 push_1 alpha">
             BANNER
         </div>
-        <div id="login_form" class = "grid_6 push_7 omega">
+        <div id="login_form" class = "grid_7 push_6 omega">
             <form method="POST" action="{% url login-user %}" >
                     {{form.username}}
                     {{form.password}}
-                <input type="submit" value = "Login" >
-            </form>
+                    <input type="submit" value = "Login" >
+                    <a href={% url email_app.views.signup %}>SignUp</a>
+                </form>
         </div>
     </div>
 
