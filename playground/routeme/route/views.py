@@ -6,5 +6,5 @@ from django.http import HttpResponseRedirect
 
 def index(request):
     if not request.user.is_authenticated():
-        return return HttpResponseRedirect('/email/login')
+        return HttpResponseRedirect('/email/login')
     return render_to_response("route/index.html")
