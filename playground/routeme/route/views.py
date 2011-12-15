@@ -30,7 +30,7 @@ def createRoute(request):
 
             lineString = LineString(pointList)
 
-            RouteInformation.objects.create(
+            routeInformation = RouteInformation.objects.create(
                         date = form.cleaned_data['date'],
                         time = form.cleaned_data['time'],
                         arrivalTime = form.cleaned_data['arrivalTime'],
@@ -38,8 +38,10 @@ def createRoute(request):
                         capacity = form.cleaned_data['capacity'],
                         baggage = form.cleaned_data['baggage'],
                         pet = form.cleaned_data['pet'],
-                        route = LineString
+                        route = lineString,
                     )
+            routeInformation.owner.add(request.user)
+            routeInformation.save()
             return HttpResponseRedirect("/")
 
     else:
