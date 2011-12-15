@@ -5,7 +5,7 @@
     
     <div id="main" role="main">
       <center>
-      <form enctype="multipart/form-data" action={% url email_app.views.signup %} method="post" id="signupForm" >
+        <form enctype="multipart/form-data" action={% url email_app.views.signup %} method="post" id="signupForm" >
           {{ field.errors }}
           <table>
             {{ form.as_table }}

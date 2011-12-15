@@ -5,5 +5,6 @@ from django.conf.urls.defaults import patterns, include, url
 
 urlpatterns = patterns('routeme',
     url(r'^$',"route.views.index", name = "index"),
+    url(r'^createroute$',"route.views.createRoute", name = "create-route"),
 )
 
