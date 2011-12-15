@@ -43,3 +43,8 @@
     float:left;
     padding-right:10px;
 }
+#map{
+
+    margin: auto;
+    height:300px;
+}

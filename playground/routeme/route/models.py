@@ -17,3 +17,4 @@ class RouteInformation(models.Model):
      route = models.LineStringField()
      people = models.ManyToManyField(User)
      owner = models.ManyToManyField(User, related_name = "owner")
+     objects = models.GeoManager()
