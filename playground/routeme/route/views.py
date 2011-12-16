@@ -39,9 +39,8 @@ def createRoute(request):
                         baggage = form.cleaned_data['baggage'],
                         pet = form.cleaned_data['pet'],
                         route = lineString,
+                        owner = request.user
                     )
-            routeInformation.owner.add(request.user)
-            routeInformation.save()
             return HttpResponseRedirect("/")
 
     else:
