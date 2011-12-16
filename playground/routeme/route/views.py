@@ -16,6 +16,7 @@ def index(request):
         return HttpResponseRedirect("/email/login")
     return render_to_response("route/index.html")
 
+@login_required
 def createRoute(request):
     if request.method == "POST":
         form = CreateRouteForm(request.POST)
