@@ -1,1 +1,10 @@
-{{user}}
+{% include "include/header.html" %}
+
+
+<div id="map"></div>
+
+{% for r in routes %}
+<a href="/returnroute/{{r.id}}/" >{{  r.owner }}</a></br>
+{% endfor %}
+{% include "include/footer.html" %}
+

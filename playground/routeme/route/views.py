@@ -5,36 +5,43 @@
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from django.core.urlresolvers import reverse
 from forms import CreateRouteForm, SearchRouteForm
 from models import RouteInformation
 from django.contrib.gis.geos import LineString, Point
 from django.contrib.auth.models import User
 from django.contrib.gis.measure import D
+import simplejson
 
 def index(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect("/email/login")
     return render_to_response("route/index.html")
 
-@login_required
-def searchRoute(request):
-    if request.method == "POST":
+def returnRoute(request,routeId):
+    l = RouteInformation.objects.get(id=routeId).route
+    return HttpResponse(simplejson.dumps(l))
+
+def listRoute(request):
+    if request.method=="POST":
         form = SearchRouteForm(request.POST)
-        print "aaaaaaaaa"
         if form.is_valid():
-            print "bbbbbbb"
             end = form.cleaned_data['end']
             start = form.cleaned_data['start']
             end=end.split(',')
             start=start.split(',')
-            end=Point(float(end[0]),float(end[1])) 
+            end=Point(float(end[0]),float(end[1]))
             start=Point(float(start[0]),float(start[1]))
             print end
             print start
             route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10)))
-            return HttpResponseRedirect(reverse)
+            print route[0].owner
+            return render_to_response("route/listRoute.html",{'routes':route,'map':1})
+
+
+@login_required
+def searchRoute(request):
     form = SearchRouteForm()
     data = { 'map': 1, "form": form}
     return render_to_response("route/searchRoute.html", data)
