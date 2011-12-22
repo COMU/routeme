@@ -7,5 +7,6 @@ urlpatterns = patterns('routeme',
     url(r'^$',"route.views.index", name = "index"),
     url(r'^createroute$',"route.views.createRoute", name = "create-route"),
     url(r'^saveroute$',"route.views.saveRoute", name = "save-route"),
+    url(r'^searchroute$',"route.views.searchRoute", name = "search-route"),
 )
 

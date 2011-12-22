@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from models import UserProfile
 from django.contrib.auth import authenticate,login as auth_login
+from django.contrib.auth.models import check_password
 from django.contrib.auth import logout as user_logout
 from django.contrib.auth.decorators import login_required
 
@@ -25,8 +26,10 @@ def login(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(username=username,password=password)
-            if user is not None:
+            print password
+            user=authenticate(username=username,password=password)
+            u=User.objects.get(username=username)
+            if user is not None and u.check_password(password):
                 if user.is_active:
                     auth_login(request,user)
                 else:

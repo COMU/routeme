@@ -7,9 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from forms import CreateRouteForm
+from forms import CreateRouteForm, SearchRouteForm
 from models import RouteInformation
 from django.contrib.gis.geos import LineString, Point
+from django.contrib.auth.models import User
+from django.contrib.gis.measure import D
 
 def index(request):
     if not request.user.is_authenticated():
@@ -18,6 +20,7 @@ def index(request):
 
 @login_required
 def createRoute(request):
+
     if request.method == "POST":
         form = CreateRouteForm(request.POST)
         if form.is_valid():

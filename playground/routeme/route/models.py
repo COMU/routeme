@@ -16,5 +16,5 @@ class RouteInformation(models.Model):
      pet = models.BooleanField()
      route = models.LineStringField()
      people = models.ManyToManyField(User)
-     owner = models.ManyToManyField(User, related_name = "owner")
+     owner = models.ForeignKey(User, related_name = "owner")
      objects = models.GeoManager()
