@@ -1,0 +1,28 @@
+{% include "include/header.html" %}
+<div class = "container_16">
+    <div id = "header" class = "grid_16">
+        <div id = "banner" class = "grid_3 push_1 alpha">
+            BANNER
+        </div>
+        {% include "include/navbar.html" %}
+    </div>
+ 
+    <div class="clear">&nbsp;</div>
+    <div id="map" class="grid_11"></div>
+    <div class = "grid_5" id = "suggestedFriend">
+        Suggested Friend
+    </div>
+    <div class = 'clear'>&nbsp;</div>
+    <div class="grid_11">
+        <form action={% url route.views.searchRoute %} method="POST" id="searchRouteForm">
+            <table>
+                {{ form.as_table }}
+            </table>
+        <p><input type = "button" id = "sroute" value = "search" /></p>
+        </form>
+    </div>
+
+</div>
+
+{% include "include/footer.html" %}
+
