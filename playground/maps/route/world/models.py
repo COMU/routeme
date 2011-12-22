@@ -1,5 +1,5 @@
 from django.contrib.gis.db import models
-from django.contrib.auth.models import Useri
+from django.contrib.auth.models import User
 
 
 RELATIONSHIP_FOLLOWING = 1
@@ -21,7 +21,7 @@ class RouteInformation(models.Model):
     baggage = models.BooleanField()
     pet = models.BooleanField()
     route = models.LineStringField()
-
+    objects = models.GeoManager()
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
@@ -34,7 +34,7 @@ class UserProfile(models.Model):
             from_person=self,
             to_person=person,
             status=status)
-    return relationship
+        return relationship
 
         
     def remove_relationship(self, person, status):
@@ -42,7 +42,7 @@ class UserProfile(models.Model):
             from_person=self, 
             to_person=person,
             status=status).delete()
-    return
+        return
 
     def get_relationships(self, status):
         return self.relationships.filter(
