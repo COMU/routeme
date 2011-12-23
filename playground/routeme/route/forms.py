@@ -13,7 +13,7 @@ class SearchRouteForm(forms.Form):
 
 class CreateRouteForm(forms.Form):
     route = forms.CharField(widget = forms.HiddenInput())
-    date = forms.DateField(widget = SelectDateWidget())
+    date = forms.DateField()
     time = forms.TimeField()
     arrivalTime = forms.CharField(max_length = 10)
     vehicle = forms.CharField(max_length = 30)

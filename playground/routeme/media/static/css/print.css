@@ -28,21 +28,11 @@
     background-color:gray;
 }
 #header{
-    background-color:black;
-}
-#navbar{
-    height:100%;
-    background-color:gray;
-}
-#navbar ul{
-    background-color:blue;
-    list-style-type:none;
+    background-color:white;
 }
 
-#navbar li{
-    float:left;
-    padding-right:10px;
-}
+
+
 #map{
 
     margin: auto;

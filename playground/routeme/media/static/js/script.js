@@ -87,6 +87,8 @@ $(document).ready(function (){
     $("#createRouteSubmit").attr('disabled', true);
     $("#show").click(showRouteOnMap);
     $("#sroute").click(searchRoute);
+    $("#id_date").datepicker();
+    $("#id_time").timepicker({});
 });
 
 
