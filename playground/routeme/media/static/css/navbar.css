@@ -1,20 +1,26 @@
-
+#navbarGrid{
+    background: #333;
+}
+#navbarWrapper{
+    float:right;
+    background: #333;
+}
 #navbar {
 	background: #333;
-	float: left;
+	float: right;
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	width: 100%;
+    width:100%
 }
 
 #navbar li {
-	float: right;
+	float: left;
 	margin: 0;
 	padding: 0;
 }
 #navbar a {
-	background: #333 url("static/images/seperator.gif") bottom right no-repeat;
+	background: #333 url("/static/images/seperator.gif") bottom right no-repeat;
 	color: #ccc;
 	display: block;
 	float: left;
