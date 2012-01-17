@@ -1,9 +1,5 @@
 {% include "include/header.html" %}
-<div class = "container_16">
     <div id = "header" class = "grid_16">
-        <div id="banner" class = "grid_3 push_1 alpha">
-            BANNER
-        </div>
         <div id="login_form" class = "grid_7 push_6 omega">
             <form method="POST" action="{% url login-user %}" >
                     {{form.username}}
@@ -19,7 +15,6 @@
         <a href="/facebook/">facebook</a>
         <a href="/twitter/auth/">twitter</a>
     </div>
-</div>
 
 {% include "include/footer.html" %}
 
