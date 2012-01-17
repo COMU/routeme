@@ -61,7 +61,6 @@ def createRoute(request):
                 pointList.append(Point(float(str[0]), float(str[1])))
 
             lineString = LineString(pointList)
-
             routeInformation = RouteInformation.objects.create(
                         date = form.cleaned_data['date'],
                         time = form.cleaned_data['time'],

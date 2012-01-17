@@ -35,6 +35,6 @@ class UserForm(forms.Form):
         return self.cleaned_data
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label='',widget=forms.TextInput(attrs={'label':'','placeholder': 'username'}))
-    password = forms.CharField(label='',widget=forms.PasswordInput(attrs={'label':'','placeholder': 'password'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'username'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'password'}))
 
