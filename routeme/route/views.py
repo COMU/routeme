@@ -21,7 +21,9 @@ def index(request):
 
 def returnRoute(request,routeId):
     l = RouteInformation.objects.get(id=routeId).route
-    return HttpResponse(simplejson.dumps(l))
+    print "returna geliyor"
+    return render_to_response("route/listRoute.html",{'l':l,'map':1})
+
 
 def listRoute(request):
     if request.method=="POST":
@@ -29,14 +31,17 @@ def listRoute(request):
         if form.is_valid():
             end = form.cleaned_data['end']
             start = form.cleaned_data['start']
+            date = form.cleaned_data['date']
+            baggage = form.cleaned_data['baggage']
+            pet = form.cleaned_data['pet'] 
             end=end.split(',')
             start=start.split(',')
             end=Point(float(end[0]),float(end[1]))
             start=Point(float(start[0]),float(start[1]))
             print end
             print start
-            route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10)))
-            print route[0].owner
+            route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10))).filter(date=date).filter(pet=pet).filter(baggage=baggage)
+
             return render_to_response("route/listRoute.html",{'routes':route,'map':1})
 
 

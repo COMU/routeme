@@ -9,7 +9,9 @@ class SearchRouteForm(forms.Form):
     to = forms.CharField(label="to")
     start = forms.CharField(widget = forms.HiddenInput())
     end = forms.CharField(widget = forms.HiddenInput())
-
+    date = forms.DateField()
+    baggage = forms.BooleanField(required=False)
+    pet = forms.BooleanField(required=False) 
 
 class CreateRouteForm(forms.Form):
     route = forms.CharField(widget = forms.HiddenInput())
@@ -18,5 +20,5 @@ class CreateRouteForm(forms.Form):
     arrivalTime = forms.CharField(max_length = 10)
     vehicle = forms.CharField(max_length = 30)
     capacity = forms.IntegerField(widget = Select(choices = [(x, str(x)) for x in range(1, 10)]))
-    baggage = forms.BooleanField()
-    pet = forms.BooleanField()
+    baggage = forms.BooleanField(required=False)
+    pet = forms.BooleanField(required=False)

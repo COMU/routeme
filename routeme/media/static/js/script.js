@@ -65,6 +65,9 @@ function searchRoute(){
         }});
 
 }
+function showRouteMapp(){
+    alert("bakalim");
+}
 
 function showRouteOnMap(){
   var start = $("#where").val();
@@ -89,6 +92,7 @@ $(document).ready(function (){
     $("#sroute").click(searchRoute);
     $("#id_date").datepicker({dateFormat: 'yy-mm-dd'});
     $("#id_time").timepicker({timeFormat: 'h:m'});
+    $("#showroute").click(showRouteMapp);
 });
 
 

@@ -1,10 +1,18 @@
 {% include "include/header.html" %}
 
-
-<div id="map"></div>
-
-{% for r in routes %}
-<a href="/returnroute/{{r.id}}/" >{{  r.owner }}</a></br>
-{% endfor %}
+{% include "include/navbar.html" %}
+<div class ="clear">&nbsp;</div>
+<div id="map" class="grid_11"></div>
+<div class = "grid_5" id="suggestedFriend"></div>
+<div class = 'clear'>&nbsp;</div>
+<div class="grid_11">
+    <form method="POST">
+    {%if routes%}
+        {% for r in routes %}
+        <a href="#" onClick="alert("merhabaa")" id="showroute">{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br>
+        {% endfor %}
+        {%endif%}
+    </form>
+</div>
+afssssssssssssssssssssss
 {% include "include/footer.html" %}
-
