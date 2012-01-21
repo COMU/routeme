@@ -8,11 +8,13 @@
 <div class="grid_11">
     <form method="POST">
     {%if routes%}
-        {% for r in routes %}
-        <a href="#" onClick="alert("merhabaa")" id="showroute">{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br>
+    {% for r in routes %}
+    <input type="button" onClick="showRouteMapp({{r.route.json}})" value="Show Route">
+    <a href="returnroute/{{r.id}}">{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br>
         {% endfor %}
         {%endif%}
     </form>
 </div>
-afssssssssssssssssssssss
+{%if l%}
+{%endif%}
 {% include "include/footer.html" %}

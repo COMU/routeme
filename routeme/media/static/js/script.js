@@ -65,8 +65,35 @@ function searchRoute(){
         }});
 
 }
-function showRouteMapp(){
-    alert("bakalim");
+function showRouteMapp(data){
+    alert(Number(data.coordinates[3][1]));
+    var waypts = [];
+    for(i=0;i<data.coordinates.length;i++){
+        c1=Number(data.coordinates[i][0]);
+        c2=Number(data.coordinates[i][1]);
+        stop = new google.maps.LatLng(c1,c2);
+        waypts.push({
+            location:stop,
+            stopover:true});
+
+    }
+var request = {
+            origin: waypts[0],
+            destination: waypts[waypts.length-1],
+            waypoints: waypts,
+            optimizeWaypoints: true,
+            travelMode: google.maps.DirectionsTravelMode.WALKING
+        };
+
+   directionService.route(request, function(result, status){
+      if (status == google.maps.DirectionsStatus.OK){
+        $("#createRouteSubmit").attr('disabled', false);
+        directionDisplay.setDirections(result);
+      }
+  });
+ 
+
+
 }
 
 function showRouteOnMap(){

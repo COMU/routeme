@@ -20,7 +20,7 @@ def index(request):
     return render_to_response("route/index.html")
 
 def returnRoute(request,routeId):
-    l = RouteInformation.objects.get(id=routeId).route
+    l = RouteInformation.objects.get(id=routeId).route.json
     print "returna geliyor"
     return render_to_response("route/listRoute.html",{'l':l,'map':1})
 
@@ -41,7 +41,7 @@ def listRoute(request):
             print end
             print start
             route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10))).filter(date=date).filter(pet=pet).filter(baggage=baggage)
-
+            print route[0].route
             return render_to_response("route/listRoute.html",{'routes':route,'map':1})
 
 
