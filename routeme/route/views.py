@@ -19,12 +19,13 @@ def index(request):
         return HttpResponseRedirect("/email/login")
     return render_to_response("route/index.html")
 
+@login_required
 def returnRoute(request,routeId):
     l = RouteInformation.objects.get(id=routeId).route.json
     print "returna geliyor"
     return render_to_response("route/listRoute.html",{'l':l,'map':1})
 
-
+@login_required
 def listRoute(request):
     if request.method=="POST":
         form = SearchRouteForm(request.POST)
@@ -85,5 +86,6 @@ def createRoute(request):
     data = { 'map': 1, "form": form}
     return render_to_response("route/createRoute.html", data)
 
+@login_required
 def saveRoute(request):
     return -1
