@@ -21,6 +21,9 @@
 
     <script src="/static/js/libs/modernizr-2.0.6.min.js"></script>
 </head>
+
+<!-- if any view sends map variable to template initializeMap method will work(onload)-->
+
 <body {% if map %} onload = initializeMap() {% endif %}>
 
 <div class = "container_16">

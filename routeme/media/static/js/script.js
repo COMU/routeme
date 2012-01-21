@@ -8,6 +8,7 @@ var directionOptions = {
   draggable: true
 };
 
+//map will be ready to use
 function initializeMap(){
   directionDisplay = new google.maps.DirectionsRenderer(directionOptions);
   var latlng = new google.maps.LatLng(39.57, 32.51);
@@ -25,6 +26,7 @@ function initializeMap(){
   geocoder = new google.maps.Geocoder();
 }
 
+//this method pushs direction coordinates(waypoints) into hidden text field.
 function saveResultAsStr(result){
     var legs = result.routes[0].legs[0];
     var route = [];
@@ -36,6 +38,7 @@ function saveResultAsStr(result){
     $('#id_route').val(route.join("\n"));
 }
 
+//this method returns coordinates of given place
 function findPosition(address, callback){
     geocoder.geocode({'address': address}, function(results, status){
         if(status = google.maps.GeocoderStatus.OK){
@@ -96,6 +99,7 @@ var request = {
 
 }
 
+//While user creating a route when #show button is clicked route will be displayed on map.
 function showRouteOnMap(){
   var start = $("#where").val();
   var end = $("#to").val();
@@ -113,12 +117,15 @@ function showRouteOnMap(){
   });
 
 }
+
 $(document).ready(function (){
-    $("#createRouteSubmit").attr('disabled', true);
+    $("#createRouteSubmit").attr('disabled', true);//diabled button to save route without directions.
     $("#show").click(showRouteOnMap);
     $("#sroute").click(searchRoute);
-    $("#id_date").datepicker({dateFormat: 'yy-mm-dd'});
-    $("#id_time").timepicker({timeFormat: 'h:m'});
+
+    $("#id_date").datepicker({dateFormat: 'yy-mm-dd'});//when user click textfield jquery-ui
+    $("#id_time").timepicker({timeFormat: 'h:m'});//datepicker or timepicker will be displayed on screen.
+
     $("#showroute").click(showRouteMapp);
 });
 
