@@ -68,35 +68,45 @@ function searchRoute(){
         }});
 
 }
-function showRouteMapp(data){
+
+//shows selected route on map 
+function showSelectedRouteOnMap(data){
     alert(Number(data.coordinates[3][1]));
     var waypts = [];
     for(i=0;i<data.coordinates.length;i++){
-        c1=Number(data.coordinates[i][0]);
-        c2=Number(data.coordinates[i][1]);
+        var c1=Number(data.coordinates[i][0]);
+        var c2=Number(data.coordinates[i][1]);
         stop = new google.maps.LatLng(c1,c2);
         waypts.push({
             location:stop,
             stopover:true});
 
-    }
-var request = {
-            origin: waypts[0],
-            destination: waypts[waypts.length-1],
-            waypoints: waypts,
+     }
+     //TODO kod optimize edilebilir.
+     for(var i = 0; i < waypts.length /6 ; i ++){
+         var j;
+         if (i + 8 <= waypts.length - 1){
+             j = i + 8;
+         }else{
+             j = waypts.length -1 ;
+         }
+
+         var request = {
+	    origin:  waypts[0].location,
+            destination: waypts[waypts.length - 1].location,
+            waypoints: waypts.slice(i, j),
             optimizeWaypoints: true,
-            travelMode: google.maps.DirectionsTravelMode.WALKING
-        };
+            travelMode: google.maps.DirectionsTravelMode.DRIVING
+         };
 
-   directionService.route(request, function(result, status){
-      if (status == google.maps.DirectionsStatus.OK){
-        $("#createRouteSubmit").attr('disabled', false);
-        directionDisplay.setDirections(result);
-      }
-  });
- 
-
-
+         directionService.route(request, function(result, status){
+            if (status == google.maps.DirectionsStatus.OK){
+                directionDisplay.setDirections(result);
+            }else{
+	        alert(status);
+            }
+        });
+     } 
 }
 
 //While user creating a route when #show button is clicked route will be displayed on map.
@@ -108,14 +118,12 @@ function showRouteOnMap(){
     destination: end,
     travelMode: google.maps.TravelMode.DRIVING
   };
-
   directionService.route(request, function(result, status){
       if (status == google.maps.DirectionsStatus.OK){
         $("#createRouteSubmit").attr('disabled', false);
         directionDisplay.setDirections(result);
       }
   });
-
 }
 
 $(document).ready(function (){
