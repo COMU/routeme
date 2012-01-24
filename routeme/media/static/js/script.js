@@ -2,6 +2,7 @@ var map;
 var directionService = new google.maps.DirectionsService();
 var directionDisplay;
 var geocoder;
+var directionRenderers = [];
 
 //direction will be draggable
 var directionOptions = {
@@ -25,6 +26,17 @@ function initializeMap(){
   directionDisplay.setMap(map);
   geocoder = new google.maps.Geocoder();
 }
+
+function drawRoute(request, directionDisplay){
+  directionService.route(request, function(result, status){
+      if (status == google.maps.DirectionsStatus.OK){
+        $("#createRouteSubmit").attr('disabled', false);
+            directionDisplay.setDirections(result);
+      }
+  });
+}
+
+
 
 //this method pushs direction coordinates(waypoints) into hidden text field.
 function saveResultAsStr(result){
@@ -70,6 +82,16 @@ function searchRoute(){
 
 }
 
+
+function removeRenderers(){
+    if (directionRenderers.length != 0){
+        for(var i=0; i < directionRenderers.length; i++){
+	    directionRenderers[i].setMap(null);
+	}
+        directionRenderers = []
+    }
+}
+
 //shows selected route on map 
 function showSelectedRouteOnMap(data){
     alert(Number(data.coordinates[3][1]));
@@ -77,16 +99,30 @@ function showSelectedRouteOnMap(data){
     for(i=0;i<data.coordinates.length;i++){
         var c1=Number(data.coordinates[i][0]);
         var c2=Number(data.coordinates[i][1]);
-        waypts.push(new google.maps.LatLng(c1,c2));
-
+	stop = new google.maps.LatLng(c1,c2);
+	waypts.push({location:stop, stopover:true});
     }
-    var path = new google.maps.Polyline({
-        path: waypts,
-        strokeColor: "#FF0000",
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-    });
-    path.setMap(map)
+    removeRenderers(); 
+    //TODO kod optimize edilebilir.
+    for(var i = 0; i < waypts.length; i = i + 8){
+        var j;
+        if (i + 8 <= waypts.length - 1){
+             j = i + 8;
+        }else{
+             j = waypts.length -1 ;
+        }
+        var request = {
+            origin:  waypts[i].location,
+            destination: waypts[j].location,
+            waypoints: waypts.slice(i, j),
+            optimizeWaypoints: true,
+            travelMode: google.maps.DirectionsTravelMode.DRIVING
+        };
+        var direction = new google.maps.DirectionsRenderer({markerOptions: {visible: false}});
+        directionRenderers.push(direction);
+	direction.setMap(map);
+        drawRoute(request, direction);
+     } 
 }
 
 //While user creating a route when #show button is clicked route will be displayed on map.
@@ -98,18 +134,9 @@ function showRouteOnMap(){
     destination: end,
     travelMode: google.maps.TravelMode.DRIVING
   };
-  drawRoute(request);
+  drawRoute(request, directionDisplay);
 }
 
-function drawRoute(request){
-  directionService.route(request, function(result, status){
-      if (status == google.maps.DirectionsStatus.OK){
-        $("#createRouteSubmit").attr('disabled', false);
-        directionDisplay.setDirections(result);
-      }
-  });
-
-}
 $(document).ready(function (){
     $("#createRouteSubmit").attr('disabled', true);//diabled button to save route without directions.
     $("#show").click(showRouteOnMap);
@@ -117,8 +144,6 @@ $(document).ready(function (){
 
     $("#id_date").datepicker({dateFormat: 'yy-mm-dd'});//when user click textfield jquery-ui
     $("#id_time").timepicker({timeFormat: 'h:m'});//datepicker or timepicker will be displayed on screen.
-
-    $("#showroute").click(showRouteMapp);
 });
 
 
