@@ -33,8 +33,8 @@ function saveResultAsStr(result){
 
     for(var i = 0; i < legs.steps.length; i++){
         route.push(legs.steps[i].start_point.lat() + "," + legs.steps[i].start_point.lng());
+        route.push(legs.steps[i].end_point.lat() + "," + legs.steps[i].end_point.lng());
     }
-
     $('#id_route').val(route.join("\n"));
 }
 
@@ -49,7 +49,8 @@ function findPosition(address, callback){
 }
 
 
-
+//finds coords of startpoint and endpoint then inserts into hidden text fields
+//#id_start and #id_end 
 function searchRoute(){
     var start = $("#id_where").val();
     var to = $("#id_to").val();
@@ -61,7 +62,7 @@ function searchRoute(){
                 if(status = google.maps.GeocoderStatus.OK){
                     var end_position = results[0].geometry.location;
 
-                    $('#id_start').val(start_position.lat()+","+start_position.lng());
+                    $('#id_start').val(start_position.lat()+","+start_position.lng());//
                     $('#id_end').val(end_position.lat()+","+end_position.lng());
                     $('#searchRouteForm').submit();
                 }});
@@ -76,37 +77,16 @@ function showSelectedRouteOnMap(data){
     for(i=0;i<data.coordinates.length;i++){
         var c1=Number(data.coordinates[i][0]);
         var c2=Number(data.coordinates[i][1]);
-        stop = new google.maps.LatLng(c1,c2);
-        waypts.push({
-            location:stop,
-            stopover:true});
+        waypts.push(new google.maps.LatLng(c1,c2));
 
-     }
-     //TODO kod optimize edilebilir.
-     for(var i = 0; i < waypts.length /6 ; i ++){
-         var j;
-         if (i + 8 <= waypts.length - 1){
-             j = i + 8;
-         }else{
-             j = waypts.length -1 ;
-         }
-
-         var request = {
-	    origin:  waypts[0].location,
-            destination: waypts[waypts.length - 1].location,
-            waypoints: waypts.slice(i, j),
-            optimizeWaypoints: true,
-            travelMode: google.maps.DirectionsTravelMode.DRIVING
-         };
-
-         directionService.route(request, function(result, status){
-            if (status == google.maps.DirectionsStatus.OK){
-                directionDisplay.setDirections(result);
-            }else{
-	        alert(status);
-            }
-        });
-     } 
+    }
+    var path = new google.maps.Polyline({
+        path: waypts,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+    path.setMap(map)
 }
 
 //While user creating a route when #show button is clicked route will be displayed on map.
@@ -118,14 +98,18 @@ function showRouteOnMap(){
     destination: end,
     travelMode: google.maps.TravelMode.DRIVING
   };
+  drawRoute(request);
+}
+
+function drawRoute(request){
   directionService.route(request, function(result, status){
       if (status == google.maps.DirectionsStatus.OK){
         $("#createRouteSubmit").attr('disabled', false);
         directionDisplay.setDirections(result);
       }
   });
-}
 
+}
 $(document).ready(function (){
     $("#createRouteSubmit").attr('disabled', true);//diabled button to save route without directions.
     $("#show").click(showRouteOnMap);
