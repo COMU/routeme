@@ -29,7 +29,7 @@ class UserForm(forms.Form):
             validators = [userNameValidator])
     password = forms.CharField(label = "Create Password", widget = forms.PasswordInput(attrs={'placeholder': "Password"}))
     password2 = forms.CharField(label = "Confirm Your Password", widget = forms.PasswordInput(attrs={'placeholder': "Password"}))
-    birthdate = forms.DateField(widget = SelectDateWidget( years = range(1930, 2012)))
+    birthdate = forms.DateField()
     gender = forms.ChoiceField(choices = GENDER_CHOICES)
     photo = forms.ImageField(required = False)
 

@@ -2,41 +2,38 @@
 
 
   {% include "include/navbar.html" %}
-  
-  <div class='clear'>&nbsp;</div>
-
-    <div id="map" class="grid_11"></div>
-    <div class="grid_5" id = "suggestedFriends">
-      Suggested Friends
+    <div class="row">
+        <div id="map" class="span8"></div>
     </div>
-    
-    <div class='clear'>&nbsp;</div>
-
-    <div class="grid_11">
-      <div class = "grid_3  alpha">
-          <label for="where"> Where : </label>
-          <input type = "text" id = "where" />
-       </div>
-       <div class = "grid_3 push_3 omega">
-          <label for="to"> To : </label>
-          <input type = "text" id = "to" />
-       </div>
-       <div class='clear'>&nbsp;</div>
-       <div class='grid_3 push_10 alpha'>
-         <input type = "button" id = "show" value = "Show Route On Map"/>
-       </div>
+    <div class="row">
+        <div class="span8">
+           <form action="" method="get" class ="form-inline">
+             <fieldset><legend> Start and End Points</legend>
+              <label for="where"> Where : </label>
+              <input type = "text" id = "where" />
+              <label for="to"> To : </label>
+              <input type = "text" id = "to" />
+              <input type = "button" id = "show" value = "Show Route On Map"/>
+              <p class="help-block">First enter start point and end point
+             </fieldset>
+           </form>
+        </div>
     </div>
-
-    <div id="formWrapper" class = "grid_8">
-      <form action = {% url route.views.createRoute %} method="post" id = "creatRouteForm">
+    <div class="row">
+    <div id="formWrapper" class = "span8">
+      <fieldset><legend>Route Informations</legend>
+      <form action = {% url route.views.createRoute %} method="post">
       {{ field.errors }}
       <table>
         {{ form.as_table }}
       </table>
+      <div class="form-actions">
       <p><input type="submit" value="Create" id= "createRouteSubmit"/></p>
+      </div>
       </form>
+      </fieldset>
+    </div>
     </div>
 
-  <div class='clear'>&nbsp;</div>
 
 {% include "include/footer.html" %}

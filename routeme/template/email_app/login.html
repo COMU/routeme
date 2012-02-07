@@ -1,15 +1,20 @@
 {% include "include/header.html" %}
-    <div id = "header" class = "grid_16">
-        <div id="loginForm" class = "grid_8 push_4 omega">
+    {% include "include/unsignedNavbar.html" %}
+    <div class = "row">
+        <div class = "span6 offset3" style="text-align:center">
             <form method="POST" action="{% url login-user %}" >
+                <fieldset><legend>Login</legend>
 		{{form.as_p}}
-		<input type="submit" value = "Login" >
+                <div class = "form-actions">
+		    <input type="submit" value = "Login" >
 		<a href={% url email_app.views.signup %}>SignUp!</a>
+	        </div>
 		<p>
 		    <a href="/foursq_auth/auth/"><img src="/static/images/foursquare-logo.png"></a>
 		    <a href="/foursq_auth/auth/"><img src="/static/images/facebook-logo.jpg"></a>
 		    <a href="/foursq_auth/auth/"><img src="/static/images/twitter-logo.png"></a>
 		</p>
+  		</fieldset>
             </form>
         </div>
     </div>

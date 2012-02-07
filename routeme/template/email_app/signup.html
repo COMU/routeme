@@ -1,19 +1,22 @@
 {% include "include/header.html" %}
-    
-    <div id="main" role="main">
+        
+    {% include "include/unsignedNavbar.html" %}
+    <div class = "row"  role="main">
       <center>
+        <div class = "span6 offset3">
         <form enctype="multipart/form-data" action={% url email_app.views.signup %} method="post" id="signupForm" >
+          <fieldset><legend>Sign Up</legend>
           {{ field.errors }}
           <table>
             {{ form.as_table }}
           </table>
+          <div class = "form-actions">
           <p><input type="submit" value="Join!" /></p>
-      </form>
+	  </div>
+          </fieldset>
+        </form>
+        <div>
       </center>
-    </div>
-    
-    <div id = "footer">
-      footer
     </div>
 {% include "include/footer.html" %}
 

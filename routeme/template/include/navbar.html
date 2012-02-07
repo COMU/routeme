@@ -1,11 +1,14 @@
-<div  id = "navbarGrid" class = "grid_16">
-  <div id = "navbarWrapper">
-  <ul id = "navbar">
-      <li><a href = "">Friends</a></li>
-      <li><a href = "{% url route.views.searchRoute%}">Search Route</a></li>
-      <li><a href = "{% url route.views.createRoute%}">Create Route</a></li>
-      <li><a href = "{% url email_app.views.update %}">Profil</a></li>
-      <li><a href = "{% url email_app.views.logout%}">Logout</a></li>
-    </ul>
+<div class = "navbar">
+  <div class = "navbar-inner">
+   <div class = "container">
+     <a class="brand" href="#"><img src = "/static/img/icon-route.png">routeme</a>
+     <ul class = "nav">
+        <li><a href = "">Friends</a></li>
+        <li><a href = "{% url route.views.searchRoute%}">Search Route</a></li>
+        <li><a href = "{% url route.views.createRoute%}">Create Route</a></li>
+        <li><a href = "{% url email_app.views.update %}">Profil</a></li>
+        <li><a href = "{% url email_app.views.logout%}">Logout</a></li>
+      </ul>
+   </div>
   </div>
 </div>

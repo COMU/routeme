@@ -1,21 +1,23 @@
 {% include "include/header.html" %}
      
     {% include "include/navbar.html" %}
-    <div class="clear">&nbsp;</div>
-    <div id="map" class="grid_11"></div>
-    <div class = "grid_5" id = "suggestedFriend">
-        Suggested Friend
+    <div class="row">
+        <div id="map" class="span7"></div>
     </div>
-    <div class = 'clear'>&nbsp;</div>
-    <div class="grid_11">
-        <form action={% url route.views.listRoute %} method="POST" id="searchRouteForm">
-            <table>
-                {{ form.as_table }}
-            </table>
-        <p><input type = "button" id = "sroute" value = "search" /></p>
-        </form>
+    <div class="row">
+       <div class="span7">
+           <form action={% url route.views.listRoute %} method="POST">
+              <fieldset><legend>Route Informations</legend>
+              <table>
+                   {{ form.as_table }}
+              </table>
+              <div class="form-actions">
+              <p><input type = "button" id = "sroute" value = "search" /></p>
+              </div>
+              </fieldset>
+           </form>
+       </div>
     </div>
-
 
 {% include "include/footer.html" %}
 
