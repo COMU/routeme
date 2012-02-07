@@ -15,6 +15,13 @@ def userNameValidator(value):
         return True
     raise ValidationError('Email zaten var.')
 
+class UserUpdateForm(forms.Form):
+    firstName = forms.CharField(max_length = 30, widget=forms.TextInput(attrs={'title':"FirstName", 'placeholder': "First Name"}))
+    lastName = forms.CharField(max_length = 30, widget = forms.TextInput(attrs = {'title':"LastName",'placeholder': "Last Name"}))
+    email = forms.EmailField(widget = forms.TextInput(attrs={'placeholder':'Email'}),
+				validators = [userNameValidator])
+    photo = forms.ImageField(required = False)
+
 class UserForm(forms.Form):
     firstName = forms.CharField(max_length = 30, widget=forms.TextInput(attrs={'title':"FirstName", 'placeholder': "First Name"}))
     lastName = forms.CharField(max_length = 30, widget=forms.TextInput(attrs={'placeholder': "Last Name"}))

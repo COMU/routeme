@@ -16,15 +16,12 @@ GENDER_CHOICES = (
     ('F', 'Female'),
 )
 
-class ProfilePhoto(models.Model):
-    photo = models.ImageField(upload_to = "images")
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     birthdate = models.DateField()
     gender = models.CharField(max_length = 1, choices = GENDER_CHOICES)
     experience = models.IntegerField(default = 0, null = True)
-    profilePhoto = models.ForeignKey(ProfilePhoto, null = True)
+    profilePhoto = models.ImageField(upload_to = "images", null =True)
 
 
     def addFriend(self, person, status):

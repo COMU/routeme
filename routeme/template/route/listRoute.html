@@ -12,7 +12,15 @@
     <input type="button" onClick="showSelectedRouteOnMap({{r.route.json}})" value="Show Route">
     <a href="returnroute/{{r.id}}">{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br>
         {% endfor %}
-        {%endif%}
+
+	<script><h1>{{r.owner.profilePhoto.photo}}</h1></script>
+    {%else%}
+     <script>
+	alert('Route is not found!');
+	window.location = 'searchroute';
+     </script>
+    {%endif%}
+     
     </form>
 </div>
 {%if l%}

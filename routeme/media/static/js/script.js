@@ -115,14 +115,24 @@ function showSelectedRouteOnMap(data){
             origin:  waypts[i].location,
             destination: waypts[j].location,
             waypoints: waypts.slice(i, j),
-            optimizeWaypoints: true,
+            //optimizeWaypoints: true,
             travelMode: google.maps.DirectionsTravelMode.DRIVING
         };
         var direction = new google.maps.DirectionsRenderer({markerOptions: {visible: false}});
         directionRenderers.push(direction);
 	direction.setMap(map);
-        drawRoute(request, direction);
-     } 
+	var c1=Number(data.coordinates[0][0]);
+        var c2=Number(data.coordinates[0][1]);
+  	var myLatlng = new google.maps.LatLng(c1,c2);
+
+  	var marker = new google.maps.Marker({
+      	position: myLatlng,
+      	map: map,
+      	title:"Hello World!"
+  });
+	
+	drawRoute(request, direction);
+    } 
 }
 
 //While user creating a route when #show button is clicked route will be displayed on map.

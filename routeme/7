@@ -22,19 +22,20 @@ def index(request):
 def update(request):
     if request.method == "POST":
 	form = UserUpdateForm(request.POST)
-	
-	firstname = form.cleaned_data['firstName']
-	lastname = form.cleaned_data['lastName']
-	email = form.cleaned_data['email']
-	user_profile = UserProfile(user=request.user)
-	profile_photo = form.cleaned_data['photo']
-	request.user.first_name = firstname
-	request.user.last_name = lastname
-        request.user.username = email
-        request.user.email = email
-        user_profile.profilePhoto = profile_photo
-	request.user.save()
-	user_profile.save()
+	if form.is_valid():
+	    firstname = form.cleaned_data['firstName']
+	    lastname = form.cleaned_data['lastName']
+	    email = form.cleaned_data['email']
+	    user_profile = UserProfile(user=request.user)
+	    profile_photo = form.cleaned_data['photo']
+	    request.user.first_name = firstname
+	    request.user.last_name = lastname
+            request.user.username = email
+            request.user.email = email
+            user_profile.profilePhoto = profile_photo
+	    request.user.save()
+	    user_profile.save()
+	    return HttpResponseRedirect("/")
     else:
     
     	initial_data = {
