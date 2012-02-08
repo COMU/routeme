@@ -6,12 +6,11 @@
         <div class = "span6 offset3">
         <form enctype="multipart/form-data" action={% url email_app.views.signup %} method="post" id="signupForm" >
           <fieldset><legend>Sign Up</legend>
-          {{ field.errors }}
           <table>
             {{ form.as_table }}
           </table>
           <div class = "form-actions">
-          <p><input type="submit" value="Join!" /></p>
+              <p><input type="submit" value="Join!" class="btn-success"/></p>
 	  </div>
           </fieldset>
         </form>

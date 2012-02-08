@@ -73,9 +73,9 @@ function searchRoute(){
             geocoder.geocode({'address': to}, function(results, status){
                 if(status = google.maps.GeocoderStatus.OK){
                     var end_position = results[0].geometry.location;
-
                     $('#id_start').val(start_position.lat()+","+start_position.lng());//
                     $('#id_end').val(end_position.lat()+","+end_position.lng());
+	            
                     $('#searchRouteForm').submit();
                 }});
         }});

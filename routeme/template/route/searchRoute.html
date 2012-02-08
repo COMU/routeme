@@ -6,13 +6,13 @@
     </div>
     <div class="row">
        <div class="span7">
-           <form action={% url route.views.listRoute %} method="POST">
+           <form action={% url route.views.listRoute %} method="POST" id="searchRouteForm">
               <fieldset><legend>Route Informations</legend>
               <table>
                    {{ form.as_table }}
               </table>
               <div class="form-actions">
-              <p><input type = "button" id = "sroute" value = "search" /></p>
+              <p><input type = "button" id = "sroute" value = "Search" /></p>
               </div>
               </fieldset>
            </form>

@@ -1,28 +1,27 @@
 {% include "include/header.html" %}
 
 {% include "include/navbar.html" %}
-<div class ="clear">&nbsp;</div>
-<div id="map" class="grid_11"></div>
-<div class = "grid_5" id="suggestedFriend"></div>
-<div class = 'clear'>&nbsp;</div>
-<div class="grid_11">
+<div class="row"><div id="map" class="span7"></div></div>
+
+<div class="row"><div class="span7">
     <form method="POST">
-    {%if routes%}
-    {% for r in routes %}
-    <input type="button" onClick="showSelectedRouteOnMap({{r.route.json}})" value="Show Route">
-    <a href="returnroute/{{r.id}}">{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br>
-        {% endfor %}
+      <fieldset><legend>Results</legend>
+        {%if routes%}
+            {% for r in routes %}
+                <input type="button" onClick="showSelectedRouteOnMap({{r.route.json}})" value="Show Route">
+                <a href="returnroute/{{r.id}}">{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br>
+            {% endfor %}
 
 	<script><h1>{{r.owner.profilePhoto.photo}}</h1></script>
-    {%else%}
-     <script>
-	alert('Route is not found!');
-	window.location = 'searchroute';
-     </script>
-    {%endif%}
-     
+       {%else%}
+          <script>
+    	       alert('Route is not found!');
+	       window.location = 'searchroute';
+         </script>
+       {%endif%}
+     </fieldset>
     </form>
 </div>
-{%if l%}
-{%endif%}
+</div>
+
 {% include "include/footer.html" %}
