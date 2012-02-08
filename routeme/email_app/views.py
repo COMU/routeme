@@ -56,8 +56,11 @@ def update(request):
   data={
            'form':form,
            'title':"Profile",
-           'img': request.user.userprofile.profilePhoto.url
-   }
+  }
+
+  if request.user.userprofile.profilePhoto:
+      data['img'] = request.user.userprofile.profilePhoto.url
+
   return render_to_response("email_app/update.html", data)
 
 	
