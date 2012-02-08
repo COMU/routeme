@@ -17,10 +17,10 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'routeme.db',                      # Or path to database file if using sqlite3.
-        'USER': 'routeme',                      # Not used with sqlite3.
-        'PASSWORD':'sss',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'NAME': 'routemedb',                      # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD':'',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -50,7 +50,7 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.abspath(os.path.join(os.path.abspath(__file__), '../media/images'))
+MEDIA_ROOT = os.path.abspath(os.path.join(os.path.abspath(__file__), '../media/static/images'))
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.

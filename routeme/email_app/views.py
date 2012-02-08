@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate,login as auth_login
 from django.contrib.auth.models import check_password
 from django.contrib.auth import logout as user_logout
 from django.contrib.auth.decorators import login_required
-
+import Image
 def error404(request):
     return render_to_response("email_app/404.html")
 
@@ -20,34 +20,46 @@ def index(request):
 
 @login_required
 def update(request):
-    if request.method == "POST":
-	form = UserUpdateForm(request.POST)
-	
-	firstname = form.cleaned_data['firstName']
-	lastname = form.cleaned_data['lastName']
-	email = form.cleaned_data['email']
-	user_profile = UserProfile(user=request.user)
-	profile_photo = form.cleaned_data['photo']
-	request.user.first_name = firstname
-	request.user.last_name = lastname
-        request.user.username = email
-        request.user.email = email
-        user_profile.profilePhoto = profile_photo
-	request.user.save()
-	user_profile.save()
-    else:
-    
-    	initial_data = {
-		'email': request.user.email,
-		'firstName':request.user.first_name,
-		'lastName':request.user.last_name,
-    	}
-	form = UserUpdateForm(initial=initial_data)
-	data={
-	   'form':form,
-	   'title':"Profile"
-	}
-        return render_to_response("email_app/update.html", data)
+  if request.method == "POST":
+        form = UserUpdateForm(request.POST,request.FILES)
+        if form.is_valid():
+                photo = request.FILES['photo']
+                firstname = form.cleaned_data['firstName']
+                lastname = form.cleaned_data['lastName']
+                email = form.cleaned_data['email']
+                user_profile = UserProfile.objects.get(user=request.user)
+
+                request.user.first_name = firstname
+                request.user.last_name = lastname
+                request.user.username = email
+                request.user.email = email
+                user_profile.profilePhoto = photo
+                user_profile.save()
+                request.user.save()
+                image = Image.open(user_profile.profilePhoto.path)
+                image = image.resize((96, 96), Image.ANTIALIAS) 
+                image.save(user_profile.profilePhoto.path, "jpeg")
+                user_profile.save()
+
+                return HttpResponseRedirect("/email/update")
+
+  else:
+        user_profile = UserProfile.objects.get(user=request.user)
+
+        initial_data = {
+                'email': request.user.email,
+                'firstName':request.user.first_name,
+                'lastName':request.user.last_name,
+        }
+        form = UserUpdateForm(initial=initial_data)
+
+  data={
+           'form':form,
+           'title':"Profile",
+           'img': request.user.userprofile.profilePhoto.url
+   }
+  return render_to_response("email_app/update.html", data)
+
 	
 def login(request):
     if request.user.is_authenticated():

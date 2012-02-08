@@ -1,19 +1,22 @@
-{% include "include/header.html" %}
+                                                                                                    
+ {% include "include/header.html" %}
 
     {% include "include/navbar.html" %}
 
   <div class='clear'>&nbsp;</div>
 
   <div class="grid_11" id = "mainContent">
-    Profile
-<form method="POST" action={% url email_app.views.update %}>
-	  <table>
+<center>    Profile
+<form method="POST" enctype="multipart/form-data" action={% url email_app.views.update %}>
+         {{ form.errors }}
+        <table>
+<img border="0" src="{{STATIC_URL}}/static/images/{{img}}"/>
             {{ form.as_table }}
           </table>
 
 <p><input type="submit" value="Save" /></p>
 
-</form>
+</form></center>
   </div>
   <div class="grid_5" id = "suggestedFriends">
     Suggested Friends
