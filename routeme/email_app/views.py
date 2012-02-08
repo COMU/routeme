@@ -23,7 +23,6 @@ def update(request):
   if request.method == "POST":
         form = UserUpdateForm(request.POST,request.FILES)
         if form.is_valid():
-                photo = request.FILES['photo']
                 firstname = form.cleaned_data['firstName']
                 lastname = form.cleaned_data['lastName']
                 email = form.cleaned_data['email']
@@ -33,14 +32,16 @@ def update(request):
                 request.user.last_name = lastname
                 request.user.username = email
                 request.user.email = email
-                user_profile.profilePhoto = photo
-                user_profile.save()
+                if request.FILES:
+                        photo = request.FILES['photo']
+                        user_profile.profilePhoto = photo
+                        user_profile.save()
+                        #user_profile.profilePhoto.name='/images/'+str(request.user.id)+'.jpeg'
+                        image = Image.open(user_profile.profilePhoto.path)
+                        image = image.resize((96, 96), Image.ANTIALIAS)
+                        image.save(user_profile.profilePhoto.path,"jpeg")
+                        user_profile.save()
                 request.user.save()
-                image = Image.open(user_profile.profilePhoto.path)
-                image = image.resize((96, 96), Image.ANTIALIAS) 
-                image.save(user_profile.profilePhoto.path, "jpeg")
-                user_profile.save()
-
                 return HttpResponseRedirect("/email/update")
 
   else:
@@ -49,19 +50,18 @@ def update(request):
         initial_data = {
                 'email': request.user.email,
                 'firstName':request.user.first_name,
-                'lastName':request.user.last_name,
+                'lastName':request.user.last_name
         }
         form = UserUpdateForm(initial=initial_data)
 
   data={
            'form':form,
            'title':"Profile",
-  }
-
-  if request.user.userprofile.profilePhoto:
-      data['img'] = request.user.userprofile.profilePhoto.url
-
+           'img': request.user.userprofile.profilePhoto.url
+   }
   return render_to_response("email_app/update.html", data)
+
+
 
 	
 def login(request):
@@ -104,7 +104,9 @@ def signup(request):
 
             userProfile = UserProfile.objects.get_or_create(user = user,
                             birthdate = form.cleaned_data['birthdate'],
-                            gender = form.cleaned_data['gender'])
+                            gender = form.cleaned_data['gender'],
+			    profilePhoto = 'images/default.png'
+				)
 
             return HttpResponseRedirect(reverse("login-user"))
 
