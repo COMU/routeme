@@ -4,7 +4,7 @@
     <div class = "row"  role="main">
       <center>
         <div class = "span6 offset3">
-        <form enctype="multipart/form-data" action={% url email_app.views.signup %} method="post" id="signupForm" >
+        <form enctype="multipart/form-data" action={% url email_app.views.signup %} method="post" id="signupForm" class="well" >
           <fieldset><legend>Sign Up</legend>
           <table>
             {{ form.as_table }}

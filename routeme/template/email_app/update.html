@@ -1,27 +1,24 @@
-                                                                                                    
- {% include "include/header.html" %}
+{% include "include/header.html" %}
 
-    {% include "include/navbar.html" %}
+{% include "include/navbar.html" %}
 
-  <div class='clear'>&nbsp;</div>
+<div class="row">
+  <div class="span7">
 
-  <div class="grid_11" id = "mainContent">
-<center>    Profile
-<form method="POST" enctype="multipart/form-data" action={% url email_app.views.update %}>
-         {{ form.errors }}
+     <form method="POST" enctype="multipart/form-data" action={% url email_app.views.update %} class = "well">
+        <fieldset><legend>Profile</legend> 
+        {{ form.errors }}
         <table>
-<img border="0" src="{{STATIC_URL}}/static/images/{{img}}"/>
-            {{ form.as_table }}
-          </table>
-
-<p><input type="submit" value="Save" /></p>
-
-</form></center>
+		<img border="0" src="{{STATIC_URL}}/static/images/{{img}}"/>
+                {{ form.as_table }}
+        </table>
+        <div class="form-actions">
+	    <p><input type="submit" value="Save" /></p>
+        </div>
+        </fieldset>
+     </form>
   </div>
-  <div class="grid_5" id = "suggestedFriends">
-    Suggested Friends
-  </div>
+</div>
 
-  <div class='clear'>&nbsp;</div>
 
 {% include "include/footer.html" %}

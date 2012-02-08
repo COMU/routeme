@@ -6,16 +6,20 @@
 <div class="row"><div class="span7">
     <form method="POST">
       <fieldset><legend>Results</legend>
-        {%if routes%}
+        
+       {%if routes%}
+          <table class = "table table-striped">
             {% for r in routes %}
-                <input type="button" onClick="showSelectedRouteOnMap({{r.route.json}})" value="Show Route">
-                <a href="returnroute/{{r.id}}">{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br>
+		<tr>
+                    <td><a href="#">{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br></td>
+                    <td><input type="button" onClick="showSelectedRouteOnMap({{r.route.json}})" value="Show Route"></td>
+		</tr>
             {% endfor %}
-
+	  </table>
 	<script><h1>{{r.owner.profilePhoto.photo}}</h1></script>
        {%else%}
           <script>
-    	       alert('Route is not found!');
+    	       alert('No route is found!');
 	       window.location = 'searchroute';
          </script>
        {%endif%}
