@@ -43,7 +43,7 @@ def listRoute(request):
             print start
             route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10))).filter(date=date).filter(pet=pet).filter(baggage=baggage)
 	   # if route:
-            return render_to_response("route/listRoute.html",{'routes':route,'map':1})
+            return render_to_response("route/listRoute.html",{'routes':enumerate(route, 1),'map':1})
 	    #else:
 	    #	return HttpResponseRedirect('searchroute')
 
