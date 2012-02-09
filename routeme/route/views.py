@@ -12,6 +12,7 @@ from models import RouteInformation
 from django.contrib.gis.geos import LineString, Point
 from django.contrib.auth.models import User
 from django.contrib.gis.measure import D
+from django.template.loader import render_to_string
 import simplejson
 
 def index(request):
@@ -43,7 +44,8 @@ def listRoute(request):
             print start
             route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10))).filter(date=date).filter(pet=pet).filter(baggage=baggage)
 	   # if route:
-            return render_to_response("route/listRoute.html",{'routes':enumerate(route, 1),'map':1})
+            profil = render_to_string("include/profil.html", {'user': request.user})
+            return render_to_response("route/listRoute.html",{'routes':enumerate(route, 1),'map':1, "profil":profil})
 	    #else:
 	    #	return HttpResponseRedirect('searchroute')
 
@@ -51,7 +53,8 @@ def listRoute(request):
 @login_required
 def searchRoute(request):
     form = SearchRouteForm()
-    data = { 'map': 1, "form": form}
+    profil = render_to_string("include/profil.html", {'user': request.user})
+    data = { 'map': 1, "form": form, 'profil':profil}
     return render_to_response("route/searchRoute.html", data)
 
 @login_required
@@ -84,8 +87,8 @@ def createRoute(request):
 
     else:
         form = CreateRouteForm()
-
-    data = { 'map': 1, "form": form}
+    profil = render_to_string("include/profil.html", {'user': request.user})
+    data = { 'map': 1, "form": form, 'profil':profil}
     return render_to_response("route/createRoute.html", data)
 
 @login_required

@@ -1,7 +1,10 @@
 {% include "include/header.html" %}
 
 {% include "include/navbar.html" %}
-<div class="row"><div id="map" class="span8"></div></div>
+<div class="row">
+	<div id="map" class="span8"></div>
+	<div class="span4"><div class="alert alert-info">{{profil}}</div></div>
+</div>
 
 <div class="row"><div class="span8">
     <form method="POST">
@@ -11,11 +14,13 @@
           <table class = "table table-striped">
             <tr>
 		<th>#</th>
+		<th>Vehicle</th>
 		<th colspan=2>User</th>
             <tr>
             {% for n, r in routes %}
 		<tr>
  		    <td>{{ n }}</td>
+ 		    <td>{{ r.vehicle }}</td>
                     <td><a href="#">{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br></td>
                     <td><input type="button" onClick="showSelectedRouteOnMap({{r.route.json}})" value="Show Route"></td>
 		</tr>
