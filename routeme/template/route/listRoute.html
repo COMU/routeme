@@ -22,7 +22,7 @@
  		    <td>{{ n }}</td>
  		    <td>{{ r.vehicle }}</td>
                     <td><a href="#">{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br></td>
-                    <td><input type="button" onClick="showSelectedRouteOnMap({{r.route.json}})" value="Show Route"></td>
+                    <td><input type="button" onClick="showSelectedRouteOnMap({{r.route.json}},'{{r.owner.userprofile.profilePhoto.url}}','{{r.owner.first_name}}','{{r.owner.last_name}}')" value="Show Route"></td>
 		</tr>
             {% endfor %}
 	  </table>

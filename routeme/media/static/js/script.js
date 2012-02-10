@@ -93,7 +93,7 @@ function removeRenderers(){
 }
 
 //shows selected route on map 
-function showSelectedRouteOnMap(data){
+function showSelectedRouteOnMap(data,path,name,lastname){
     alert(Number(data.coordinates[3][1]));
     var waypts = [];
     for(i=0;i<data.coordinates.length;i++){
@@ -124,15 +124,25 @@ function showSelectedRouteOnMap(data){
 	var c1=Number(data.coordinates[0][0]);
         var c2=Number(data.coordinates[0][1]);
   	var myLatlng = new google.maps.LatLng(c1,c2);
-
-  	var marker = new google.maps.Marker({
-      	position: myLatlng,
-      	map: map,
-      	title:"Hello World!"
-  });
-	
 	drawRoute(request, direction);
     } 
+	var myLatlng = new google.maps.LatLng(c1,c2)
+	var pimage = 'static/images/'+path;
+	var image = new google.maps.MarkerImage(pimage)
+	contentString="<html><div><img width='42' height='48' src="+pimage+">"+"  "+name+" " + lastname+"</div></html>"
+	var infowindow = new google.maps.InfoWindow({
+    		content: contentString,
+		pixelOffset: new google.maps.Size(0, 0)
+	
+});
+
+	var marker = new google.maps.Marker({
+    		position: myLatlng,
+    		map: map
+	});
+	infowindow.open(map,marker);
+
+
 }
 
 //While user creating a route when #show button is clicked route will be displayed on map.
