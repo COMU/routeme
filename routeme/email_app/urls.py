@@ -17,5 +17,6 @@ urlpatterns = patterns('routeme',
     url(r'login/$',"email_app.views.login",name = "login-user"),
     url(r'logout/$',"email_app.views.logout", name = "logout"),
     url(r'update/$',"email_app.views.update",name = "update-user"),
+    url(r'activate/(?P<key>\w+)/$',"email_app.views.activate",name = "activate-user"),
 )
 

@@ -5,11 +5,12 @@ from forms import UserForm,LoginForm,UserUpdateForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from models import UserProfile
+from models import UserProfile, Registration
 from django.contrib.auth import authenticate,login as auth_login
 from django.contrib.auth.models import check_password
 from django.contrib.auth import logout as user_logout
 from django.contrib.auth.decorators import login_required
+import mail 
 import Image
 def error404(request):
     return render_to_response("email_app/404.html")
@@ -99,7 +100,7 @@ def signup(request):
             user.last_name = form.cleaned_data['lastName']
             user.username = user.email
             user.set_password(form.cleaned_data['password'])
-            user.is_active = True
+            user.is_active = False
             user.save()
 
             userProfile = UserProfile.objects.get_or_create(user = user,
@@ -108,6 +109,7 @@ def signup(request):
 			    profilePhoto = 'images/default.png'
 				)
 
+	    mail.send_activation_mail(user)
             return HttpResponseRedirect(reverse("login-user"))
 
     else:
@@ -119,3 +121,10 @@ def signup(request):
     }
     return render_to_response("email_app/signup.html", data)
 
+def activate(request, key):
+    registration = Registration.objects.get(activation_key = key)
+    user = registration.user
+    user.is_active = True
+    user.save()
+    return HttpResponseRedirect(reverse("login-user"))
+    

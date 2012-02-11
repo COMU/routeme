@@ -39,6 +39,10 @@ class UserProfile(models.Model):
             status=status).delete()
         return true
 
+class Registration(models.Model):
+    user = models.OneToOneField(User)
+    activation_key = models.CharField(max_length = 50)
+
 class Friendship(models.Model):
     from_person = models.ForeignKey(User, related_name='from_people')
     to_person = models.ForeignKey(User, related_name='to_people')
