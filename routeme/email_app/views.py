@@ -108,8 +108,8 @@ def signup(request):
                             gender = form.cleaned_data['gender'],
 			    profilePhoto = 'images/default.png'
 				)
-
-	    mail.send_activation_mail(user)
+	    registration = Registration.objects.create_registration(user)
+            registration.send_activation_mail()	
             return HttpResponseRedirect(reverse("login-user"))
 
     else:
@@ -122,9 +122,10 @@ def signup(request):
     return render_to_response("email_app/signup.html", data)
 
 def activate(request, key):
-    registration = Registration.objects.get(activation_key = key)
-    user = registration.user
-    user.is_active = True
-    user.save()
-    return HttpResponseRedirect(reverse("login-user"))
+    activated = Registration.objects.activate_user(key)
+    if activated:
+        return HttpResponseRedirect(reverse("login-user"))
+    else:
+	#TODO
+	pass
     
