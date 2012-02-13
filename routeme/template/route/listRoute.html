@@ -38,12 +38,12 @@
 			Trip Date {{r.date}}</br>
 			Trip Time {{r.time}}</br></br>
 			Trip Arrival Time {{r.arrivalTime}}</br>
-			{% if '{{r.baggage}}' %}
+			{% if  r.baggage  %}
 				Baggage <input type="checkbox" disabled checked>	
 			{%else%}			
 				Baggage <input type="checkbox"  disabled>	
 			{%endif%}
-			{% if '{{r.pet}}' %}
+			{% if r.pet  %}
 				Pet <input type="checkbox" disabled checked>	
 			{%else%}			
 				Pet <input type="checkbox"  disabled>	
