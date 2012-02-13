@@ -15,14 +15,50 @@
             <tr>
 		<th>#</th>
 		<th>Vehicle</th>
-		<th colspan=2>User</th>
+		<th colspan=3>User</th>
             <tr>
             {% for n, r in routes %}
 		<tr>
  		    <td>{{ n }}</td>
  		    <td>{{ r.vehicle }}</td>
                     <td><a href="#">{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br></td>
-                    <td><input type="button" onClick="showSelectedRouteOnMap({{r.route.json}},'{{r.owner.userprofile.profilePhoto.url}}','{{r.owner.first_name}}','{{r.owner.last_name}}')" value="Show Route"></td>
+                    <td><input type="button" onClick="showSelectedRouteOnMap({{r.route.json}},
+				'{{r.owner.userprofile.profilePhoto.url}}','{{r.owner.first_name}}','{{r.owner.last_name}}')" 
+				value="Show Route"></td>
+	
+    		    <div id="{{n}}" class="modal hide fade">
+    		    	<div class="modal-header">
+                    	   <a class="close" data-dismiss="modal">×</a>
+    		    	   <h2>
+				<img src="/static/images/{{ r.owner.userprofile.profilePhoto.url}}" style="width:60px;height:60px">
+				{{r.owner.first_name}} {{r.owner.last_name}}
+			   </h2>
+    		    	</div>
+                    	<div class="modal-body">
+			Trip Date {{r.date}}</br>
+			Trip Time {{r.time}}</br></br>
+			Trip Arrival Time {{r.arrivalTime}}</br>
+			{% if '{{r.baggage}}' %}
+				Baggage <input type="checkbox" disabled checked>	
+			{%else%}			
+				Baggage <input type="checkbox"  disabled>	
+			{%endif%}
+			{% if '{{r.pet}}' %}
+				Pet <input type="checkbox" disabled checked>	
+			{%else%}			
+				Pet <input type="checkbox"  disabled>	
+			{%endif%}</br>
+			Capacity {{r.capacity}}</br>
+			Vehicle {{r.vehicle}}</br>
+			Other People In Route 
+			</div>
+    			<div class="modal-footer">
+    		 	   <a href="#" class="btn btn-primary">Save changes</a>
+    			   <a href="#" data-dismiss="modal" class="btn">Close</a>
+    			</div>
+    		    </div>
+	
+		    <td><a class="btn" data-toggle="modal" href="#{{n}}" >Get Route Information</a></td>
 		</tr>
             {% endfor %}
 	  </table>
