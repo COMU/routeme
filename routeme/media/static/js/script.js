@@ -94,7 +94,6 @@ function removeRenderers(){
 
 //shows selected route on map 
 function showSelectedRouteOnMap(data,path,name,lastname){
-    alert(Number(data.coordinates[3][1]));
     var waypts = [];
     for(i=0;i<data.coordinates.length;i++){
         var c1=Number(data.coordinates[i][0]);
@@ -141,7 +140,9 @@ function showSelectedRouteOnMap(data,path,name,lastname){
     		map: map
 	});
 	infowindow.open(map,marker);
-
+	google.maps.event.addListener(marker, 'click', function() {
+  	   infowindow.open(map,marker);
+	});
 
 }
 
