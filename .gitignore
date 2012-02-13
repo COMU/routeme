@@ -1,0 +1,12 @@
+*.pyc
+*~
+*.orig
+*.swp
+*.db
+.project
+.pydevproject
+.ropeproject
+*.egg-info
+/.settings
+\#*\#
+.\#
