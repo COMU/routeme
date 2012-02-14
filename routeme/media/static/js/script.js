@@ -91,9 +91,12 @@ function removeRenderers(){
         directionRenderers = []
     }
 }
-
+var marker;
 //shows selected route on map 
 function showSelectedRouteOnMap(data,path,name,lastname){
+    if (marker!=null){
+	marker.setMap(null);
+    }
     var waypts = [];
     for(i=0;i<data.coordinates.length;i++){
         var c1=Number(data.coordinates[i][0]);
@@ -135,7 +138,7 @@ function showSelectedRouteOnMap(data,path,name,lastname){
 	
 });
 
-	var marker = new google.maps.Marker({
+	marker = new google.maps.Marker({
     		position: myLatlng,
     		map: map
 	});
