@@ -11,9 +11,6 @@
       <fieldset><legend>Results</legend>
         
        {%if routes%}
-	  <table>
-          	{{form.as_table}}
-          </table>
           <table class = "table table-striped">
             <tr>
 		<th>#</th>
@@ -53,7 +50,9 @@
 			{%endif%}</br>
 			Capacity {{r.capacity}}</br>
 			Vehicle {{r.vehicle}}</br>
-			Other People In Route 
+			<form>
+          				{{form.as_p}}
+			</form>
 			</div>
     			<div class="modal-footer">
     		 	   <a href="#" class="btn btn-primary">Save changes</a>
@@ -61,8 +60,9 @@
     			</div>
     		    </div>
 		    <td><input id="selectPointButton" type="button" value="Select Point on Route" onClick="selectStartPoint()"></td>
-		    <td><a class="btn" data-toggle="modal" href="#{{n}}" >Get Route Information</a></td>
-		</tr>
+				
+    		    <td><a href="#{{n}}" data-toggle="modal" class="btn">Go</a></td>
+               </tr>
             {% endfor %}
 	  </table>
 	<script><h1>{{r.owner.profilePhoto.photo}}</h1></script>

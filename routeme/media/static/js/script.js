@@ -92,9 +92,9 @@ function removeRenderers(){
     }
 }
 
+var sayac=0;
 var geocoder;
 function selectStartPoint(){
-var sayac=0;
 	google.maps.event.addListener(map, "click", function (e) {
 	if(sayac<3){
 	    var lat = e.latLng.lat();
@@ -104,30 +104,32 @@ var sayac=0;
 	    var onay = window.confirm("if You Are Confirm Please Ok Button Click"); 
             if(onay){
 		if(sayac==0){
-		  alert(point);
+		  alert("start"+point);
 	    	  var latlng = new google.maps.LatLng(Number(lat), Number(lng));
                   geocoder.geocode({'latLng':latlng},function(result,status){
 	   	     if (status == google.maps.GeocoderStatus.OK){
 		        if(result[1]){
-			   alert(result[1].formatted_address);
+			  sayac=sayac+1; 
+			  $('#id_startaddress').val(result[1].formatted_address)			   
 		        } 
 		     }
                   });
 		  ('#id_startpoint').val(point);
-		  sayac=sayac+1;
+		  sayac=1;
 		}
 		if(sayac==1){
-		  alert(point);
+		  alert("stop"+point);
                   var latlng = new google.maps.LatLng(Number(lat), Number(lng));
                   geocoder.geocode({'latLng':latlng},function(result,status){
 	   	     if (status == google.maps.GeocoderStatus.OK){
 		        if(result[1]){
 			   alert(result[1].formatted_address);
+		  	   sayac=sayac+1;
+			   $('#id_stopaddress').val(result[1].formatted_address)			   
 		        }
 		     }
                   });
 		  ('#id_endpoint').val(point);
-		  sayac=sayac+1;
 		}
 		else{
 		  return -1;

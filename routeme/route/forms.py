@@ -7,7 +7,8 @@ from django.forms.extras.widgets import SelectDateWidget, time, Select
 class StartEndPointForm(forms.Form):
     startpoint = forms.CharField(widget = forms.HiddenInput())
     endpoint = forms.CharField(widget = forms.HiddenInput())
-
+    startaddress = forms.CharField(max_length=200)
+    stopaddress = forms.CharField(max_length=200)
 class SearchRouteForm(forms.Form):
     where = forms.CharField(label="where")
     to = forms.CharField(label="to")
