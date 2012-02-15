@@ -4,6 +4,10 @@
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget, time, Select
 
+class StartEndPointForm(forms.Form):
+    startpoint = forms.CharField(widget = forms.HiddenInput())
+    endpoint = forms.CharField(widget = forms.HiddenInput())
+
 class SearchRouteForm(forms.Form):
     where = forms.CharField(label="where")
     to = forms.CharField(label="to")

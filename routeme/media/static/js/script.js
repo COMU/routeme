@@ -91,6 +91,56 @@ function removeRenderers(){
         directionRenderers = []
     }
 }
+
+var geocoder;
+function selectStartPoint(){
+var sayac=0;
+	google.maps.event.addListener(map, "click", function (e) {
+	if(sayac<3){
+	    var lat = e.latLng.lat();
+	    var lng = e.latLng.lng();
+	    point=lat+","+lng;
+	    geocoder = new google.maps.Geocoder();
+	    var onay = window.confirm("if You Are Confirm Please Ok Button Click"); 
+            if(onay){
+		if(sayac==0){
+		  alert(point);
+	    	  var latlng = new google.maps.LatLng(Number(lat), Number(lng));
+                  geocoder.geocode({'latLng':latlng},function(result,status){
+	   	     if (status == google.maps.GeocoderStatus.OK){
+		        if(result[1]){
+			   alert(result[1].formatted_address);
+		        } 
+		     }
+                  });
+		  ('#id_startpoint').val(point);
+		  sayac=sayac+1;
+		}
+		if(sayac==1){
+		  alert(point);
+                  var latlng = new google.maps.LatLng(Number(lat), Number(lng));
+                  geocoder.geocode({'latLng':latlng},function(result,status){
+	   	     if (status == google.maps.GeocoderStatus.OK){
+		        if(result[1]){
+			   alert(result[1].formatted_address);
+		        }
+		     }
+                  });
+		  ('#id_endpoint').val(point);
+		  sayac=sayac+1;
+		}
+		else{
+		  return -1;
+		}	       
+	    }
+            else{
+                selectStartPoint();
+	    }
+	}
+
+});
+	
+}
 var marker;
 //shows selected route on map 
 function showSelectedRouteOnMap(data,path,name,lastname){
@@ -147,6 +197,7 @@ function showSelectedRouteOnMap(data,path,name,lastname){
   	   infowindow.open(map,marker);
 	});
 
+    	$('#selectPointButton').attr('disabled',false);
 }
 
 //While user creating a route when #show button is clicked route will be displayed on map.
@@ -163,6 +214,7 @@ function showRouteOnMap(){
 
 $(document).ready(function (){
     $("#createRouteSubmit").attr('disabled', true);//diabled button to save route without directions.
+    $('#selectPointButton').attr('disabled',true);
     $("#show").click(showRouteOnMap);
     $("#sroute").click(searchRoute);
 

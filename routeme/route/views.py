@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect,HttpResponse
 from django.core.urlresolvers import reverse
-from forms import CreateRouteForm, SearchRouteForm
+from forms import CreateRouteForm, SearchRouteForm, StartEndPointForm
 from models import RouteInformation
 from django.contrib.gis.geos import LineString, Point
 from django.contrib.auth.models import User
@@ -45,7 +45,8 @@ def listRoute(request):
             route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10))).filter(date=date).filter(pet=pet).filter(baggage=baggage)
 	    # if route:
             profil = render_to_string("include/profil.html", {'user': request.user})
-            return render_to_response("route/listRoute.html",{'routes':enumerate(route, 1),'map':1, "profil":profil})
+            form = StartEndPointForm()
+            return render_to_response("route/listRoute.html",{'form':form,'routes':enumerate(route, 1),'map':1, "profil":profil})
 	    #else:
 	    #	return HttpResponseRedirect('searchroute')
 
