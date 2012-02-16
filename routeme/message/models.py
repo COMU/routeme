@@ -1,11 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
+import urllib2
 
 # Create your models here.
 class MessageManager(models.Manager):
     def create_message(self, from_user, to_user, message):
         self.create(from_user = from_user, to_user = to_user, message = message)
-        #TODO if to_user online push here
+        #push to_user here
+        count = self.count_unread(to_user)
+        urllib2.urlopen("http://127.0.0.1:8888/push?data=%s" % count)
+        
     
     def count_unread(self, user):
         count = self.filter(to_user = user, read = False).count()

@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.core.urlresolvers import reverse
 from forms import CreateRouteForm, SearchRouteForm, StartEndPointForm
 from models import RouteInformation
+from message.models import Message
 from django.contrib.gis.geos import LineString, Point
 from django.contrib.auth.models import User
 from django.contrib.gis.measure import D
@@ -24,7 +25,7 @@ def index(request):
 def returnRoute(request,routeId):
     l = RouteInformation.objects.get(id=routeId).route.json
     print "returna geliyor"
-    return render_to_response("route/listRoute.html",{'l':l,'map':1})
+    return render_to_response("route/listRoute.html",{'l':l,'map':1, 'socketio': 1})
 
 @login_required
 def listRoute(request):
@@ -44,9 +45,10 @@ def listRoute(request):
             print start
             route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10))).filter(date=date).filter(pet=pet).filter(baggage=baggage)
 	    # if route:
-            profil = render_to_string("include/profil.html", {'user': request.user})
+            unread_message_count = Message.objects.count_unread(request.user)
+            profil = render_to_string("include/profil.html", {'user': request.user, 'unread': unread_message_count})
             form = StartEndPointForm()
-            return render_to_response("route/listRoute.html",{'form':form,'routes':enumerate(route, 1),'map':1, "profil":profil})
+            return render_to_response("route/listRoute.html",{'form':form,'routes':enumerate(route, 1),'map':1, "profil":profili,  'socketio': 1})
 	    #else:
 	    #	return HttpResponseRedirect('searchroute')
 
@@ -54,8 +56,9 @@ def listRoute(request):
 @login_required
 def searchRoute(request):
     form = SearchRouteForm()
-    profil = render_to_string("include/profil.html", {'user': request.user})
-    data = { 'map': 1, "form": form, 'profil':profil}
+    unread_message_count = Message.objects.count_unread(request.user)
+    profil = render_to_string("include/profil.html", {'user': request.user, 'unread': unread_message_count})
+    data = { 'map': 1, "form": form, 'profil':profil,  'socketio': 1}
     return render_to_response("route/searchRoute.html", data)
 
 @login_required
@@ -88,8 +91,10 @@ def createRoute(request):
 
     else:
         form = CreateRouteForm()
-    profil = render_to_string("include/profil.html", {'user': request.user})
-    data = { 'map': 1, "form": form, 'profil':profil}
+   
+    unread_message_count = Message.objects.count_unread(request.user)
+    profil = render_to_string("include/profil.html", {'user': request.user, 'unread': unread_message_count})
+    data = { 'map': 1, "form": form, 'profil':profil,  'socketio': 1}
     return render_to_response("route/createRoute.html", data)
 
 @login_required
