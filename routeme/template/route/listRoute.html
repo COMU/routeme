@@ -7,7 +7,6 @@
 </div>
 
 <div class="row"><div class="span8">
-    <form method="POST">
       <fieldset><legend>Results</legend>
         
        {%if routes%}
@@ -35,29 +34,30 @@
 			   </h2>
     		    	</div>
                     	<div class="modal-body">
-			Trip Date {{r.date}}</br>
-			Trip Time {{r.time}}</br></br>
-			Trip Arrival Time {{r.arrivalTime}}</br>
-			{% if  r.baggage  %}
+			   Trip Date {{r.date}}</br>
+			   Trip Time {{r.time}}</br></br>
+			   Trip Arrival Time {{r.arrivalTime}}</br>
+			   {% if  r.baggage  %}
 				Baggage <input type="checkbox" disabled checked>	
-			{%else%}			
+			   {%else%}			
 				Baggage <input type="checkbox"  disabled>	
-			{%endif%}
-			{% if r.pet  %}
+			   {%endif%}
+			   {% if r.pet  %}
 				Pet <input type="checkbox" disabled checked>	
-			{%else%}			
+			   {%else%}			
 				Pet <input type="checkbox"  disabled>	
-			{%endif%}</br>
-			Capacity {{r.capacity}}</br>
-			Vehicle {{r.vehicle}}</br>
-			<form>
-          				{{form.as_p}}
-			</form>
+			   {%endif%}</br>
+			   Capacity {{r.capacity}}</br>
+			   Vehicle {{r.vehicle}}</br>
+			   <form id="requestForm{{n}}" method="POST" action={% url route.views.saveRouteRequest %}>
+          			{{form.as_p}}
+				
+			   </form>
 			</div>
     			<div class="modal-footer">
-    		 	   <a href="#" class="btn btn-primary">Save changes</a>
-    			   <a href="#" data-dismiss="modal" class="btn">Close</a>
+                           <input type="button" onclick="sendRequest('requestForm{{n}}', {{n}})"  class= "btn primary" value ="Send Request" id = "requestButton">
     			</div>
+
     		    </div>
 		    <td><input id="selectPointButton" type="button" value="Select Point on Route" onClick="selectStartPoint()"></td>
 				
@@ -73,7 +73,6 @@
          </script>
        {%endif%}
      </fieldset>
-    </form>
 </div>
 </div>
 

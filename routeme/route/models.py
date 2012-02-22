@@ -15,13 +15,6 @@ ROUTE_REQUEST_STATUS = {
 	(ROUTE_REJECTED,'rejected'),
 }
 
-
-class RouteRequest(models.Model):
-     person = models.ForeignKey(User)
-     start = models.PointField()
-     end = models.PointField()
-     status = models.IntegerField(choices=ROUTE_REQUEST_STATUS)
-
 #Rota bilgileri
 class RouteInformation(models.Model):
      date = models.DateField()
@@ -32,7 +25,12 @@ class RouteInformation(models.Model):
      baggage = models.BooleanField()
      pet = models.BooleanField()
      route = models.LineStringField()
-     routerequest = models.ManyToManyField(RouteRequest,null=True)
      owner = models.ForeignKey(User, related_name = "owner")
      objects = models.GeoManager()
 
+class RouteRequest(models.Model):
+     person = models.ForeignKey(User)
+     start = models.PointField()
+     end = models.PointField()
+     status = models.IntegerField(choices=ROUTE_REQUEST_STATUS)
+     route = models.ForeignKey(RouteInformation)

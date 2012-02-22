@@ -1,3 +1,4 @@
+
 var map;
 var directionService = new google.maps.DirectionsService();
 var directionDisplay;
@@ -213,7 +214,10 @@ function showRouteOnMap(){
   };
   drawRoute(request, directionDisplay);
 }
-
+function sendRequest(id, n){
+    $('#' + id).submit();
+    $('#' + n).modal("hide");
+}
 $(document).ready(function (){
     $("#createRouteSubmit").attr('disabled', true);//diabled button to save route without directions.
     $('#selectPointButton').attr('disabled',true);
@@ -223,25 +227,47 @@ $(document).ready(function (){
     $("#id_date").datepicker({dateFormat: 'yy-mm-dd'});//when user click textfield jquery-ui
     $("#id_birthdate").datepicker({dateFormat: 'yy-mm-dd'});//when user click textfield jquery-ui
     $("#id_time").timepicker({timeFormat: 'h:m'});//datepicker or timepicker will be displayed on screen.
+
+   
 });
 
 
 
+$(document).ajaxSend(function(event, xhr, settings) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function sameOrigin(url) {
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    function safeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
 
+    if 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+(!safeMethod(settings.type) && sameOrigin(settings.url)) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+});

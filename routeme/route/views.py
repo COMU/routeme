@@ -8,7 +8,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect,HttpResponse
 from django.core.urlresolvers import reverse
 from forms import CreateRouteForm, SearchRouteForm, StartEndPointForm
-from models import RouteInformation
+from models import RouteInformation,RouteRequest
 from message.models import Message
 from django.contrib.gis.geos import LineString, Point
 from django.contrib.auth.models import User
@@ -27,6 +27,27 @@ def returnRoute(request,routeId):
     print "returna geliyor"
     return render_to_response("route/listRoute.html",{'l':l,'map':1, 'socketio': 1})
 
+
+@login_required
+def saveRouteRequest(request):
+    if request.method=="POST":
+	form = StartEndPointForm(request.POST)
+	if form.is_valid():
+	    startpoint = form.cleaned_data['startpoint']
+	    endpoint = form.cleaned_data['endpoint']
+	    startpoint=startpoint.split(',')
+	    endpoint=endpoint.split(',')
+	    routeId = form.cleaned_data['routeowner']
+	    RouteRequest.objects.createRoute(
+		person = request.user,
+		start = Point(float(startpoint[0]),float(startpoint[1])) ,
+		end =  Point(float(endpoint[0]),float(endpoint[1])) ,
+		route = routeId,
+		status = 1,
+	    ) 
+	    return HttpResponseRedirect('/')
+	return HttpResponseRedirect('/searchroute')
+    return HttpResponseRedirect('/')
 @login_required
 def listRoute(request):
     if request.method=="POST":
@@ -48,9 +69,9 @@ def listRoute(request):
             unread_message_count = Message.objects.count_unread(request.user)
             profil = render_to_string("include/profil.html", {'user': request.user, 'unread': unread_message_count})
             form = StartEndPointForm()
-            return render_to_response("route/listRoute.html",{'form':form,'routes':enumerate(route, 1),'map':1, "profil":profili,  'socketio': 1})
-	    #else:
-	    #	return HttpResponseRedirect('searchroute')
+            return render_to_response("route/listRoute.html",{'form':form,'routes':enumerate(route, 1),'map':1, "profil":profil,  'socketio': 1})
+    
+    return HttpResponseRedirect('searchroute')
 
 
 @login_required
