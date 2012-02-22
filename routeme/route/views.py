@@ -38,13 +38,15 @@ def saveRouteRequest(request):
 	    startpoint=startpoint.split(',')
 	    endpoint=endpoint.split(',')
 	    routeId = form.cleaned_data['routeowner']
-	    RouteRequest.objects.createRoute(
+	    route = RouteInformation.objects.get(id=routeId)
+	    RouteRequest.objects.create(
 		person = request.user,
 		start = Point(float(startpoint[0]),float(startpoint[1])) ,
 		end =  Point(float(endpoint[0]),float(endpoint[1])) ,
-		route = routeId,
+		route = route,
 		status = 1,
-	    ) 
+	    )
+	    Message.objects.create_message(request.user,route.owner,"asd") 
 	    return HttpResponseRedirect('/')
 	return HttpResponseRedirect('/searchroute')
     return HttpResponseRedirect('/')

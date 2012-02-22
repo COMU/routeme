@@ -95,7 +95,7 @@ function removeRenderers(){
 
 var sayac=0;
 var geocoder;
-function selectStartPoint(){
+function selectStartPoint(routeId){
 	google.maps.event.addListener(map, "click", function (e) {
 	if(sayac<3){
 	    var lat = e.latLng.lat();
@@ -111,11 +111,11 @@ function selectStartPoint(){
 	   	     if (status == google.maps.GeocoderStatus.OK){
 		        if(result[1]){
 			  sayac=sayac+1; 
-			  $('#id_startaddress').val(result[1].formatted_address)			   
+			  $('#id_startaddress').val(result[1].formatted_address);			   
 		        } 
 		     }
                   });
-		  ('#id_startpoint').val(point);
+		  $('#id_startpoint').val(point);
 		  sayac=1;
 		}
 		if(sayac==1){
@@ -126,11 +126,12 @@ function selectStartPoint(){
 		        if(result[1]){
 			   alert(result[1].formatted_address);
 		  	   sayac=sayac+1;
-			   $('#id_stopaddress').val(result[1].formatted_address)			   
+			   $('#id_stopaddress').val(result[1].formatted_address);	  
+			   $('#id_routeowner').val(routeId); 
 		        }
 		     }
                   });
-		  ('#id_endpoint').val(point);
+		  $('#id_endpoint').val(point);
 		}
 		else{
 		  return -1;
