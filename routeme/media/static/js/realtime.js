@@ -7,7 +7,7 @@ onclose = function (){
 socket = io.connect("http://localhost:8090");
 
 socket.on('connect', function (){
-    $.post("/email/username/", function(data){
+    $.get("/email/username/", function(data){
         socket.emit("adduser", data.username);
     });
 });

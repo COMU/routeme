@@ -78,6 +78,7 @@ def listRoute(request):
 def searchRoute(request):
     form = SearchRouteForm()
     unread_message_count = Message.objects.count_unread(request.user)
+    print unread_message_count
     profil = render_to_string("include/profil.html", {'user': request.user, 'unread': unread_message_count})
     data = { 'map': 1, "form": form, 'profil':profil,  'socketio': 1}
     return render_to_response("route/searchRoute.html", data)

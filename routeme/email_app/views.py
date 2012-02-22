@@ -11,6 +11,7 @@ from django.contrib.auth.models import check_password
 from django.contrib.auth import logout as user_logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.utils import simplejson
 import mail 
 import Image
 

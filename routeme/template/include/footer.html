@@ -11,31 +11,8 @@
 <!-- scripts concatenated and minified via ant build script-->
 <script src="/static/js/plugins.js"></script>
 {% if socketio %}
-    <script src="http://cdn.socket.io/stable/socket.io.js" ></script>
-    <script>
-        onopen = function() { alert("connected"); };
-
-onmessage = function (data) {
-    alert(data.unread);
-};
-
-onclose = function() { alert("disconnected"); };
-
-alert(window.location.hostname);
-
-socket = new io.Socket(window.location.hostname, {
-            port:"8888",
-            resource:"socket/",
-            transports:['websocket', 'flashsocket','xhr-multipart', 'xhr-polling']
-            }
-     );
-
-socket.on('connect', onopen);
-socket.on('message', onmessage);
-socket.on('disconnect', onclose);
-socket.connect();
-
-    </script>
+    <script src="http://localhost:8090/socket.io/socket.io.js"></script>    
+    <script src="/static/js/realtime.js"></script>
 {% endif %}
 <script src="/static/js/script.js"></script>
 <script src="/static/js/jquery-ui-1.8.16.custom.min.js"></script>
