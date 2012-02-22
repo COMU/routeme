@@ -10,8 +10,10 @@ from django.contrib.auth import authenticate,login as auth_login
 from django.contrib.auth.models import check_password
 from django.contrib.auth import logout as user_logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 import mail 
 import Image
+
 def error404(request):
     return render_to_response("email_app/404.html")
 
@@ -120,6 +122,10 @@ def signup(request):
         'title': 'SignUp'
     }
     return render_to_response("email_app/signup.html", data)
+
+def get_username(request):
+    data = {'username': request.user.username}
+    return HttpResponse(simplejson.dumps(data), mimetype='application/json')
 
 def activate(request, key):
     activated = Registration.objects.activate_user(key)

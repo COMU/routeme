@@ -1,22 +1,16 @@
-onopen = function() { alert("connected"); };
-
 onmessage = function (data) {
-    alert(data.unread);
+    $('#unread').html(data);
 };
 
-onclose = function() { alert("disconnected"); };
+onclose = function (){
+}
+socket = io.connect("http://localhost:8090");
 
-alert(window.location.hostname);
+socket.on('connect', function (){
+    $.post("/email/username/", function(data){
+        socket.emit("adduser", data.username);
+    });
+});
 
-socket = new io.Socket(window.location.hostname, {
-            port:"8888",
-            resource:"socket/",
-            transports:['websocket', 'flashsocket','xhr-multipart', 'xhr-polling']
-            }
-     );
-
-socket.on('connect', onopen);
 socket.on('message', onmessage);
 socket.on('disconnect', onclose);
-socket.connect();
-
