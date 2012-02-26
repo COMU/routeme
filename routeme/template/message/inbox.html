@@ -22,7 +22,7 @@
 			<tbody>
                         {% if messages %}
 			    {% for message in messages %}
-                            <tr id = "{{ message.id }}">
+                            <tr id = "{{ message.id }}" {{ message.read|yesno:",style=font-weight:bold class=well"}}>
 				<td> {{ message.from_user }} </td>
 				<td> {{ message.subject }} </td>
                                 <td> {{ message.date_time }}</td>
