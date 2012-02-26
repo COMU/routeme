@@ -1,0 +1,63 @@
+{% include "include/header.html" %}
+
+    {% include "include/navbar.html" %}
+    
+    <div class="row">
+        <div class="span8">
+           <div class="tabbable tabs-below">
+             <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#inbox"><i class = "icon-download"></i>Inbox</a></li>
+                <li><a data-toggle="tab" href="#new"><i class = "icon-upload"></i>Send Message</a></li>
+    	     </ul>
+    	     <div class="tab-content">
+    		<div id="inbox" class="tab-pane active">
+		    <table class = "table table-striped" id = "messageTable">
+			<thead>
+			    <tr>
+                                <th>From</th>
+                                <th>Subject</th>
+                                <th>Date</th>
+			    </tr>
+			</thead>
+			<tbody>
+                        {% if messages %}
+			    {% for message in messages %}
+                            <tr id = "{{ message.id }}">
+				<td> {{ message.from_user }} </td>
+				<td> {{ message.subject }} </td>
+                                <td> {{ message.date_time }}</td>
+			    </tr>
+                            <div id="modal{{message.id}}" class="modal hide fade">
+                          	<div class="modal-header">
+                           	    <a class="close" data-dismiss="modal">×</a>
+                           	    <h2>
+                                        <img src="/static/images/{{ message.from_user.userprofile.profilePhoto.url}}" style="width:60px;height:60px">
+                                        {{message.from_user.first_name}} {{message.from_user.last_name}}
+                          	    </h2>
+                                </div>
+                        	<div class="modal-body">
+                                    <h3> {{message.subject}} </h3>
+				    <p> {{ message.message}} </p>
+                        	</div>
+                        	<div class="modal-footer">
+				    <a href="#" class="btn" data-dismiss = "modal">Close</a>
+                        	</div>
+                            </div>    
+			    {% endfor %}
+			{%else%}
+ 			    <tr>
+				<td colspan = 3>
+                            	   No message found
+				</td>
+                            </tr>
+			{% endif%}
+			</tbody>
+		    </table>
+		</div>
+    		<div id="new" class="tab-pane">New message</div>
+             </div>
+           </div>
+        </div>
+        <div class="span4"><div class="alert alert-info">{{profil}}</div></div>
+    </div>
+{% include "include/footer.html" %}
