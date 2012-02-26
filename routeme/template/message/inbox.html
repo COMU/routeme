@@ -54,7 +54,17 @@
 			</tbody>
 		    </table>
 		</div>
-    		<div id="new" class="tab-pane">New message</div>
+    		<div id="new" class="tab-pane">
+                    <form method="post" action = {% url message.views.inbox %}>
+			<fieldset>
+			<legend>New Message</legend>
+		    	    <table>{{ form.as_table }}</table>
+			</fieldset>
+			 <div class = "form-actions">
+              		    <p><input type="submit" value="Send" class="btn-success"/></p>
+          		</div>
+		    </form>
+  		</div>
              </div>
            </div>
         </div>
