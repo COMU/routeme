@@ -1,3 +1,6 @@
+#messageTable td:hover{
+    cursor: pointer;
+}
 #footer{
     background: #336679;
     height:120px;

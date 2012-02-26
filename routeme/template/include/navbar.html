@@ -3,6 +3,7 @@
    <div class = "container">
      <a class="brand" href="#"><img src = "/static/img/icon-route.png">routeme</a>
      <ul class = "nav">
+        <li><a href = "{% url message.views.inbox %}">Messages</a></li>
         <li><a href = "">Friends</a></li>
         <li><a href = "{% url route.views.searchRoute%}">Search Route</a></li>
         <li><a href = "{% url route.views.createRoute%}">Create Route</a></li>

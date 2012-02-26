@@ -1,5 +1,9 @@
 onmessage = function (data) {
-    $('#unread').html(data);
+    if (window.location.pathname == "/message/inbox/"){
+	location.reload();
+    }else{
+        $('#unread').html(data);
+    }
 };
 
 onclose = function (){
