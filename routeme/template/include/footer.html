@@ -16,14 +16,8 @@
 <script src="/static/js/jquery-ui-1.8.16.custom.min.js"></script>
 <script src="/static/js/jquery-ui-timepicker-addon.js"></script>
 <script src="/static/js/bootstrap.js"></script>
+<script src="/static/js/message.js"></script>
 <!-- end scripts-->
-<script>
-        $("#messageTable tr").click(function () { 
-	    var modalId = "modal" + $(this).attr("id");
-  	    $.post("/message/markRead/", { "id": modalId }, "html");
-	    $("#" + modalId).modal('show');
-	});
-</script>
 <script>
 	var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']]; // Change UA-XXXXX-X to be your site's ID
 	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
