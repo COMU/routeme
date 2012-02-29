@@ -1,7 +1,6 @@
-{% include "include/header.html" %}
+{% extends "base/layout.html" %}
 
-{% include "include/navbar.html" %}
-
+{% block content %}
 <div class="row">
   <div class="span8">
 
@@ -13,7 +12,7 @@
                 {{ form.as_table }}
         </table>
         <div class="form-actions">
-	    <p><input type="submit" value="Save" /></p>
+	    <p><input class = "btn-success" type="submit" value="Save" /></p>
         </div>
         </fieldset>
      </form>
@@ -21,4 +20,4 @@
 </div>
 
 
-{% include "include/footer.html" %}
+{% endblock %}

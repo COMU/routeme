@@ -1,6 +1,6 @@
-{% include "include/header.html" %}
-     
-    {% include "include/navbar.html" %}
+{% extends "base/layout.html"%}
+
+{% block content %}
     <div class="row">
         <div id="map" class="span8"></div>
         <div class="span4"><div class="alert alert-info">{{profil}}</div></div>
@@ -19,6 +19,5 @@
               </fieldset>
        </div>
     </div>
-
-{% include "include/footer.html" %}
+{% endblock %}
 

@@ -1,6 +1,6 @@
-{% include "include/header.html" %}
+{% extends "base/layout.html" %}
 
-    {% include "include/navbar.html" %}
+    {% block content %}
     
     <div class="row">
         <div class="span8">
@@ -70,4 +70,4 @@
         </div>
         <div class="span4"><div class="alert alert-info">{{profil}}</div></div>
     </div>
-{% include "include/footer.html" %}
+{% endblock %}
