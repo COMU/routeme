@@ -1,5 +1,11 @@
 var reduceUnread = function(){
    	currentValue = parseInt($('#unread').html());
+        
+        if ( currentValue == 1){
+	     $('#unread').removeClass("label");
+	     $('#unread').html('');
+             return;
+	}
         $('#unread').html((currentValue -1));
 }
 

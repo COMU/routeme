@@ -4,9 +4,16 @@
 <div class = "navbar navbar-fixed-top">
   <div class = "navbar-inner">
    <div class = "container">
-     <a class="brand" href="#"><img src = "/static/img/icon-route.png">routeme</a>
+     <a class="brand" href="{% url route.views.index %}"><img src = "/static/img/icon-route.png">routeme</a>
      <ul class = "nav pull-right">
-        <li><a href = "{% url message.views.inbox %}"><i class="icon-comment icon-white"></i>Messages</a></li>
+        <li><a href = "{% url message.views.inbox %}"><i class="icon-comment icon-white"></i>Messages
+             
+               <span {{ unread|yesno:"class=label,"}} id="unread">
+	     {%if unread %}
+                {{unread}}
+             {% endif %}
+               </span>
+         </a></li>
         <li><a href = ""><i class="icon-user icon-white"></i>Friends</a></li>
         <li><a href = "{% url route.views.searchRoute%}"><i class="icon-search icon-white"></i>Search Route</a></li>
         <li><a href = "{% url route.views.createRoute%}"><i class="icon-map-marker icon-white"></i>Create Route</a></li>

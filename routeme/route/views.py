@@ -22,14 +22,13 @@ def index(request):
 
     routeInfo = RouteInformation.objects.filter(owner = request.user)
     unread_message_count = Message.objects.count_unread(request.user)
-    profil = render_to_string("include/profil.html", {'user': request.user, 'unread': unread_message_count})
-    return render_to_response("route/index.html",{'routeInfos':routeInfo,'profile':profil})
+    return render_to_response("route/index.html",{'routeInfos':routeInfo, 'unread':unread_message_count, "user":request.user})
 
 @login_required
 def returnRoute(request,routeId):
     l = RouteInformation.objects.get(id=routeId).route.json
     print "returna geliyor"
-    return render_to_response("route/listRoute.html",{'l':l,'map':1, 'socketio': 1})
+    return render_to_response("route/listRoute.html",{'l':l,'map':1, 'unread':unread_message_count, "user":request.user})
 
 
 @login_required
@@ -78,9 +77,8 @@ def listRoute(request):
             route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10))).filter(date=date).filter(pet=pet).filter(baggage=baggage)
 	    # if route:
             unread_message_count = Message.objects.count_unread(request.user)
-            profil = render_to_string("include/profil.html", {'user': request.user, 'unread': unread_message_count})
             form = StartEndPointForm()
-            return render_to_response("route/listRoute.html",{'form':form,'routes':enumerate(route, 1),'map':1, "profil":profil,  'socketio': 1})
+            return render_to_response("route/listRoute.html",{'form':form,'routes':enumerate(route, 1),'map':1, 'unread':unread_message_count, "user":request.user})
     
     return HttpResponseRedirect('searchroute')
 
@@ -89,9 +87,7 @@ def listRoute(request):
 def searchRoute(request):
     form = SearchRouteForm()
     unread_message_count = Message.objects.count_unread(request.user)
-    print unread_message_count
-    profil = render_to_string("include/profil.html", {'user': request.user, 'unread': unread_message_count})
-    data = { 'map': 1, "form": form, 'profil':profil,  'socketio': 1}
+    data = { 'map': 1, "form": form, 'unread':unread_message_count, "user":request.user}
     return render_to_response("route/searchRoute.html", data)
 
 @login_required
@@ -126,10 +122,6 @@ def createRoute(request):
         form = CreateRouteForm()
    
     unread_message_count = Message.objects.count_unread(request.user)
-    profil = render_to_string("include/profil.html", {'user': request.user, 'unread': unread_message_count})
-    data = { 'map': 1, "form": form, 'profil':profil,  'socketio': 1}
+    data = { 'map': 1, "form": form, 'unread':unread_message_count, "user":request.user}
     return render_to_response("route/createRoute.html", data)
 
-@login_required
-def saveRoute(request):
-    return -1
