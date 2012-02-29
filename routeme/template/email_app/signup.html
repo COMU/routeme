@@ -1,6 +1,8 @@
-{% include "include/header.html" %}
-        
-    {% include "include/unsignedNavbar.html" %}
+{% extends "base/layout.html" %}
+{% block navigation %}
+    {% include "include/unsignedNavbar.html"%}
+{%endblock%}
+{% block content %}
     <div class = "row"  role="main">
       <center>
         <div class = "span6 offset3">
@@ -17,5 +19,5 @@
         <div>
       </center>
     </div>
-{% include "include/footer.html" %}
+{% endblock %}
 

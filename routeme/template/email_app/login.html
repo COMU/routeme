@@ -1,5 +1,9 @@
-{% include "include/header.html" %}
-    {% include "include/unsignedNavbar.html" %}
+{% extends "base/layout.html" %}
+    {% block navigation %}
+        {% include "include/unsignedNavbar.html" %}
+    {% endblock %}
+
+    {% block content %}
     <div class = "row">
         <div class = "span6 offset3" style="text-align:center">
             <form method="POST" action="{% url login-user %}" >
@@ -20,7 +24,7 @@
             </form>
         </div>
     </div>
+    {% endblock %}
 
 
-{% include "include/footer.html" %}
 
