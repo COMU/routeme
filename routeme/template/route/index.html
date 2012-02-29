@@ -1,7 +1,30 @@
 {% include "include/header.html" %}
 
-    {% include "include/navbar.html" %}
+{% include "include/navbar.html" %}
 
-
+<div class="row">
+	<div class="span8">
+	<div class="tabbable tabs-below">
+		<ul class="nav nav-tabs">
+		    <li class="active"><a data-toggle="tab" href="#request">Requests</a></li>
+		    <li><a data-toggle="tab" href="#myroute">My Routes</a></li>
+		</ul>
+		<div class="tab-content">
+		    <div id="request" class="tab-pane active">
+		    </div>
+		    <div id="myroute" class="tab-pane">
+		   
+			{%if routeInfos %}
+			    {%for r in routeInfos %}
+				{{r.owner}}
+		    	    {% endfor %}
+			{%endif%}
+		    </div>
+		</div>
+	</div>
+	</div>	
+	<div class="span4 offset8"><div class="alert alert-info">{{profile}}</div></div>
+	
+</div>
 
 {% include "include/footer.html" %}

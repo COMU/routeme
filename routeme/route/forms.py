@@ -10,7 +10,7 @@ class StartEndPointForm(forms.Form):
     routeowner = forms.CharField(widget = forms.HiddenInput())
     startaddress = forms.CharField(max_length=200,widget = forms.Textarea(attrs={'rows':4, 'cols':40}))
     stopaddress = forms.CharField(max_length=200,widget = forms.Textarea(attrs={'rows':4, 'cols':40}))
-
+    messagecontent = forms.CharField(max_length=200)
 class SearchRouteForm(forms.Form):
     where = forms.CharField(label="where")
     to = forms.CharField(label="to")

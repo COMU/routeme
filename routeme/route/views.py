@@ -19,7 +19,11 @@ import simplejson
 def index(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect("/email/login")
-    return render_to_response("route/index.html")
+
+    routeInfo = RouteInformation.objects.filter(owner = request.user)
+    unread_message_count = Message.objects.count_unread(request.user)
+    profil = render_to_string("include/profil.html", {'user': request.user, 'unread': unread_message_count})
+    return render_to_response("route/index.html",{'routeInfos':routeInfo,'profile':profil})
 
 @login_required
 def returnRoute(request,routeId):
@@ -35,6 +39,9 @@ def saveRouteRequest(request):
 	if form.is_valid():
 	    startpoint = form.cleaned_data['startpoint']
 	    endpoint = form.cleaned_data['endpoint']
+	    messagecontent = form.cleaned_data['messagecontent']
+	    startaddress = form.cleaned_data['startaddress']
+	    stopaddress = form.cleaned_data['stopaddress']
 	    startpoint=startpoint.split(',')
 	    endpoint=endpoint.split(',')
 	    routeId = form.cleaned_data['routeowner']
@@ -46,7 +53,9 @@ def saveRouteRequest(request):
 		route = route,
 		status = 1,
 	    )
-	    Message.objects.create_message(request.user,route.owner,"asd") 
+	    subject = "Route Request"
+	    content = messagecontent
+	    Message.objects.create_message(request.user,route.owner,subject,messagecontent) 
 	    return HttpResponseRedirect('/')
 	return HttpResponseRedirect('/searchroute')
     return HttpResponseRedirect('/')
