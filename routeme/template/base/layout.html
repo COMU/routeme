@@ -1,0 +1,27 @@
+{% extends "base/base.html" %}
+
+{% block navigation %}
+<div class = "navbar navbar-fixed-top">
+  <div class = "navbar-inner">
+   <div class = "container">
+     <a class="brand" href="#"><img src = "/static/img/icon-route.png">routeme</a>
+     <ul class = "nav pull-right">
+        <li><a href = "{% url message.views.inbox %}"><i class="icon-comment icon-white"></i>Messages</a></li>
+        <li><a href = ""><i class="icon-user icon-white"></i>Friends</a></li>
+        <li><a href = "{% url route.views.searchRoute%}"><i class="icon-search icon-white"></i>Search Route</a></li>
+        <li><a href = "{% url route.views.createRoute%}"><i class="icon-map-marker icon-white"></i>Create Route</a></li>
+        <li><a href = "{% url email_app.views.update %}"><i class="icon-user icon-white"></i>Profil</a></li>
+        <li><a href = "{% url email_app.views.logout%}"><i class="icon-off icon-white"></i>Logout</a></li>
+      </ul>
+   </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+    
+{% endblock %}
+
+
+
