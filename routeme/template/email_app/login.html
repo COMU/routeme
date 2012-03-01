@@ -12,13 +12,13 @@
                 <div class = "form-actions">
 		    <input type="submit" value = "Login" class = "btn-danger">
                      or 
-	            <a href={% url email_app.views.signup %}>SignUp!</a>
+	            <a href={% url save-user %}>SignUp!</a>
 	        </div>
 		<p class="help-block">Have an account via Foursquare, Facebook, or Twitter? Log in with the buttons below:
 		<p>
-		    <a href="/foursq_auth/auth/"><img src="/static/images/foursquare-logo.png"></a>
-		    <a href="/foursq_auth/auth/"><img src="/static/images/facebook-logo.jpg"></a>
-		    <a href="/foursq_auth/auth/"><img src="/static/images/twitter-logo.png"></a>
+		    <a href="/foursq/auth/"><img src="/static/images/foursquare-logo.png"></a>
+		    <a href="/facebook/login/"><img src="/static/images/facebook-logo.jpg"></a>
+		    <a href="/twitter/auth/"><img src="/static/images/twitter-logo.png"></a>
 		</p>
   		</fieldset>
             </form>

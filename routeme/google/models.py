@@ -1,22 +1,22 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+
 from django.contrib.auth.models import User
 from django.db import models
 
 from routeme.auth.models import LoginProfile
-from routeme.twitter_app.backend import TwitterBackend
+from routeme.google.backend import GoogleBackend
 
 
-class TwitterProfile(LoginProfile):
+class GoogleProfile(LoginProfile):
 
-  twitter_id = models.IntegerField(unique = True)
-  screenname = models.CharField(max_length=100)
+  email = models.CharField(max_length=100)
   firstname = models.CharField(max_length=100)
   lastname = models.CharField(max_length=100)
 
   def getLoginBackend(self, request):
-      return TwitterBackend(self, request)
+    return GoogleBackend(self, request)
 
   def __unicode__(self):
-    return self.screen_name
+    return self.email

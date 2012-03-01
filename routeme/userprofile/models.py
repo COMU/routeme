@@ -20,11 +20,26 @@ GENDER_CHOICES = (
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    birthdate = models.DateField()
-    gender = models.CharField(max_length = 1, choices = GENDER_CHOICES)
+    birthdate = models.DateField(null = True)
+    gender = models.CharField(max_length = 1, choices = GENDER_CHOICES, null = True)
     experience = models.IntegerField(default = 0, null = True)
-    profilePhoto = models.ImageField(upload_to = "images", null =True)
+    profilePhoto = models.ImageField(upload_to = "images", default = "images/default.png", null =True)
+    
+    google_profile = models.OneToOneField(
+      'google.GoogleProfile',
+      blank=True, null=True, related_name='userprofile_set')
+    facebook_profile = models.OneToOneField(
+      'facebook.FacebookProfile',
+      blank=True, null=True, related_name='userprofile_set')
+    twitter_profile = models.OneToOneField(
+      'twitter_app.TwitterProfile',
+      blank=True, null=True, related_name='userprofile_set')
+    foursq_profile = models.OneToOneField(
+      'foursq.FoursqProfile',
+      blank=True, null=True, related_name='userprofile_set')
 
+    def __unicode__(self):
+        return self.user.__unicode__()
 
     def addFriend(self, person, status):
         relationship, created = Friendship.objects.get_or_create(
@@ -72,6 +87,7 @@ class Registration(models.Model):
     def activation_key_expried(self):
         expiration_date = datetime.timedelta(days=7)
         return (self.user.date_joined + expiration_date <= datetime.datetime.now()) 
+
 
 class Friendship(models.Model):
     from_person = models.ForeignKey(User, related_name='from_people')

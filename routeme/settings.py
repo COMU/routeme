@@ -1,7 +1,7 @@
 import os
 # Django settings for routeme project.
 
-AUTH_PROFILE_MODULE = 'email_app.UserProfile'
+AUTH_PROFILE_MODULE = 'userprofile.UserProfile'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -17,10 +17,10 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'routemedb',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD':'',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'NAME': 'routeme.db',                      # Or path to database file if using sqlite3.
+        'USER': 'routeme',                      # Not used with sqlite3.
+        'PASSWORD':'sss',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -123,11 +123,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'email_app',
     'route',
     'foursq',
     'facebook',
     'twitter_app',
+    'google',
+    'userprofile',
     'message'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
@@ -151,12 +152,14 @@ FACEBOOK_APP_ID = "255768354473895"
 FACEBOOK_APP_SECRET = "b8f0ef66e6e88951311ea2e70dccf4fa"
 FACEBOOK_SCOPE = 'email,publish_stream'
 
-
+DEFAULT_PASSWORD = 'b90f83f387b20a704b65d1dbf94736a9b8864507'
+DEFAULT_EMAIL = 'default@routeme.com'
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'foursq.fakeauth.FakeAuthBackend',
-    'facebook.backend.FacebookBackend',
+    'facebook.auth.FacebookBackend',
+    'google.auth.GoogleAuthBackend',
+    'twitter_app.auth.TwitterAuthBackend',
+    'foursq.auth.FoursqAuthBackend'
 )
 
 # A sample logging configuration. The only tangible logging

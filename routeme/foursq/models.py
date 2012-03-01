@@ -1,12 +1,23 @@
 from django.db import models
-from django.contrib.auth.models import User
 
+from routeme.auth.models import LoginProfile
+from routeme.foursq.backend import FoursqBackend
 
-class Foursq_User(models.Model):
+class FoursqProfile(LoginProfile):
+
     foursq_id = models.IntegerField()
-    user = models.OneToOneField(User)
+    access_token = models.CharField(max_length=150)
+    email = models.CharField(max_length=100)
+    firstname = models.CharField(max_length=100)
+    lastname = models.CharField(max_length=100)
 
-class Foursq_Friend(models.Model):
-    foursq_id = models.IntegerField()
-    foursq_user = models.ManyToManyField(Foursq_User)
+    def getLoginBackend(self, request):
+        return FoursqBackend(self, request)
+
+    def __unicode__(self):
+        return self.email
+
+#class Foursq_Friend(models.Model):
+#    foursq_id = models.IntegerField()
+#    foursq_user = models.ManyToManyField(Foursq_User)
 

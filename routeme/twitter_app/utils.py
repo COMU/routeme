@@ -19,6 +19,7 @@ CONSUMER_SECRET = 'xILVEUYPJke0bWTJKTCZbXyIzB6js0PLk5n4WTWs'
 # We use this URL to check if Twitters oAuth worked
 TWITTER_CHECK_AUTH = 'https://twitter.com/account/verify_credentials.json'
 #TWITTER_FRIENDS = 'https://twitter.com/statuses/friends.json'
+TWITTER_USER='https://api.twitter.com/1/users/show.json?screen_name=TwitterAPI'
 TWITTER_FRIENDS = 'https://api.twitter.com/1/friends/ids.json?screen_name=twitterapi'
 TWITTER_FRIEND_DETAILS = 'https://api.twitter.com/1/users/lookup.json?screen_name=twitterapi'
 
@@ -37,6 +38,7 @@ def request_oauth_resource(consumer, url, access_token, parameters=None, signatu
 def fetch_response(oauth_request, connection):
     url = oauth_request.to_url()
     connection.request(oauth_request.http_method, url)
+    print "url:", url
     response = connection.getresponse()
     s = response.read()
     return s
@@ -69,7 +71,7 @@ def exchange_request_token_for_access_token(consumer, request_token, signature_m
     )
     oauth_request.sign_request(signature_method, consumer, request_token)
     resp = get_oauth_url(oauth_request)
-    return oauth.OAuthToken.from_string(resp) 
+    return oauth.OAuthToken.from_string(resp)
 
 def is_authenticated(consumer, connection, access_token):
     oauth_request = request_oauth_resource(consumer, TWITTER_CHECK_AUTH, access_token)
@@ -77,6 +79,13 @@ def is_authenticated(consumer, connection, access_token):
     if 'screen_name' in json:
         return json
     return False
+
+
+def get_user_details(consumer, connection, access_token, users):
+    """Get user details on Twitter"""
+    oauth_request = request_oauth_resource(consumer, TWITTER_FRIEND_DETAILS, access_token, {'user_id': users})
+    json = fetch_response(oauth_request, connection)
+    return json
 
 def get_friend_details(consumer, connection, access_token, users):
     """Get friends details on Twitter"""
@@ -99,3 +108,9 @@ def update_status(consumer, connection, access_token, status):
                                            http_method='POST')
     json = fetch_response(oauth_request, connection)
     return json
+
+def close_twitter_connection(connection):
+    connection.close()
+
+def connect_twitter(connection):
+    connection.connect()

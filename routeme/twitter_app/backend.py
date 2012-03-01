@@ -4,5 +4,5 @@
 from routeme.auth.backend import LoginBackend
 
 
-class FacebookBackend(LoginBackend):
+class TwitterBackend(LoginBackend):
   pass

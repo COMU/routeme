@@ -6,22 +6,23 @@ import urllib2
 import json
 
 from django.core.context_processors import csrf
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib.auth import logout
 from django.conf import settings
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as djangoLogin
+from django.template import RequestContext
 
-from foursq.models import Foursq_User, Foursq_Friend
-from foursq.fakeauth import FakeAuthBackend
+from userprofile.models import *
+
 CLIENT_ID = settings.FOURSQ_CLIENT_ID
 CLIENT_SECRET = settings.FOURSQ_CLIENT_SECRET
 
 request_token_url = 'https://foursquare.com/oauth2/authenticate'
 access_token_url = 'https://foursquare.com/oauth2/access_token'
-redirect_url = settings.BASE_URL + '/foursq_auth/callback'
+redirect_url = settings.BASE_URL + '/foursq/callback'
 
 def main(request):
     return render_to_response('foursq/login.html')
@@ -63,9 +64,9 @@ def callback(request):
     request.session['access_token'] = access_token
 
     # redirect the user to show we're done
-    return HttpResponseRedirect(reverse('oauth_done'))
+    return HttpResponseRedirect(reverse('foursq_oauth_done'))
 
-def done(request):
+def foursquareUserDetails(request):
     # get the access_token
     access_token = request.session.get('access_token')
 
@@ -77,39 +78,27 @@ def done(request):
     response = urllib2.urlopen(full_url)
     response = response.read()
     user = json.loads(response)['response']['user']
-    name = " ".join([user['firstName'], user['lastName']])
+    firstname = user['firstName']
+    lastname = user['lastName']
     contact = user['contact']
     email = contact['email']
-    id = user['id']
-    request.session['user_id'] = id
-    print "id", id
+    foursq_id = user['id']
+    userDetails = {'firstname':firstname, 'lastname':lastname, 'foursq_id':foursq_id, 'access_token':access_token, 'email' : email}
+    return userDetails
 
-    #check whether this user has logged before, if not create a default User object for it
-    foursq_user = Foursq_User.objects.filter(foursq_id=id)
-    if not foursq_user:
-        user, created = User.objects.get_or_create(username=email, email=email)
-        Foursq_User.objects.create(foursq_id=id, user=user)
-        #create a default password for the system users, no need to reflect it to the user, the user can change it anytime from the dashboard
-        if created:
-            password = User.objects.make_random_password()
-            print "password", password
-            user.set_password(password)
-            user.save()
-    else:
-        user = foursq_user[0].user
+def done(request):
 
-    print "authenticating", user.email, user.password
-    #authenticated user object
-    auth_user = authenticate(username=user.username , password = user.password)
-    if auth_user is not None:
-        if auth_user.is_active:
-              login(request, auth_user)
-              # show the page with the user's name to show they've logged in
-              return HttpResponseRedirect(reverse('index'))
-        else:
-            return render_to_response('errors/disabled_account.html', {'name', name})
-    else:
-        return render_to_response('errors/invalid_login.html', {'name', name})
+    #write the authenticate method here
+    credentials = foursquareUserDetails(request)
+    print credentials
+    user = authenticate(request=request, credentials=credentials, backend="foursq")
+
+    if not user:
+        return HttpResponse(reverse('user_loginFail'))
+
+    response = HttpResponseRedirect(reverse('index'))
+    djangoLogin(request, user)
+    return response
 
 def friend_import(request):
     send_data = {}
@@ -123,11 +112,11 @@ def friend_import(request):
 
     if request.method == 'POST':
         user_id = request.session['user_id']
-        foursq_user = Foursq_User.objects.get(foursq_id=user_id)
+        #foursq_user = Foursq_User.objects.get(foursq_id=user_id)
         for friend_id in request.POST.getlist('friend_id'):
             foursq_friend = Foursq_Friend.objects.create(foursq_id=friend_id)
             # addind the index for many to many field
-            foursq_friend.foursq_user.add(foursq_user)
+            #foursq_friend.foursq_user.add(foursq_user)
             send_data.update({'message':'ok'})
             return render_to_response('foursq/success.html', send_data)
 
@@ -140,3 +129,5 @@ def friend_import(request):
         items = friends['items']
         send_data.update({'items':items})
         return render_to_response('foursq/friend_import.html', send_data)
+
+
