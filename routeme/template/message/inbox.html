@@ -23,7 +23,9 @@
                         {% if messages %}
 			    {% for message in messages %}
                             <tr id = "{{ message.id }}" {{ message.read|yesno:",style=font-weight:bold class=well"}}>
-				<td> {{ message.from_user }} </td>
+				<td> <img src="/static/images/{{ message.from_user.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
+					{{ message.from_user.first_name}} {{ message.from_user.last_name}} 
+				</td>
 				<td> {{ message.subject }} </td>
                                 <td> {{ message.date_time }}</td>
 			    </tr>
@@ -55,13 +57,13 @@
 		    </table>
 		</div>
     		<div id="new" class="tab-pane">
-                    <form method="post" action = {% url message.views.inbox %}>
+                    <form method="post" action = {% url message.views.inbox %} id="newMessage">
 			<fieldset>
 			<legend>New Message</legend>
 		    	    <table>{{ form.as_table }}</table>
 			</fieldset>
 			 <div class = "form-actions">
-              		    <p><input type="submit" value="Send" class="btn-success"/></p>
+              		    <p><input type="submit" value="Send" id="sendMessage"class="btn-success"/></p>
           		</div>
 		    </form>
   		</div>

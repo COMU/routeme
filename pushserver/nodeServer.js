@@ -19,7 +19,12 @@ io.sockets.on('connection', function (socket) {
         console.log(data);
         clients[data] = socket;
     });
-
+ 
+    socket.on('newMessage', function(data){
+	console.log("Message to :" + data);
+	clients[data].emit('message', "data");
+    });
+   
     socket.on('disconnect', function(){
         //TODO remove sid from hashtable
     });

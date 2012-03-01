@@ -14,6 +14,7 @@ from django.http import HttpResponse
 from django.utils import simplejson
 import mail 
 import Image
+from message.models import Message
 
 def error404(request):
     return render_to_response("email_app/404.html")
@@ -58,10 +59,13 @@ def update(request):
         }
         form = UserUpdateForm(initial=initial_data)
 
+  unread_message_count = Message.objects.count_unread(request.user)
   data={
            'form':form,
            'title':"Profile",
-           'img': request.user.userprofile.profilePhoto.url
+           'img': request.user.userprofile.profilePhoto.url,
+	   'unread': unread_message_count,
+	   'user': request.user
    }
   return render_to_response("email_app/update.html", data)
 
@@ -124,6 +128,7 @@ def signup(request):
     }
     return render_to_response("email_app/signup.html", data)
 
+@login_required
 def get_username(request):
     data = {'username': request.user.username}
     return HttpResponse(simplejson.dumps(data), mimetype='application/json')

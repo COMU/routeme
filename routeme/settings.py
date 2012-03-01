@@ -159,7 +159,8 @@ AUTHENTICATION_BACKENDS = (
     'facebook.auth.FacebookBackend',
     'google.auth.GoogleAuthBackend',
     'twitter_app.auth.TwitterAuthBackend',
-    'foursq.auth.FoursqAuthBackend'
+    'foursq.auth.FoursqAuthBackend',
+    'django.contrib.auth.backends.ModelBackend'
 )
 
 # A sample logging configuration. The only tangible logging
