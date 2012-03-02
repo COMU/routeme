@@ -23,7 +23,7 @@ class UserProfile(models.Model):
     birthdate = models.DateField(null = True)
     gender = models.CharField(max_length = 1, choices = GENDER_CHOICES, null = True)
     experience = models.IntegerField(default = 0, null = True)
-    profilePhoto = models.ImageField(upload_to = "images", default = "images/default.png", null =True)
+    profilePhoto = models.ImageField(upload_to = "images/%Y/%m/%d", default = "images/default.png", null =True)
     
     google_profile = models.OneToOneField(
       'google.GoogleProfile',

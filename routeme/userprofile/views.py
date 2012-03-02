@@ -39,7 +39,7 @@ def update(request):
                 request.user.email = email
                 if request.FILES:
                         photo = request.FILES['photo']
-                        user_profile.profilePhoto = photo
+                        user_profile.profilePhoto.save(str(request.user.id)+".jpg",photo)
                         user_profile.save()
                         #user_profile.profilePhoto.name='/images/'+str(request.user.id)+'.jpeg'
                         image = Image.open(user_profile.profilePhoto.path)

@@ -42,7 +42,7 @@ def requestConfirm(request,requestId):
 	routeRequest = RouteRequest.objects.get(id=requestId)
 	routeRequest.status = 0
 	routeRequest.route.capacity =  routeRequest.route.capacity -1
-	routeRequest.route.save()
+	routeRequest.route.save(str(request.user.id)+".jpg",photo)
 	routeRequest.save()
 	subject = "Route Request Confirm"
 	content = "Your request is confirmed by "+routeRequest.person.first_name
