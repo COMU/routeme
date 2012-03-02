@@ -42,6 +42,11 @@ function drawRoute(request, directionDisplay){
 //this method pushs direction coordinates(waypoints) into hidden text field.
 function saveResultAsStr(result){
     var legs = result.routes[0].legs[0];
+    seconds = result.routes[0].legs[0].duration.value;
+    hours = parseInt(seconds / 3600);
+    mins = parseInt((seconds - (hours * 3600)) / 60);
+    $('#id_arrivalTime').val(hours + ":" + mins);
+    $('#id_arrivalTime').attr("disabled", "disabled");
     var route = [];
 
     for(var i = 0; i < legs.steps.length; i++){
