@@ -15,17 +15,13 @@ from django.contrib.auth.models import User
 from django.contrib.gis.measure import D
 from django.template.loader import render_to_string
 import simplejson
-from django.db.models.manager import QuerySet
 
 def index(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect("/email/login")
 
     routeInfo = RouteInformation.objects.filter(owner = request.user)
-    routeRequest = QuerySet(RouteRequest)
-    for i in routeInfo:
- 	routeRequest = routeRequest | RouteRequest.objects.filter(route = i)
-    #routeRequest = RouteRequest.objects.filter(route = routeInfo)
+    routeRequest = RouteRequest.objects.filter(route = routeInfo)
     unread_message_count = Message.objects.count_unread(request.user)
     return render_to_response("route/index.html",{'routeInfos':routeInfo, 'routeRequest':routeRequest,'unread':unread_message_count, "user":request.user})
 
@@ -46,7 +42,7 @@ def requestConfirm(request,requestId):
 	routeRequest = RouteRequest.objects.get(id=requestId)
 	routeRequest.status = 0
 	routeRequest.route.capacity =  routeRequest.route.capacity -1
-	routeRequest.route.save(str(request.user.id)+".jpg",photo)
+	routeRequest.route.save()
 	routeRequest.save()
 	subject = "Route Request Confirm"
 	content = "Your request is confirmed by "+routeRequest.person.first_name
