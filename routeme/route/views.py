@@ -26,6 +26,14 @@ def index(request):
     return render_to_response("route/index.html",{'routeInfos':routeInfo, 'routeRequest':routeRequest,'unread':unread_message_count, "user":request.user})
 
 
+def requestReject(request,requestId):
+    if request.method == "POST":
+	routeRequest = RouteRequest.objects.get(id=requestId)
+	routeRequest.status = 2
+	routeRequest.save()
+	return HttpResponseRedirect('/')
+    return HttpResponseRedirect('/')
+
 def requestConfirm(request,requestId):
     if request.method == "POST":
 	routeRequest = RouteRequest.objects.get(id=requestId)
