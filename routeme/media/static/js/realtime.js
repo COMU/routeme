@@ -1,9 +1,7 @@
 onmessage = function (data) {
     if (window.location.pathname == "/message/inbox/"){
-	alert("Geldi");
 	location.reload();
     }else{
-	alert("Geldi");
     	$.get("/message/unread_count/", function(data){
             if (!$('#unread').hasClass('label')){
             	$('#unread').addClass('label');
