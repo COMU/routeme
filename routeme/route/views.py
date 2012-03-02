@@ -31,6 +31,9 @@ def requestReject(request,requestId):
 	routeRequest = RouteRequest.objects.get(id=requestId)
 	routeRequest.status = 2
 	routeRequest.save()
+	subject = "Route Request Confirm"
+	content = "Your request is rejected by "+routeRequest.person.first_name
+	Message.objects.create_message(request.user,routeRequest.person,subject,content) 
 	return HttpResponseRedirect('/')
     return HttpResponseRedirect('/')
 
@@ -40,6 +43,9 @@ def requestConfirm(request,requestId):
 	routeRequest.status = 0
 	routeRequest.route.capacity =  routeRequest.route.capacity -1
 	routeRequest.save()
+	subject = "Route Request Confirm"
+	content = "Your request is confirmed by "+routeRequest.person.first_name
+	Message.objects.create_message(request.user,routeRequest.person,subject,content) 
 	print routeRequest.status
 	return HttpResponseRedirect('/')
 
