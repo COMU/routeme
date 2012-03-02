@@ -8,6 +8,7 @@ urlpatterns = patterns('routeme',
     url(r'^createroute$',"route.views.createRoute", name = "create-route"),
     url(r'^saverequest$',"route.views.saveRouteRequest", name = "save-request"),
     url(r'^searchroute$',"route.views.searchRoute", name = "search-route"),
+    url(r'^requestConfirm/(?P<requestId>\d+)/$',"route.views.requestConfirm", name = "confirm-request"),
     url(r'^listroute$',"route.views.listRoute", name = "list-route"),
     url(r'^returnroute/(?P<routeId>\d+)/',"route.views.returnRoute",name="return-route"),
 )

@@ -21,8 +21,23 @@ def index(request):
         return HttpResponseRedirect("/email/login")
 
     routeInfo = RouteInformation.objects.filter(owner = request.user)
+    routeRequest = RouteRequest.objects.filter(route = routeInfo)
     unread_message_count = Message.objects.count_unread(request.user)
-    return render_to_response("route/index.html",{'routeInfos':routeInfo, 'unread':unread_message_count, "user":request.user})
+    return render_to_response("route/index.html",{'routeInfos':routeInfo, 'routeRequest':routeRequest,'unread':unread_message_count, "user":request.user})
+
+
+def requestConfirm(request,requestId):
+    if request.method == "POST":
+	routeRequest = RouteRequest.objects.get(id=requestId)
+	routeRequest.status = 0
+	routeRequest.route.capacity =  routeRequest.route.capacity -1
+	routeRequest.save()
+	print routeRequest.status
+	return HttpResponseRedirect('/')
+
+    return HttpResponseRedirect('/')
+    
+
 
 @login_required
 def returnRoute(request,routeId):
@@ -47,6 +62,8 @@ def saveRouteRequest(request):
 	    route = RouteInformation.objects.get(id=routeId)
 	    RouteRequest.objects.create(
 		person = request.user,
+		startadress = startaddress,
+		stopadress = stopaddress,
 		start = Point(float(startpoint[0]),float(startpoint[1])) ,
 		end =  Point(float(endpoint[0]),float(endpoint[1])) ,
 		route = route,

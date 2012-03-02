@@ -27,10 +27,11 @@ class RouteInformation(models.Model):
      route = models.LineStringField()
      owner = models.ForeignKey(User, related_name = "owner")
      objects = models.GeoManager()
-
 class RouteRequest(models.Model):
      person = models.ForeignKey(User)
      start = models.PointField()
      end = models.PointField()
+     startadress = models.CharField(max_length=200)
+     stopadress = models.CharField(max_length=200)
      status = models.IntegerField(choices=ROUTE_REQUEST_STATUS)
      route = models.ForeignKey(RouteInformation)
