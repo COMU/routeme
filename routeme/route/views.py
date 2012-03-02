@@ -42,6 +42,7 @@ def requestConfirm(request,requestId):
 	routeRequest = RouteRequest.objects.get(id=requestId)
 	routeRequest.status = 0
 	routeRequest.route.capacity =  routeRequest.route.capacity -1
+	routeRequest.route.save()
 	routeRequest.save()
 	subject = "Route Request Confirm"
 	content = "Your request is confirmed by "+routeRequest.person.first_name
@@ -105,7 +106,7 @@ def listRoute(request):
             start=Point(float(start[0]),float(start[1]))
             print end
             print start
-            route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10))).filter(date=date).filter(pet=pet).filter(baggage=baggage)
+            route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10))).filter(date=date).filter(pet=pet).filter(baggage=baggage).filter(capacity__gt=0)
 	    # if route:
             unread_message_count = Message.objects.count_unread(request.user)
             form = StartEndPointForm()
