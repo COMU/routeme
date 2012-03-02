@@ -8,7 +8,7 @@ var clients = {};
 // routing
 app.get('/message', function (req, res) {
     console.log(req.query['user']);
-    clients[req.query['user']].emit('message', req.query['data']);
+    clients[req.query['user']].emit('message', 'data');
     res.send("Hello World!");
 });
 

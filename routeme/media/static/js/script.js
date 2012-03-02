@@ -96,13 +96,14 @@ function removeRenderers(){
 var sayac=0;
 var geocoder;
 function selectStartPoint(routeId){
+ 	//TODO code may be more efficent
 	google.maps.event.addListener(map, "click", function (e) {
 	if(sayac<3){
 	    var lat = e.latLng.lat();
 	    var lng = e.latLng.lng();
 	    point=lat+","+lng;
 	    geocoder = new google.maps.Geocoder();
-	    var onay = window.confirm("if You Are Confirm Please Ok Button Click"); 
+	    var onay = window.confirm("if You Are Sure Please Click Ok Button"); 
             if(onay){
 		if(sayac==0){
 		  alert("start"+point);
@@ -116,9 +117,8 @@ function selectStartPoint(routeId){
 		     }
                   });
 		  $('#id_startpoint').val(point);
-		  sayac=1;
 		}
-		if(sayac==1){
+		else if(sayac==1){
 		  alert("stop"+point);
                   var latlng = new google.maps.LatLng(Number(lat), Number(lng));
                   geocoder.geocode({'latLng':latlng},function(result,status){
