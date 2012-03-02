@@ -46,7 +46,7 @@ function saveResultAsStr(result){
     hours = parseInt(seconds / 3600);
     mins = parseInt((seconds - (hours * 3600)) / 60);
     $('#id_arrivalTime').val(hours + ":" + mins);
-    $('#id_arrivalTime').attr("disabled", "disabled");
+    $('#id_arrivalTime').attr("readonly", "readonly");
     var route = [];
 
     for(var i = 0; i < legs.steps.length; i++){
