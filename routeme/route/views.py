@@ -26,7 +26,7 @@ def index(request):
     for i in routeInfo:
 	routeRequest = routeRequest | RouteRequest.objects.filter(route = i)
     unread_message_count = Message.objects.count_unread(request.user)
-    return render_to_response("route/index.html",{'routeInfos':routeInfo, 'routeRequest':routeRequest,'unread':unread_message_count, "user":request.user})
+    return render_to_response("route/index.html",{'title':'Routeme','routeInfos':routeInfo, 'routeRequest':routeRequest,'unread':unread_message_count, "user":request.user})
 
 
 def requestReject(request,requestId):
@@ -61,7 +61,7 @@ def requestConfirm(request,requestId):
 def returnRoute(request,routeId):
     l = RouteInformation.objects.get(id=routeId).route.json
     print "returna geliyor"
-    return render_to_response("route/listRoute.html",{'l':l,'map':1, 'unread':unread_message_count, "user":request.user})
+    return render_to_response("route/listRoute.html",{'title':'Routeme','l':l,'map':1, 'unread':unread_message_count, "user":request.user})
 
 
 @login_required
@@ -113,7 +113,7 @@ def listRoute(request):
 	    # if route:
             unread_message_count = Message.objects.count_unread(request.user)
             form = StartEndPointForm()
-            return render_to_response("route/listRoute.html",{'form':form,'routes':enumerate(route, 1),'map':1, 'unread':unread_message_count, "user":request.user})
+            return render_to_response("route/listRoute.html",{'title':'Routeme','form':form,'routes':enumerate(route, 1),'map':1, 'unread':unread_message_count, "user":request.user})
     
     return HttpResponseRedirect('searchroute')
 
@@ -122,7 +122,7 @@ def listRoute(request):
 def searchRoute(request):
     form = SearchRouteForm()
     unread_message_count = Message.objects.count_unread(request.user)
-    data = { 'map': 1, "form": form, 'unread':unread_message_count, "user":request.user}
+    data = { 'map': 1, "form": form, 'unread':unread_message_count, 'title':'Routeme',"user":request.user}
     return render_to_response("route/searchRoute.html", data)
 
 @login_required
@@ -157,6 +157,6 @@ def createRoute(request):
         form = CreateRouteForm()
    
     unread_message_count = Message.objects.count_unread(request.user)
-    data = { 'map': 1, "form": form, 'unread':unread_message_count, "user":request.user}
+    data = { 'map': 1, "form": form, 'unread':unread_message_count, 'title':'Routeme',"user":request.user}
     return render_to_response("route/createRoute.html", data)
 
