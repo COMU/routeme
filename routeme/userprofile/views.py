@@ -15,6 +15,8 @@ from django.utils import simplejson
 import mail 
 import Image
 from message.models import Message
+from django.contrib import messages
+from django.template import RequestContext
 
 def error404(request):
     return render_to_response("email_app/404.html")
@@ -93,7 +95,9 @@ def login(request):
         else:
             return render_to_response('email_app/login.html',{'title':'Login', 'form':LoginForm()})
     else:
-        return render_to_response('email_app/login.html',{'title':'Login', 'form':LoginForm()})
+	sys_messages = messages.get_messages(request)
+        return render_to_response('email_app/login.html',{'title':'Login', 'sys_messages':sys_messages, 'form':LoginForm()})
+
 def logout(request):
     user_logout(request)
     return HttpResponseRedirect(reverse("login-user"))
@@ -116,7 +120,8 @@ def signup(request):
 			    profilePhoto = 'images/default.png'
 				)
 	    registration = Registration.objects.create_registration(user)
-            registration.send_activation_mail()	
+            registration.send_activation_mail()
+            messages.add_message(request, messages.WARNING, 'Activation mail sent.')	
             return HttpResponseRedirect(reverse("login-user"))
 
     else:

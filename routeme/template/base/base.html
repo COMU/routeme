@@ -31,6 +31,42 @@
 
     <div id="main" class="container" style="padding-top:50px;height:100%">
     	{% block content %} {% endblock %}
+        {% if sys_messages %}
+          {% for message in sys_messages %}
+            <div class="row">
+              
+              {% ifequal message.level 40 %}
+                <div class="span10 offset1 alert alert-error">
+                  <a class="close" data-dismiss="alert">×</a>
+                  <h4 class="alert-heading">Opps!</h4>
+                  {{ message }}
+                </div>
+              {% endifequal %}
+              {% ifequal message.level 20 %}
+                <div class="span10 offset1 alert alert-info">
+                  <a class="close" data-dismiss="alert">×</a>
+                  <h4 class="alert-heading">Info!</h4>
+                  {{ message }}
+                </div>
+              {% endifequal %}
+              {% ifequal message.level 25 %}
+                <div class="span10 offset1 alert alert-success">
+                  <a class="close" data-dismiss="alert">×</a>
+                  <h4 class="alert-heading">Ok!</h4>
+                  {{ message }}
+                </div>
+              {% endifequal %}
+              {% ifequal message.level 30 %}
+                <div class="span10 offset1 alert alert-warning">
+                  <a class="close" data-dismiss="alert">×</a>
+                  <h4 class="alert-heading">Warning!</h4>
+                  {{ message }}
+                </div>
+              {% endifequal %}
+            </div>
+          {% endfor %}
+        {% endif %}
+
     </div>
 
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
@@ -39,11 +75,11 @@
 <!-- scripts concatenated and minified via ant build script-->
 <script src="/static/js/plugins.js"></script>
 <script src="http://localhost:8090/socket.io/socket.io.js"></script>
-<script src="/static/js/realtime.js"></script>
 <script src="/static/js/script.js"></script>
 <script src="/static/js/jquery-ui-1.8.16.custom.min.js"></script>
 <script src="/static/js/jquery-ui-timepicker-addon.js"></script>
 <script src="/static/js/bootstrap.js"></script>
+<script src="/static/js/realtime.js"></script>
 <!--<script src="/static/js/message.js"></script>-->
 <!-- end scripts-->
 <script>
