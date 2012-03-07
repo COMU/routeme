@@ -34,7 +34,7 @@ def inbox(request):
     
     unread_message_count = Message.objects.count_unread(request.user)
     
-    return render_to_response("message/inbox.html", {'messages': messages,'form': form, 'user': request.user, 'unread': unread_message_count})
+    return render_to_response("message/inbox.html", {'title':'Message','messages': messages,'form': form, 'user': request.user, 'unread': unread_message_count})
 
 @login_required
 def mark_read(request):

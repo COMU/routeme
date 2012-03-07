@@ -122,7 +122,7 @@ def listRoute(request):
 def searchRoute(request):
     form = SearchRouteForm()
     unread_message_count = Message.objects.count_unread(request.user)
-    data = { 'map': 1, "form": form, 'unread':unread_message_count, 'title':'Routeme',"user":request.user}
+    data = { 'map': 1, "form": form, 'unread':unread_message_count, 'title':'Search Route',"user":request.user}
     return render_to_response("route/searchRoute.html", data)
 
 @login_required
@@ -157,6 +157,6 @@ def createRoute(request):
         form = CreateRouteForm()
    
     unread_message_count = Message.objects.count_unread(request.user)
-    data = { 'map': 1, "form": form, 'unread':unread_message_count, 'title':'Routeme',"user":request.user}
+    data = { 'map': 1, "form": form, 'unread':unread_message_count, 'title':'Create Route',"user":request.user}
     return render_to_response("route/createRoute.html", data)
 
