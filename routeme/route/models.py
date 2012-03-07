@@ -9,11 +9,11 @@ ROUTE_APPROVAL = 0
 ROUTE_WAITING = 1
 ROUTE_REJECTED = 2
 
-ROUTE_REQUEST_STATUS = {
+ROUTE_REQUEST_STATUS = (
 	(ROUTE_APPROVAL,'appraval'),
 	(ROUTE_WAITING,'waiting'),
 	(ROUTE_REJECTED,'rejected'),
-}
+)
 
 #Rota bilgileri
 class RouteInformation(models.Model):

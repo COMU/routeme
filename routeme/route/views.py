@@ -14,7 +14,6 @@ from django.contrib.gis.geos import LineString, Point
 from django.contrib.auth.models import User
 from django.contrib.gis.measure import D
 from django.template.loader import render_to_string
-import simplejson
 from django.db.models.manager import QuerySet
 
 def index(request):
