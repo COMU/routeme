@@ -8,7 +8,7 @@ class MessageManager(models.Manager):
         message = self.create(from_user = from_user, to_user = to_user, subject = subject, message = message)
         #push to_user here
         #count = self.count_unread(to_user)
-        urllib2.urlopen("http://127.0.0.1:8090/message?user=%s" % (to_user.username))
+        urllib2.urlopen("http://drivefor.me/message?user=%s" % (to_user.username))
 	return message        
     
     def mark_read(self, id):

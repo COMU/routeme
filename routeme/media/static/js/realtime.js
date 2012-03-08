@@ -13,10 +13,11 @@ onmessage = function (data) {
 
 onclose = function (){
 }
-socket = io.connect("http://localhost:8090");
+socket = io.connect("http://drivefor.me");
 
 socket.on('connect', function (){
     $.get("/email/username/", function(data){
+	alert("data");
         socket.emit("adduser", data.username);
     });
 });

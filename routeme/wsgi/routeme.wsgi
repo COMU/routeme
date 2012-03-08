@@ -1,6 +1,6 @@
 import os, sys
-sys.path.append("/opt/routeme/")
-sys.path.append("/opt/routeme/routeme")
+sys.path.append(os.path.abspath(os.path.join(os.path.abspath(__file__), '../../')))
+sys.path.append(os.path.abspath(os.path.join(os.path.abspath(__file__), '../../../')))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'routeme.settings'
 
 import django.core.handlers.wsgi

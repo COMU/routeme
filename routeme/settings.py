@@ -157,7 +157,7 @@ DEFAULT_EMAIL = 'default@routeme.com'
 
 AUTHENTICATION_BACKENDS = (
     'facebook.auth.FacebookBackend',
-    'google.auth.GoogleAuthBackend',
+    #'google.auth.GoogleAuthBackend',
     'twitter_app.auth.TwitterAuthBackend',
     'foursq.auth.FoursqAuthBackend',
     'django.contrib.auth.backends.ModelBackend'
