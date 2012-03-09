@@ -13,8 +13,8 @@ AUTHORIZATION_URL = getattr(settings, 'OAUTH_AUTHORIZATION_URL', 'http://%s/oaut
 
 #CONSUMER_KEY = getattr(settings, 'CONSUMER_KEY', 'YOUR_KEY')
 #CONSUMER_SECRET = getattr(settings, 'CONSUMER_SECRET', 'YOUR_SECRET')
-CONSUMER_KEY = 'OYDudnHh57k6ZAFVaBCZA'
-CONSUMER_SECRET = 'xILVEUYPJke0bWTJKTCZbXyIzB6js0PLk5n4WTWs'
+CONSUMER_KEY = 'axxhDLlcHkEJWAipXX9e4A'
+CONSUMER_SECRET = 'ggRa76OCYWMl7Dchy7KLJOwrRETF7WSMC5020l3Y'
 
 # We use this URL to check if Twitters oAuth worked
 TWITTER_CHECK_AUTH = 'https://twitter.com/account/verify_credentials.json'
