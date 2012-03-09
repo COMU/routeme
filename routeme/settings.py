@@ -5,7 +5,7 @@ AUTH_PROFILE_MODULE = 'userprofile.UserProfile'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-BASE_URL = 'http://127.0.0.1:8000'
+BASE_URL = 'http://www.drivefor.me'
 
 
 ADMINS = (
@@ -19,7 +19,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'routeme.db',                      # Or path to database file if using sqlite3.
         'USER': 'routeme',                      # Not used with sqlite3.
-        'PASSWORD':'comurouteme',                  # Not used with sqlite3.
+        'PASSWORD':'sss',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -145,8 +145,8 @@ EMAIL_HOST_PASSWORD = '111111ssss'
 
 
 #required client id and secret
-FOURSQ_CLIENT_ID = '1OVOPIR5HS5XEXJYNB4B1QNCPLFLIVULYCGHT3BFSNCG5HMR'
-FOURSQ_CLIENT_SECRET = 'JKYYZB5FIDQEHIE3MB4VZARVWWTEZTN1ICOAK1IPFBCHSSQH'
+FOURSQ_CLIENT_ID = 'RLCWOK0BY3W1YHAURXLWOCQ0D2SL3RHXHZG4J3VC3P2TIP2T'
+FOURSQ_CLIENT_SECRET = 'RCYT2YO1FCAH3PEO4ZL51HA0ZO1GZLROX4QGPHX1IJAL2IZR'
 
 FACEBOOK_APP_ID = "255768354473895"
 FACEBOOK_APP_SECRET = "b8f0ef66e6e88951311ea2e70dccf4fa"
