@@ -8,9 +8,15 @@
     });
 }*/
 
+function friendshipRequest(userId){
+ 	$.get("/friend/request/" + userId, function(data){
+	    //$('#dialog').dialog('close');
+            var myPopover = $('#u' + userId).data('popover');
+            myPopover.options.content = "<input type='button' class='btn' value='You sent a friendship request.'/>";
+	});
+}
 
-$(document).ready(function(){
-    $('.user').popover({html: true});
+var setRequests = function (){
     $('.user').each(function(){
 	userId = $(this).attr('id');
         $.get("/friend/showStatus/" + userId, function(data){
@@ -20,12 +26,31 @@ $(document).ready(function(){
             myPopover.options.delay = { show: 100, hide: 3500 };
     	});
     });
-    $('.friendShipRequest').click(function(){
-        url = $(this).attr('href');
-        alert(url);
- 	$.get(url, function(data){
-	    //TODO
-	});
-    });
-
+}
+$(document).ready(function(){
+    $('.user').popover({html: true});
+    setRequests();
 });
+/*
+$(document).ready(function(){
+    $('.user').hover(function(){
+	userId = $(this).attr('id');
+	x= $(this).position().left - document.scrollLeft;
+	y= $(this).position().top - document.scrollTop ;
+        $.get("/friend/showStatus/" + userId, function(data){
+            $('#dialog').html(data.content);
+	    //$('#dialog').dialog({title:data.title});
+    	    $("#dialog").dialog('option', 'position', [y, x]);
+	    $('#dialog').dialog('open');
+    	});
+    });
+    $( "#dialog" ).dialog({
+	autoOpen: false,
+	show: "blind",
+	hide: "explode",
+	width: 250,
+	height:85
+    });
+    //$('.friendshipRequest').hover(function(){friendshipRequest($(this))});
+});
+*/

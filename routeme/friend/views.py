@@ -13,12 +13,12 @@ def friendship_request(request, user_id):
     from_user = request.user
     to_user = User.objects.get(id = int(user_id[-1:]))
     
-    if  from_user == to_user and Friendship.objects.requested(from_user, to_user):
+    if  from_user == to_user or Friendship.objects.requested(from_user, to_user):
 	print "No way!"
     else:
 	friendship = Friendship.objects.create(from_user=from_user, to_user=to_user, status='3')
 
-    return HttpResponseRedirect(reverse('list-route'))
+    return HttpResponse(simplejson.dumps({'ok':1}), mimetype="application/json")
 
 def show_status(request, user_id):
     print user_id[1:]
