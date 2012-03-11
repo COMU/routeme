@@ -12,6 +12,7 @@ urlpatterns = patterns('routeme',
     url(r'^twitter/', include('twitter_app.urls')),
     url(r'^facebook/', include('facebook.urls')),
     url(r'^message/', include('message.urls')),
+    url(r'^friend/', include('friend.urls')),
     # url(r'^$', 'routeme.views.home', name='home'),
     # url(r'^routeme/', include('routeme.foo.urls')),
 

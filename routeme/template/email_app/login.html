@@ -6,7 +6,7 @@
     {% block content %}
     <div class = "row">
         <div class = "span6 offset3" style="text-align:center">
-            <form method="POST" action="{% url login-user %}" >
+            <form method="POST" action={% url login-user %} >
                 <fieldset><legend>Login</legend>
 		{{form.as_p}}
                 <div class = "form-actions">

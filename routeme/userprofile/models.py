@@ -4,15 +4,6 @@ from django.utils.hashcompat import sha_constructor
 import random 
 import datetime
 
-RELATIONSHIP_FOLLOWING = 1
-RELATIONSHIP_BLOCKED = 2
-RELATIONSHIP_WAITING = 3
-RELATIONSHIP_STATUSES = (
-    (RELATIONSHIP_FOLLOWING, 'Following'),
-    (RELATIONSHIP_BLOCKED, 'Blocked'),
-    (RELATIONSHIP_WAITING, 'Waiting')
-)
-
 GENDER_CHOICES = (
     ('M', 'Male'),
     ('F', 'Female'),
@@ -87,9 +78,3 @@ class Registration(models.Model):
     def activation_key_expried(self):
         expiration_date = datetime.timedelta(days=7)
         return (self.user.date_joined + expiration_date <= datetime.datetime.now()) 
-
-
-class Friendship(models.Model):
-    from_person = models.ForeignKey(User, related_name='from_people')
-    to_person = models.ForeignKey(User, related_name='to_people')
-    status = models.IntegerField(choices=RELATIONSHIP_STATUSES)

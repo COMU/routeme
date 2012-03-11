@@ -4,6 +4,7 @@
 <div class="row">
 	<div id="map" class="span8"></div>
 	<div class="span4"><div class="alert alert-info">{% include "include/profil.html" %}</div></div>
+
 </div>
 
 <div class="row"><div class="span8">
@@ -20,7 +21,9 @@
 		<tr>
  		    <td>{{ n }}</td>
  		    <td>{{ r.vehicle }}</td>
-                    <td><a href="#">{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br></td>
+                    <td><a href="#" id="u{{r.owner.id}}" class="user">
+			{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br>
+		    </td>
                     <td><input type="button" onClick="showSelectedRouteOnMap({{r.route.json}},
 				'{{r.owner.userprofile.profilePhoto.url}}','{{r.owner.first_name}}','{{r.owner.last_name}}')" 
 				value="Show Route"></td>
@@ -74,6 +77,6 @@
        {%endif%}
      </fieldset>
 </div>
-</div>
 
+</div>
 {% endblock %}
