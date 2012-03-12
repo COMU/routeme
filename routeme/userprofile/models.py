@@ -58,7 +58,7 @@ class RegistrationManager(models.Manager):
         try:
 	    r = self.get(activation_key = key) 
         except self.model.DoesNotExist:
-	    return false
+	    return False
         if not r.activation_key_expried():
             user = r.user
             user.is_active = True
