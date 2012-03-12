@@ -1,0 +1,43 @@
+{% extends "base/layout.html" %}
+
+{% block content%}
+<div class="row"> 
+	<div class="span8">
+	<div class="tabbable tabs-below">
+		<ul class="nav nav-tabs">
+		    <li class="active"><a data-toggle="tab" href="#requests">Requests</a></li>
+		    <li><a data-toggle="tab" href="#friends">Friends</a></li>
+		</ul>
+		<div class="tab-content">
+		    <div id="requests" class="tab-pane active">
+			<table class="table" width=100%>
+			  <tr>
+			     {% for request in requests %}
+			     <td>	
+				<img src="/static/images/{{ request.from_user.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
+                             	<span class="label"> {{request.from_user.first_name}} {{request.from_user.last_name}}</span>
+			     <form action="{% url friendship_reject request.id %}" class="pull-right" method="POST">
+				<input type="submit" class="btn-danger " value="Reject">
+			     </form>
+			     <form action="{% url friendship_accept request.id %}" class="pull-right" method="POST">
+				<input type="submit" class="btn-primary" value="Confirm">
+			     </form> 
+			     </td>		
+			     {% endfor %}
+			  </tr>
+			</table>
+		    </div>
+		    <div id="friends" class="tab-pane">
+		   	<table class="table" width="100%">
+			
+			</table>
+		    </div>
+		</div>
+
+	</div>
+	</div>
+	<div class="span4"><div class="alert alert-info">{% include "include/profil.html" %}</div>
+	
+</div>
+
+{% endblock %}

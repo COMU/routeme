@@ -25,6 +25,21 @@ class FriendShipManager(models.Manager):
    
     def getFriends(self, user):
 	return self.filter(Q(from_user = user, status='1') | Q(to_user=user, status='2'))
+     
+    def getRequestsToUser(self, user):
+        return self.filter(to_user = user, status='3')
+
+    def acceptRequest(self, requestId):
+	request = self.get(id = requestId)
+        request.status = "1"
+	request.save()
+        return True
+
+    def rejectRequest(self, requestId):
+        request = self.get(id = requestId)  
+        request.status = "2"
+	request.save()
+        return True  
 
 class Friendship(models.Model):
     from_user = models.ForeignKey(User, related_name="user1")

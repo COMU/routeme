@@ -11,8 +11,12 @@
 function friendshipRequest(userId){
  	$.get("/friend/request/" + userId, function(data){
 	    //$('#dialog').dialog('close');
-            var myPopover = $('#u' + userId).data('popover');
-            myPopover.options.content = "<input type='button' class='btn' value='You sent a friendship request.'/>";
+            $.get("/friend/showStatus/u" + userId, function(data){
+            	var myPopover = $('#u' + userId).data('popover');
+            	myPopover.options.content = data.content;
+            	myPopover.options.title = data.title
+            	myPopover.options.delay = { show: 100, hide: 3500 };
+    	    });
 	});
 }
 
