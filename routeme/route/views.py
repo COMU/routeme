@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 from django.contrib.gis.measure import D
 from django.template.loader import render_to_string
 from django.db.models.manager import QuerySet
+from django.db.models import Q
 
 def index(request):
     if not request.user.is_authenticated():
@@ -108,7 +109,15 @@ def listRoute(request):
             start=Point(float(start[0]),float(start[1]))
             print end
             print start
-            route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10))).filter(date=date).filter(pet=pet).filter(baggage=baggage).filter(capacity__gt=0)
+            route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10))).filter(date=date)
+	    if pet == True and baggage == False:
+		route = route.filter(pet=pet).filter(Q(baggage=baggage) | Q(baggage=not baggage)).filter(capacity__gt=0)
+	    elif pet == False and baggage == True:
+		route = route.filter(Q(pet=pet)|Q(pet= not pet)).filter(baggage=baggage).filter(capacity__gt=0)
+	    elif pet == False and baggage == False:
+		route = route.filter(Q(pet=pet)|Q(pet= not pet)).filter(Q(baggage=baggage) | Q(baggage=not baggage)).filter(capacity__gt=0)
+	    else:
+		route = route.filter(pet=pet).filter(baggage=baggage).filter(capacity__gt=0)
 	    # if route:
             unread_message_count = Message.objects.count_unread(request.user)
             form = StartEndPointForm()

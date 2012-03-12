@@ -143,6 +143,7 @@ def activate(request, key):
     if activated:
         return HttpResponseRedirect(reverse("login-user"))
     else:
+	return HttpResponseRedirect('/')
 	#TODO
 	pass
     
