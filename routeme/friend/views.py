@@ -42,6 +42,9 @@ def show_status(request, user_id):
 def list(request):
     requests = Friendship.objects.getRequestsToUser(request.user)
     friends = Friendship.objects.getFriends(request.user)
+    for i in friends:
+	print "a", i
+
     return render_to_response("friend/list.html", {'requests':requests, 'friends':friends, 'user': request.user})  
 
 def accept(request, request_id):

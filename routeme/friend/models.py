@@ -24,7 +24,7 @@ class FriendShipManager(models.Manager):
 	return False
    
     def getFriends(self, user):
-	return self.filter(Q(from_user = user, status='1') | Q(to_user=user, status='2'))
+	return self.filter(Q(from_user = user, status='1') | Q(to_user=user, status='1'))
      
     def getRequestsToUser(self, user):
         return self.filter(to_user = user, status='3')

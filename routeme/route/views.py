@@ -101,7 +101,7 @@ def listRoute(request):
             start = form.cleaned_data['start']
             date = form.cleaned_data['date']
             baggage = form.cleaned_data['baggage']
-            pet = form.cleaned_data['pet'] 
+            pet = form.cleaned_data['pet']
             end=end.split(',')
             start=start.split(',')
             end=Point(float(end[0]),float(end[1]))
