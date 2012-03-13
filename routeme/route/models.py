@@ -27,6 +27,7 @@ class RouteInformation(models.Model):
      route = models.LineStringField()
      owner = models.ForeignKey(User, related_name = "owner")
      objects = models.GeoManager()
+
 class RouteRequest(models.Model):
      person = models.ForeignKey(User)
      start = models.PointField()
