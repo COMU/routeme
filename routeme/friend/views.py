@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.utils import simplejson
 from django.template.loader import render_to_string
 from django.shortcuts import render_to_response
+from message.models import Message
 
 @login_required
 def friendship_request(request, user_id):
@@ -21,6 +22,7 @@ def friendship_request(request, user_id):
 
     return HttpResponse(simplejson.dumps({'ok':1}), mimetype="application/json")
 
+@login_required
 def show_status(request, user_id):
     print user_id[1:]
     userId = int(user_id[1:])
@@ -39,6 +41,7 @@ def show_status(request, user_id):
     data = {'title':title, 'content':content}
     return HttpResponse(simplejson.dumps(data), mimetype="application/json")
 
+@login_required
 def list(request):
     requests = Friendship.objects.getRequestsToUser(request.user)
     friends = Friendship.objects.getFriends(request.user)
@@ -47,10 +50,12 @@ def list(request):
 
     return render_to_response("friend/list.html", {'requests':requests, 'friends':friends, 'user': request.user})  
 
+@login_required
 def accept(request, request_id):
     Friendship.objects.acceptRequest(request_id)
     return HttpResponseRedirect(reverse("friendship_list"))
 
+@login_required
 def reject(request, request_id):
     Friendship.objects.rejectRequest(request_id)
     return HttpResponseRedirect(reverse("friendship_list"))
