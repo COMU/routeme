@@ -20,7 +20,7 @@ def friendship_request(request, user_id):
 	friendship = Friendship.objects.create(from_user=from_user, to_user=to_user, status='3')
 	content = from_user.get_full_name() + " sent a friendship request to you."
 	message = Message.objects.create_message(from_user, to_user, "Friendship Request", content)
-
+    
     return HttpResponse(simplejson.dumps({'ok':1}), mimetype="application/json")
 
 @login_required
@@ -46,7 +46,8 @@ def show_status(request, user_id):
 def list(request):
     requests = Friendship.objects.getRequestsToUser(request.user)
     friends = Friendship.objects.getFriends(request.user)
-    return render_to_response("friend/list.html", {'requests':requests, 'friends':friends, 'user': request.user})  
+    unread_message_count = Message.objects.count_unread(request.user)
+    return render_to_response("friend/list.html", {'requests':requests, 'friends':friends, 'user': request.user, 'unread':unread_message_count})  
 
 @login_required
 def accept(request, request_id):
