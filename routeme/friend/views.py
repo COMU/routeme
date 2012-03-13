@@ -46,8 +46,8 @@ def show_status(request, user_id):
 def list(request):
     requests = Friendship.objects.getRequestsToUser(request.user)
     friends = Friendship.objects.getFriends(request.user)
-    unread_message_count = Message.objects.count_unread(request.user)
-    return render_to_response("friend/list.html", {'requests':requests, 'friends':friends, 'user': request.user, 'unread':unread_message_count})  
+    #unread_message_count = Message.objects.count_unread(request.user)
+    return render_to_response("friend/list.html", {'requests':requests, 'friends':friends, 'user': request.user})  
 
 @login_required
 def accept(request, request_id):

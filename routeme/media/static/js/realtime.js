@@ -1,12 +1,12 @@
 onmessage = function (data) {
-    if (window.location.pathname == "/message/inbox/"){
+    if (window.location.pathname == "/message/inbox/" && data == null){
 	location.reload();
     }else{
     	$.get("/message/unread_count/", function(data){
-            if (!$('#unread').hasClass('label')){
+            if (!$('#unread').hasClass('label') && data.count != 0){
             	$('#unread').addClass('label');
+                $('#unread').html(data.count);
 	    }
-            $('#unread').html(data.count);
     	});
     }
 };
@@ -60,4 +60,5 @@ $(document).ready(function() {
 	alert("Ok");
         //socket.emit("newMessage", to);
     });
+    onmessage(1);
 }); 

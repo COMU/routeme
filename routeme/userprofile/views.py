@@ -61,12 +61,10 @@ def update(request):
         }
         form = UserUpdateForm(initial=initial_data)
 
-  unread_message_count = Message.objects.count_unread(request.user)
   data={
            'form':form,
            'title':"Profile",
            'img': request.user.userprofile.profilePhoto.url,
-	   'unread': unread_message_count,
 	   'user': request.user
    }
   return render_to_response("email_app/update.html", data)
