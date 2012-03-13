@@ -26,7 +26,7 @@
 			{{  r.owner.first_name }} {{ r.owner.last_name}}</a></br>
 		    </td>
                     <td><input type="button" onClick="showSelectedRouteOnMap({{r.route.json}},
-				'{{r.owner.userprofile.profilePhoto.url}}','{{r.owner.first_name}}','{{r.owner.last_name}}')" 
+				'{{r.owner.userprofile.profilePhoto.url}}','{{r.owner.first_name}}','{{r.owner.last_name}}',{{n}})" 
 				value="Show Route"></td>
 	
     		    <div id="{{n}}" class="modal hide fade">
@@ -63,7 +63,7 @@
     			</div>
 
     		    </div>
-		    <td><input id="selectPointButton" type="button" value="Select Point on Route" onClick="selectStartPoint({{r.id}})"></td>
+		    <td><input id="selectPointButton{{n}}" type="button" disabled="disabled" value="Select Point on Route" onClick="selectStartPoint({{r.id}})"></td>
 				
     		    <td><a href="#{{n}}" data-toggle="modal" class="btn">Go</a></td>
                </tr>

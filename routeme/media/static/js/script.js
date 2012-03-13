@@ -152,7 +152,7 @@ function selectStartPoint(routeId){
 }
 var marker;
 //shows selected route on map 
-function showSelectedRouteOnMap(data,path,name,lastname){
+function showSelectedRouteOnMap(data,path,name,lastname,n){
     if (marker!=null){
 	marker.setMap(null);
     }
@@ -206,7 +206,7 @@ function showSelectedRouteOnMap(data,path,name,lastname){
   	   infowindow.open(map,marker);
 	});
 
-    	$('#selectPointButton').attr('disabled',false);
+    	$('#selectPointButton'+n).attr('disabled',false);
 }
 
 //While user creating a route when #show button is clicked route will be displayed on map.
@@ -227,7 +227,6 @@ function sendRequest(id, n){
 
 $(document).ready(function (){
     $("#createRouteSubmit").attr('disabled', true);//diabled button to save route without directions.
-    $('#selectPointButton').attr('disabled',true);
     $("#show").click(showRouteOnMap);
     $("#sroute").click(searchRoute);
     $("#id_date").datepicker({dateFormat: 'yy-mm-dd'}, { minDate: 0 });//when user click textfield jquery-ui
