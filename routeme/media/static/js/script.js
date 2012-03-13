@@ -100,7 +100,7 @@ function removeRenderers(){
 
 var sayac=0;
 var geocoder;
-function selectStartPoint(routeId){
+function selectStartPoint(routeId,n){
  	//TODO code may be more efficent
 	google.maps.event.addListener(map, "click", function (e) {
 	if(sayac<3){
@@ -117,11 +117,11 @@ function selectStartPoint(routeId){
 	   	     if (status == google.maps.GeocoderStatus.OK){
 		        if(result[1]){
 			  sayac=sayac+1; 
-			  $('#id_startaddress').val(result[1].formatted_address);			   
+			  $('#'+n).find('#id_startaddress').val(result[1].formatted_address);			   
 		        } 
 		     }
                   });
-		  $('#id_startpoint').val(point);
+		  $('#'+n).find('#id_startpoint').val(point);
 		}
 		else if(sayac==1){
 		  alert("stop"+point);
@@ -131,12 +131,12 @@ function selectStartPoint(routeId){
 		        if(result[1]){
 			   alert(result[1].formatted_address);
 		  	   sayac=sayac+1;
-			   $('#id_stopaddress').val(result[1].formatted_address);	  
-			   $('#id_routeowner').val(routeId); 
+			   $('#'+n).find('#id_stopaddress').val(result[1].formatted_address);	  
+			   $('#'+n).find('#id_routeowner').val(routeId); 
 		        }
 		     }
                   });
-		  $('#id_endpoint').val(point);
+		  $('#'+n).find('#id_endpoint').val(point);
 		}
 		else{
 		  return -1;
