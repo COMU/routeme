@@ -13,7 +13,8 @@ onmessage = function (data) {
 
 onclose = function (){
 }
-socket = io.connect("http://drivefor.me");
+
+/*socket = io.connect("http://drivefor.me");
 
 socket.on('connect', function (){
     $.get("/email/username/", function(data){
@@ -24,7 +25,7 @@ socket.on('connect', function (){
 
 socket.on('message', onmessage);
 socket.on('disconnect', onclose);
-
+*/
 //message
 var reduceUnread = function(){
    	currentValue = parseInt($('#unread').html());
@@ -57,6 +58,6 @@ $(document).ready(function() {
 	to = $('#id_to').val();
 	$('#newMessage').submit();
 	alert("Ok");
-        socket.emit("newMessage", to);
+        //socket.emit("newMessage", to);
     });
 }); 
