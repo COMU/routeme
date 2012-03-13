@@ -33,13 +33,13 @@ class FriendShipManager(models.Manager):
 	request = self.get(id = requestId)
         request.status = "1"
 	request.save()
-        return True
+        return request.from_user
 
     def rejectRequest(self, requestId):
         request = self.get(id = requestId)  
         request.status = "2"
 	request.save()
-        return True  
+        return request.from_user  
 
 class Friendship(models.Model):
     from_user = models.ForeignKey(User, related_name="user1")
