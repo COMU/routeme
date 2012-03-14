@@ -218,6 +218,8 @@ function showSelectedRouteOnMap(data,path,name,lastname,n){
 function showRouteOnMap(){
   var start = $("#where").val();
   var end = $("#to").val();
+  $('#id_start').val(start);
+  $('#id_end').val(end);
   var request = {
     origin: start,
     destination: end,

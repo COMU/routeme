@@ -27,7 +27,7 @@ def index(request):
 	routeRequest = routeRequest | RouteRequest.objects.filter(route = i)
     return render_to_response("route/index.html",{'title':'Routeme','routeInfos':routeInfo, 'routeRequest':routeRequest, "user":request.user})
 
-
+@login_required
 def requestReject(request,requestId):
     if request.method == "POST":
 	routeRequest = RouteRequest.objects.get(id=requestId)
@@ -39,6 +39,7 @@ def requestReject(request,requestId):
 	return HttpResponseRedirect('/')
     return HttpResponseRedirect('/')
 
+@login_required
 def requestConfirm(request,requestId):
     if request.method == "POST":
 	routeRequest = RouteRequest.objects.get(id=requestId)
@@ -92,6 +93,7 @@ def saveRouteRequest(request):
 	    return HttpResponseRedirect('/')
 	return HttpResponseRedirect('/searchroute')
     return HttpResponseRedirect('/')
+
 @login_required
 def listRoute(request):
     if request.method=="POST":
@@ -146,6 +148,8 @@ def createRoute(request):
 
             lineString = LineString(pointList)
             routeInformation = RouteInformation.objects.create(
+			start = form.cleaned_data['start'],
+			end = form.cleaned_data['end'],
                         date = form.cleaned_data['date'],
                         time = form.cleaned_data['time'],
                         arrivalTime = form.cleaned_data['arrivalTime'],

@@ -26,7 +26,11 @@ class RouteInformation(models.Model):
      pet = models.BooleanField()
      route = models.LineStringField()
      owner = models.ForeignKey(User, related_name = "owner")
+     start = models.CharField(max_length=50)
+     end = models.CharField(max_length=50)
+
      objects = models.GeoManager()
+
 
 class RouteRequest(models.Model):
      person = models.ForeignKey(User)
