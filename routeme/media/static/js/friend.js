@@ -22,7 +22,7 @@ function friendshipRequest(userId){
 
 var setRequests = function (){
     $('.user').each(function(){
-	userId = $(this).attr('id');
+	userId = $(this).attr('user');
         $.get("/friend/showStatus/" + userId, function(data){
             var myPopover = $('#' + userId).data('popover');
             myPopover.options.content = data.content;

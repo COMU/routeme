@@ -13,9 +13,14 @@ var directionOptions = {
 //map will be ready to use
 function initializeMap(){
   directionDisplay = new google.maps.DirectionsRenderer(directionOptions);
-  var latlng = new google.maps.LatLng(39.57, 32.51);
+  var latlng;
+  if (google.loader.ClientLocation != null){
+      latlng = new google.maps.LatLng(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);
+  }else
+      latlng = new google.maps.LatLng(39.57, 32.51);
+  }
   var mapOptions = {
-    zoom: 4,
+    zoom: 7,
     center: latlng,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
