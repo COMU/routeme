@@ -16,7 +16,7 @@ function initializeMap(){
   var latlng;
   if (google.loader.ClientLocation != null){
       latlng = new google.maps.LatLng(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);
-  }else
+  }else{
       latlng = new google.maps.LatLng(39.57, 32.51);
   }
   var mapOptions = {
