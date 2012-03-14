@@ -22,9 +22,7 @@ def index(request):
         return HttpResponseRedirect("/email/login")
 
     routeInfo = RouteInformation.objects.filter(owner = request.user)
-    routeRequest = QuerySet(RouteRequest)
-    for i in routeInfo:
-	routeRequest = routeRequest | RouteRequest.objects.filter(route = i)
+    routeRequest = RouteRequest.objects.filter(route = routeInfo)    
     return render_to_response("route/index.html",{'title':'Routeme','routeInfos':routeInfo, 'routeRequest':routeRequest, "user":request.user})
 
 @login_required
