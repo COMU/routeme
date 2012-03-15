@@ -17,9 +17,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'routeme.db',                      # Or path to database file if using sqlite3.
-        'USER': 'routeme',                      # Not used with sqlite3.
-        'PASSWORD':'sss',                  # Not used with sqlite3.
+        'NAME': 'driveforme.db',                      # Or path to database file if using sqlite3.
+        'USER': 'driveforme',                      # Not used with sqlite3.
+        'PASSWORD':'driveformeroute',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -149,8 +149,8 @@ EMAIL_HOST_PASSWORD = '111111ssss'
 FOURSQ_CLIENT_ID = 'RLCWOK0BY3W1YHAURXLWOCQ0D2SL3RHXHZG4J3VC3P2TIP2T'
 FOURSQ_CLIENT_SECRET = 'RCYT2YO1FCAH3PEO4ZL51HA0ZO1GZLROX4QGPHX1IJAL2IZR'
 
-FACEBOOK_APP_ID = "392757817402560"
-FACEBOOK_APP_SECRET = "cf58111c3d6d7a0368db62628fde5fb6"
+FACEBOOK_APP_ID = "255768354473895"
+FACEBOOK_APP_SECRET = "b8f0ef66e6e88951311ea2e70dccf4fa"
 FACEBOOK_SCOPE = 'email,publish_stream'
 
 DEFAULT_PASSWORD = 'b90f83f387b20a704b65d1dbf94736a9b8864507'

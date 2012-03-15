@@ -23,7 +23,7 @@ def index(request):
 
     routeInfo = RouteInformation.objects.filter(owner = request.user)
     routeRequest = RouteRequest.objects.filter(route = routeInfo)    
-    return render_to_response("route/index.html",{'title':'Routeme','routeInfos':routeInfo, 'routeRequest':routeRequest, "user":request.user})
+    return render_to_response("route/index.html",{'title':'Driverforme','routeInfos':routeInfo, 'routeRequest':routeRequest, "user":request.user})
 
 @login_required
 def requestReject(request,requestId):
@@ -59,7 +59,7 @@ def requestConfirm(request,requestId):
 def returnRoute(request,routeId):
     l = RouteInformation.objects.get(id=routeId).route.json
     print "returna geliyor"
-    return render_to_response("route/listRoute.html",{'title':'Routeme','l':l,'map':1, "user":request.user})
+    return render_to_response("route/listRoute.html",{'title':'Driveforme','l':l,'map':1, "user":request.user})
 
 
 @login_required
@@ -119,7 +119,7 @@ def listRoute(request):
 		route = route.filter(pet=pet).filter(baggage=baggage).filter(capacity__gt=0)
 	    # if route:
             form = StartEndPointForm()
-            return render_to_response("route/listRoute.html",{'title':'Routeme','form':form,'routes':enumerate(route, 1),'map':1, "user":request.user})
+            return render_to_response("route/listRoute.html",{'title':'Driveforme','form':form,'routes':enumerate(route, 1),'map':1, "user":request.user})
     
     return HttpResponseRedirect('searchroute')
 
@@ -127,7 +127,7 @@ def listRoute(request):
 @login_required
 def searchRoute(request):
     form = SearchRouteForm()
-    data = { 'map': 1, "form": form, 'title':'Routeme',"user":request.user}
+    data = { 'map': 1, "form": form, 'title':'Driveforme',"user":request.user}
     return render_to_response("route/searchRoute.html", data)
 
 @login_required
@@ -163,6 +163,6 @@ def createRoute(request):
     else:
         form = CreateRouteForm()
    
-    data = { 'map': 1, "form": form, 'title':'Routeme',"user":request.user}
+    data = { 'map': 1, "form": form, 'title':'Driveforme',"user":request.user}
     return render_to_response("route/createRoute.html", data)
 
