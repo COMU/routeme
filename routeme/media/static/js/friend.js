@@ -15,7 +15,7 @@ function friendshipRequest(userId){
             	var myPopover = $('#u' + userId).data('popover');
             	myPopover.options.content = data.content;
             	myPopover.options.title = data.title
-            	myPopover.options.delay = { show: 100, hide: 3500 };
+            	myPopover.options.delay = { show: 100, hide: 3000 };
     	    });
 	});
 }
@@ -24,10 +24,12 @@ var setRequests = function (){
     $('.user').each(function(){
 	userId = $(this).attr('user');
         $.get("/friend/showStatus/" + userId, function(data){
-            var myPopover = $('#' + userId).data('popover');
-            myPopover.options.content = data.content;
-            myPopover.options.title = data.title
-            myPopover.options.delay = { show: 100, hide: 3500 };
+            $('[user]').each(function(){
+                var myPopover = $(this).data('popover');
+                myPopover.options.content = data.content;
+                myPopover.options.title = data.title
+                myPopover.options.delay = { show: 100, hide: 3500 };
+	    });
     	});
     });
 }
