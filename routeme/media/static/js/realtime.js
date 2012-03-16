@@ -61,4 +61,6 @@ $(document).ready(function() {
         //socket.emit("newMessage", to);
     });
     onmessage(1);
+    if (window.location.hash != "")
+     	$('a[href="' + window.location.hash + '"]').click();
 }); 

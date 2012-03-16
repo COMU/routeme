@@ -17,7 +17,7 @@ def unread_count(request):
     return HttpResponse(simplejson.dumps(data), mimetype='application/json')
 
 @login_required
-def inbox(request):
+def inbox(request, username = None):
     if request.method == "POST":
     	form = MessageForm(request.POST)
         if form.is_valid():
@@ -31,6 +31,9 @@ def inbox(request):
   
     messages = Message.objects.get_all(request.user)
     form = MessageForm()
+    if username:
+	data = {'to': username}
+        form = MessageForm(initial=data)
     
     return render_to_response("message/inbox.html", {'messages': messages,'form': form, 'user': request.user})
 

@@ -34,6 +34,8 @@ def show_status(request, user_id):
 	#TODO here have to show other options. For example other user requested before user may be accept here.
 	#or user have requested before content maybe something about that
   	content = "#TODO"
+    elif Friendship.objects.areFriends(request.user, to_user):
+        content = render_to_string("friend/message.html", {'email':to_user.username})
     elif to_user == request.user:
 	content = "Yourself :)"
     else:
