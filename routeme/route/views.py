@@ -22,7 +22,11 @@ def index(request):
         return HttpResponseRedirect("/email/login")
 
     routeInfo = RouteInformation.objects.filter(owner = request.user)
-    routeRequest = RouteRequest.objects.filter(route = routeInfo)    
+     
+    if routeInfo:
+    	routeRequest = RouteRequest.objects.filter(route__in = routeInfo)    
+    else:
+        routeRequest = None
     return render_to_response("route/index.html",{'title':'Driverforme','routeInfos':routeInfo, 'routeRequest':routeRequest, "user":request.user})
 
 @login_required
