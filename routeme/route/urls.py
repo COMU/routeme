@@ -13,5 +13,6 @@ urlpatterns = patterns('routeme',
     url(r'^listroute$',"route.views.listRoute", name = "list-route"),
     url(r'^returnroute/(?P<routeId>\d+)/',"route.views.returnRoute",name="return-route"),
     url(r'^leave/(?P<requestId>\d+)/',"route.views.leave",name="leave-route"),
+    url(r'^confirm/(?P<requestId>\d+)/',"route.views.confirm",name="confirm-route"),
 )
 

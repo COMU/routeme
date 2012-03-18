@@ -45,6 +45,27 @@ def leave(request, requestId):
 
     return HttpResponseRedirect(reverse('index'))    
 
+
+@login_required
+def confirm(request, requestId):
+   myRequest = RouteRequest.objects.get(id=requestId)
+   route = myRequest.route
+
+   myRequest.status = 3 #Confirmed
+   myRequest.save()
+   
+   #TODO this experience point must depends on requested person's distance between start and end points. 
+   route.owner.userprofile.experience += 10 #increase user experience point.
+   route.owner.userprofile.save()
+
+   #Send Message to route owner about that 
+   #TODO more user friendly message content will be good
+   message = Message.objects.create_message(request.user, route.owner, "Route", "%s confirmed route \
+                which is on %s and from %s to %s." % \
+                (request.user.get_full_name(), route.date, route.start, route.end))
+
+   return HttpResponseRedirect(reverse('index'))
+
 @login_required
 def requestReject(request,requestId):
     if request.method == "POST":
