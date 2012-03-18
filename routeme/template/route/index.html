@@ -11,7 +11,8 @@
 		</ul>
 		<div class="tab-content">
 		    <div id="request" class="tab-pane active">
-			<table class="table" width=100%>	
+			<table class="table" width=100%>
+ 			{% if routeRequest %}	
 			{%for request in routeRequest%}
 			<tr>
 			    <td class="">
@@ -39,6 +40,11 @@
 			    </td>
 			</tr>
 			{%endfor%}
+			{% else %}
+			     <div class="alert alert-warning">
+				 No route request found.
+			     </div>
+			{% endif %}
 			</table>
 		    </div>
 		    <div id="myroute" class="tab-pane">
@@ -55,7 +61,12 @@
 			    </tr>
 			    </div>
 		    	{% endfor %}
-			{%endif%}
+			{% else %}
+			    <div class="alert alert-warning">
+                                 No route found. Click button and create a route! 
+				 <a href="{% url create-route %}" class="btn" >Create Route</a>
+                            </div>
+			{% endif %}
 			</table>
 		    </div>
 
@@ -82,7 +93,12 @@
 
 			    </tr>
 		    	{% endfor %}
-			{%endif%}
+			{% else %}
+			    <div class="alert alert-warning">
+                                 No route request found. Click button and search where you want to go! 
+				 <a href="{% url search-route %}" class="btn" >Search Route</a>
+                            </div>
+			{% endif %}
 			</table>
 		    </div>
 		</div>
