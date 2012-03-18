@@ -16,7 +16,7 @@
 			<tr>
 			    <td class="">
 				<img src="/static/images/{{ request.person.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
-				<span class="label label-info"> {{request.person.first_name}} {{request.person.last_name}}</span>
+				<span class="label"><a href="#" user="u{{request.person.id}}" class="user"{{request.person.id}} >{{request.person.first_name}} {{request.person.last_name}}</a></span>
     			   	</br><strong>Date: </strong> {{request.route.date}}
 				</br><strong>Start Address: </strong> {{request.startadress}}
 				</br><strong>Stop Address: </strong> {{request.stopadress}}
@@ -66,7 +66,7 @@
 			    <tr>
 				<td>
 				    <img src="/static/images/{{ myRequest.route.owner.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
-				    <span class="label label-success">{{myRequest.route.owner.first_name}} {{myRequest.route.owner.last_name}} </span>
+				    <span class="label"><a href="#" user="u{{myRequest.route.owner.id}}"class="user" {{myRequest.route.owner.id}}>{{myRequest.route.owner.first_name}} {{myRequest.route.owner.last_name}}</a></span>
 				    </br>
 				    <strong>Date: </strong>{{myRequest.route.date}}
 				    </br>	
