@@ -88,6 +88,16 @@
 				    <strong>Status: </strong>{%ifequal myRequest.status 0 %}<span class="label label-success">Approved</span>{%endifequal%}
 							     {%ifequal myRequest.status 1 %}<span class="label label-warning">Waiting</span>{%endifequal%}
 							     {%ifequal myRequest.status 2 %}<span class="label label-inverse">Rejected</span>{%endifequal%}
+			            </br>
+					<form method="post" class="pull-right">
+				            <input type="button" class="btn-success" value="Confirm">
+					</form>
+					<form method="post" class="pull-right" action="{% url leave-route myRequest.id %}">
+				            <input type="submit" class="btn-danger" value="Leave From Route">
+					</form>
+					<form method="get" class="pull-right" action="{% url  inbox-to myRequest.route.owner.username %}#newMessage">
+				            <input type="submit" class="btn-primary" value="Send Message To Route Owner">
+					</form>
 				</td>
 				
 

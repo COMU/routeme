@@ -30,6 +30,22 @@ def index(request):
     return render_to_response("route/index.html",{'title':'Driverforme','routeInfos':routeInfo,'myRequests':myRequest, 'routeRequest':routeRequest, "user":request.user})
 
 @login_required
+def leave(request, requestId):
+    myRequest = RouteRequest.objects.get(id=requestId)
+    route = myRequest.route
+   
+    myRequest.delete() #delete request and increase route capacity.
+    route.capacity +=1
+    route.save()
+
+    #Send Message to route owner about that
+    message = Message.objects.create_message(request.user, route.owner, "Route", "%s left from your route \
+		which is on %s and from %s to %s." % \
+		(request.user.get_full_name(), route.date, route.start, route.end))
+
+    return HttpResponseRedirect(reverse('index'))    
+
+@login_required
 def requestReject(request,requestId):
     if request.method == "POST":
 	routeRequest = RouteRequest.objects.get(id=requestId)

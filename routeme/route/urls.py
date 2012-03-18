@@ -12,5 +12,6 @@ urlpatterns = patterns('routeme',
     url(r'^requestReject/(?P<requestId>\d+)/$',"route.views.requestReject", name = "reject-request"),
     url(r'^listroute$',"route.views.listRoute", name = "list-route"),
     url(r'^returnroute/(?P<routeId>\d+)/',"route.views.returnRoute",name="return-route"),
+    url(r'^leave/(?P<requestId>\d+)/',"route.views.leave",name="leave-route"),
 )
 
