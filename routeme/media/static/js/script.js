@@ -236,7 +236,7 @@ $(document).ready(function (){
     $("#createRouteSubmit").attr('disabled', true);//diabled button to save route without directions.
     $("#show").click(showRouteOnMap);
     $("#sroute").click(searchRoute);
-    $("#id_date").datepicker({dateFormat: 'yy-mm-dd'}, { minDate: 0 });//when user click textfield jquery-ui
+    $("#id_date").datepicker({dateFormat: 'yy-mm-dd', minDate: 0 });//when user click textfield jquery-ui this is createRoute's date.
     $("#id_birthdate").datepicker({dateFormat: 'yy-mm-dd'});//when user click textfield jquery-ui
     $("#id_time").timepicker({timeFormat: 'h:m'});//datepicker or timepicker will be displayed on screen.
 
