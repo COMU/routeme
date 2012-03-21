@@ -30,6 +30,16 @@ def index(request):
     return render_to_response("route/index.html",{'title':'Driverforme','routeInfos':routeInfo,'myRequests':myRequest, 'routeRequest':routeRequest, "user":request.user})
 
 @login_required
+def showRouteDetail(request, routeId):
+    routeInfo = RouteInformation.objects.get(id=routeId)
+    if routeInfo.owner == request.user:
+    	routeRequest = RouteRequest.objects.filter(route = routeInfo) 
+    	return render_to_response("route/routedetail.html",{'title':'driveforme','map':1,'routeInfo':routeInfo,'routeRequest':routeRequest,
+				'user':request.user})
+    else:
+	return HttpResponseRedirect('/')
+
+@login_required
 def leave(request, requestId):
     myRequest = RouteRequest.objects.get(id=requestId)
     route = myRequest.route
