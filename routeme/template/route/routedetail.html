@@ -9,10 +9,20 @@
 <div id="dialog">
 </div>
 <div class="row"><div class="span8">
+<div id="modal" class="modal hide fade">
+	<div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h2>
+        </div>
+
+TODO
+</div>
 <fieldset><legend>Route Detail</legend>
 
 
  <table class="table" width="100%">
+    <tr>
+	<td>
  	<strong>Date: </strong>{{routeInfo.date}} 
 	</br> 
 	<strong>Start Address: </strong>{{routeInfo.start}}
@@ -23,11 +33,15 @@
        	</br>
 	<strong>Capacity: </strong>{{routeInfo.capacity}}
        	</br>
+	<a href="#modal" data-toggle="modal" class="btn">Edit Route</a>
 	<fieldset><legend>Request</legend>
+
 	{%for request in routeRequest%}
 	    <img src="/static/images/{{ request.person.userprofile.profilePhoto.url}}" style="width:50px;height:50px">
-	    <a href="/email/update">{{request.person.first_name}}{{request.person.last_name}}</a>
+	    <a user="u{{request.person.id}}" class="user {{request.person.id}}" href="/email/update">{{request.person.first_name}}{{request.person.last_name}}</a>
 
 	{%endfor%}
+	</td>
+    </tr>
 </div>
 {% endblock %}
