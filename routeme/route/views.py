@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect,HttpResponse
 from django.core.urlresolvers import reverse
-from forms import CreateRouteForm, SearchRouteForm, StartEndPointForm
+from forms import CreateRouteForm, SearchRouteForm, StartEndPointForm,UpdateRouteForm
 from models import RouteInformation,RouteRequest
 from message.models import Message
 from django.contrib.gis.geos import LineString, Point
@@ -31,13 +31,29 @@ def index(request):
 
 @login_required
 def showRouteDetail(request, routeId):
-    routeInfo = RouteInformation.objects.get(id=routeId)
-    if routeInfo.owner == request.user:
-    	routeRequest = RouteRequest.objects.filter(route = routeInfo) 
-    	return render_to_response("route/routedetail.html",{'title':'driveforme','map':1,'routeInfo':routeInfo,'routeRequest':routeRequest,
-				'user':request.user})
-    else:
-	return HttpResponseRedirect('/')
+    if request.method == "POST":
+	form = UpdateRouteForm(request.POST)
+	return HttpResponseRedirect("/")
+    else: 
+    	routeInfo = RouteInformation.objects.get(id=routeId)
+   	if routeInfo.owner == request.user:
+    	    routeRequest = RouteRequest.objects.filter(route = routeInfo)
+	    initial_data = {
+		'start' :routeInfo.start,
+		'end' :routeInfo.end,
+		'date' : routeInfo.date,
+		'time' : routeInfo.time,
+		'arrivalTime' : routeInfo.arrivalTime,
+		'vehicle' : routeInfo.vehicle,
+		'capacity' : routeInfo.capacity,
+		'baggage' : routeInfo.baggage,
+		'pet' : routeInfo.pet
+	   }
+	    form = UpdateRouteForm(initial=initial_data)
+    	    return render_to_response("route/routedetail.html",{'title':'driveforme','map':1,'form':form,'routeInfo':routeInfo,\
+						'routeRequest':routeRequest,'user':request.user})
+        else:
+	    return HttpResponseRedirect('/')
 
 @login_required
 def leave(request, requestId):

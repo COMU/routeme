@@ -61,7 +61,7 @@
 				    </br>
 				    <strong>End Address: </strong>{{routeInfo.end}}
 				    </br>
-				    <form method="post" class="pull-right" action="{% url show-route-detail routeInfo.id %}">
+				    <form method="get" class="pull-right" action="{% url show-route-detail routeInfo.id %}">
                                     	<input type="submit" class="btn-danger" value="Show Detail">
                                     </form>
 

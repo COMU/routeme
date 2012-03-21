@@ -14,8 +14,11 @@
         <a class="close" data-dismiss="modal">×</a>
         <h2>
         </div>
-
+<table>
+{{form.as_table}}
+</table>
 TODO
+
 </div>
 <fieldset><legend>Route Detail</legend>
 
@@ -34,6 +37,8 @@ TODO
 	<strong>Capacity: </strong>{{routeInfo.capacity}}
        	</br>
 	<a href="#modal" data-toggle="modal" class="btn">Edit Route</a>
+       	</br>
+       	</br>
 	<fieldset><legend>Request</legend>
 
 	{%for request in routeRequest%}
