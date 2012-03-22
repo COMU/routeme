@@ -45,13 +45,15 @@
 	<a href="#modal" data-toggle="modal" class="btn btn-warning pull-right">Edit Route</a>
        	</br>
        	</br>
-	<fieldset><legend>Request</legend>
+	{%if routeRequest%}
+	<fieldset><legend>People on Route</legend>
 
 	{%for request in routeRequest%}
 	    <img src="/static/images/{{ request.person.userprofile.profilePhoto.url}}" style="width:50px;height:50px">
 	    <a user="u{{request.person.id}}" class="user {{request.person.id}}" href="/email/update">{{request.person.first_name}}{{request.person.last_name}}</a>
 
 	{%endfor%}
+	{%endif%}
 	</td>
     </tr>
 </div>
