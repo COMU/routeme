@@ -45,8 +45,7 @@ def showRouteDetail(request, routeId):
 	    routeInfo.baggage = form.cleaned_data['baggage']
 	    routeInfo.pet = form.cleaned_data['pet']
 	    routeInfo.save()
-	    print "aaaaaa"	
-	    return HttpResponseRedirect("/searchroute")
+	    return HttpResponseRedirect("/showroutedetail/"+str(routeInfo.id))
 	return HttpResponseRedirect("/")
     else: 
     	routeInfo = RouteInformation.objects.get(id=routeId)

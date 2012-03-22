@@ -229,7 +229,6 @@ function showRouteOnMap(){
 }
 
 function updateRoute(formId){
-alert(formId);
     $('#'+formId).submit();
     $('#modal').modal("hide");
 }
