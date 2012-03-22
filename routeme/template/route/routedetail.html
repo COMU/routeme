@@ -11,18 +11,24 @@
 <div class="row"><div class="span8">
 <div id="modal" class="modal hide fade">
 	<div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
-        <h2>
+            <a class="close" data-dismiss="modal">×</a>
+            <h2><fieldset><strong>Route Information</strong>
         </div>
-<table>
-{{form.as_table}}
-</table>
-TODO
+	<div class="modal-body">
+        <form id="updateRouteForm" method="POST" action={% url route.views.showRouteDetail routeInfo.id %}>
+	    {{form.as_p}}
+	</form>
+	</div>
+	<div class="modal-footer">
+            <input type="button" onclick="updateRoute('updateRouteForm')"  class= "btn primary" value ="Send Request" id = "requestButton">
+        </div>
+
+
 
 </div>
 <fieldset><legend>Route Detail</legend>
-
-
+<F8>
+                                  
  <table class="table" width="100%">
     <tr>
 	<td>

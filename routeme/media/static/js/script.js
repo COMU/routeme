@@ -227,6 +227,13 @@ function showRouteOnMap(){
   };
   drawRoute(request, directionDisplay);
 }
+
+function updateRoute(formId){
+alert(formId);
+    $('#'+formId).submit();
+    $('#modal').modal("hide");
+}
+
 function sendRequest(id, n){
     $('#' + id).submit();
     $('#' + n).modal("hide");

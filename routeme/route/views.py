@@ -29,10 +29,24 @@ def index(request):
         routeRequest = None
     return render_to_response("route/index.html",{'title':'Driverforme','routeInfos':routeInfo,'myRequests':myRequest, 'routeRequest':routeRequest, "user":request.user})
 
+
+
 @login_required
 def showRouteDetail(request, routeId):
     if request.method == "POST":
 	form = UpdateRouteForm(request.POST)
+	if form.is_valid():
+	    routeInfo = RouteInformation.objects.get(id=routeId)
+	    routeInfo.date = form.cleaned_data['date']
+	    routeInfo.time = form.cleaned_data['time']
+	    routeInfo.arrivalTime = form.cleaned_data['arrivalTime']
+	    routeInfo.vehicle = form.cleaned_data['vehicle']
+	    routeInfo.capacity = form.cleaned_data['capacity']
+	    routeInfo.baggage = form.cleaned_data['baggage']
+	    routeInfo.pet = form.cleaned_data['pet']
+	    routeInfo.save()
+	    print "aaaaaa"	
+	    return HttpResponseRedirect("/searchroute")
 	return HttpResponseRedirect("/")
     else: 
     	routeInfo = RouteInformation.objects.get(id=routeId)

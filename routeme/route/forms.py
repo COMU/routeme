@@ -22,8 +22,8 @@ class SearchRouteForm(forms.Form):
     pet = forms.BooleanField(required=False) 
 
 class UpdateRouteForm(forms.Form):
-    start = forms.CharField(widget = forms.HiddenInput())
-    end = forms.CharField(widget = forms.HiddenInput())
+    start = forms.CharField(widget = forms.TextInput(attrs={'readonly':'readonly'}))
+    end = forms.CharField(widget = forms.TextInput(attrs={'readonly':'readonly'}))
     date = forms.DateField()
     time = forms.TimeField()
     arrivalTime = forms.CharField(max_length = 10)
