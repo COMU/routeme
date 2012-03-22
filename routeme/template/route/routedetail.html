@@ -20,7 +20,7 @@
 	</form>
 	</div>
 	<div class="modal-footer">
-            <input type="button" onclick="updateRoute('updateRouteForm')"  class= "btn primary" value ="Send Request" id = "requestButton">
+            <input type="button" onclick="updateRoute('updateRouteForm')"  class= "btn btn-success" value ="Send Request" id = "requestButton">
         </div>
 
 
@@ -45,14 +45,19 @@
 	<a href="#modal" data-toggle="modal" class="btn btn-warning pull-right">Edit Route</a>
        	</br>
        	</br>
-	{%if routeRequest%}
 	<fieldset><legend>People on Route</legend>
+	{%if routeRequest%}
 
 	{%for request in routeRequest%}
 	    <img src="/static/images/{{ request.person.userprofile.profilePhoto.url}}" style="width:50px;height:50px">
 	    <a user="u{{request.person.id}}" class="user {{request.person.id}}" href="/email/update">{{request.person.first_name}}{{request.person.last_name}}</a>
 
 	{%endfor%}
+	{%else%}
+	<div class="alert alert-warning">
+        No route request found.
+        </div>
+
 	{%endif%}
 	</td>
     </tr>
