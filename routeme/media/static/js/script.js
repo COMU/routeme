@@ -13,9 +13,14 @@ var directionOptions = {
 //map will be ready to use
 function initializeMap(){
   directionDisplay = new google.maps.DirectionsRenderer(directionOptions);
-  var latlng = new google.maps.LatLng(39.57, 32.51);
+  var latlng;
+  if (google.loader.ClientLocation != null){
+      latlng = new google.maps.LatLng(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);
+  }else{
+      latlng = new google.maps.LatLng(39.57, 32.51);
+  }
   var mapOptions = {
-    zoom: 4,
+    zoom: 7,
     center: latlng,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
@@ -213,6 +218,8 @@ function showSelectedRouteOnMap(data,path,name,lastname,n){
 function showRouteOnMap(){
   var start = $("#where").val();
   var end = $("#to").val();
+  $('#id_start').val(start);
+  $('#id_end').val(end);
   var request = {
     origin: start,
     destination: end,
@@ -220,6 +227,12 @@ function showRouteOnMap(){
   };
   drawRoute(request, directionDisplay);
 }
+
+function updateRoute(formId){
+    $('#'+formId).submit();
+    $('#modal').modal("hide");
+}
+
 function sendRequest(id, n){
     $('#' + id).submit();
     $('#' + n).modal("hide");
@@ -229,7 +242,7 @@ $(document).ready(function (){
     $("#createRouteSubmit").attr('disabled', true);//diabled button to save route without directions.
     $("#show").click(showRouteOnMap);
     $("#sroute").click(searchRoute);
-    $("#id_date").datepicker({dateFormat: 'yy-mm-dd'}, { minDate: 0 });//when user click textfield jquery-ui
+    $("#id_date").datepicker({dateFormat: 'yy-mm-dd', minDate: 0 });//when user click textfield jquery-ui this is createRoute's date.
     $("#id_birthdate").datepicker({dateFormat: 'yy-mm-dd'});//when user click textfield jquery-ui
     $("#id_time").timepicker({timeFormat:'hh:mm'});//datepicker or timepicker will be displayed on screen.
 

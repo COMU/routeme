@@ -12,22 +12,26 @@ function friendshipRequest(userId){
  	$.get("/friend/request/" + userId, function(data){
 	    //$('#dialog').dialog('close');
             $.get("/friend/showStatus/u" + userId, function(data){
-            	var myPopover = $('#u' + userId).data('popover');
-            	myPopover.options.content = data.content;
-            	myPopover.options.title = data.title
-            	myPopover.options.delay = { show: 100, hide: 3500 };
+                $('[user]').each(function(){
+                    var myPopover = $(this).data('popover');
+                    myPopover.options.content = data.content;
+                    myPopover.options.title = data.title
+                    myPopover.options.delay = { show: 100, hide: 3500 };
+	        });
     	    });
 	});
 }
 
 var setRequests = function (){
     $('.user').each(function(){
-	userId = $(this).attr('id');
+	userId = $(this).attr('user');
         $.get("/friend/showStatus/" + userId, function(data){
-            var myPopover = $('#' + userId).data('popover');
-            myPopover.options.content = data.content;
-            myPopover.options.title = data.title
-            myPopover.options.delay = { show: 100, hide: 3500 };
+            $('[user]').each(function(){
+                var myPopover = $(this).data('popover');
+                myPopover.options.content = data.content;
+                myPopover.options.title = data.title
+                myPopover.options.delay = { show: 100, hide: 3500 };
+	    });
     	});
     });
 }

@@ -1,0 +1,65 @@
+{% extends "base/layout.html" %}
+
+{% block content %}
+<div class="row">
+	<div id="map" class="span8"></div>
+	<div class="span4"><div class="alert alert-info">{% include "include/profil.html" %}</div></div>
+
+</div>
+<div id="dialog">
+</div>
+<div class="row"><div class="span8">
+<div id="modal" class="modal hide fade">
+	<div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h2><fieldset><strong>Route Information</strong>
+        </div>
+	<div class="modal-body">
+        <form id="updateRouteForm" method="POST" action={% url route.views.showRouteDetail routeInfo.id %}>
+	    {{form.as_p}}
+	</form>
+	</div>
+	<div class="modal-footer">
+            <input type="button" onclick="updateRoute('updateRouteForm')"  class= "btn btn-success" value ="Send Request" id = "requestButton">
+        </div>
+
+
+
+</div>
+<fieldset><legend>Route Detail</legend>
+<F8>
+                                  
+ <table class="table" width="100%">
+    <tr>
+	<td>
+ 	<strong>Date: </strong>{{routeInfo.date}} 
+	</br> 
+	<strong>Start Address: </strong>{{routeInfo.start}}
+       	</br>
+        <strong>End Address: </strong>{{routeInfo.end}}
+        </br>
+	<strong>Vehicle: </strong>{{routeInfo.vehicle}}
+       	</br>
+	<strong>Capacity: </strong>{{routeInfo.capacity}}
+       	</br>
+	<a href="#modal" data-toggle="modal" class="btn btn-warning pull-right">Edit Route</a>
+       	</br>
+       	</br>
+	<fieldset><legend>People on Route</legend>
+	{%if routeRequest%}
+
+	{%for request in routeRequest%}
+	    <img src="/static/images/{{ request.person.userprofile.profilePhoto.url}}" style="width:50px;height:50px">
+	    <a user="u{{request.person.id}}" class="user {{request.person.id}}" href="/email/update">{{request.person.first_name}}{{request.person.last_name}}</a>
+
+	{%endfor%}
+	{%else%}
+	<div class="alert alert-warning">
+        No route request found.
+        </div>
+
+	{%endif%}
+	</td>
+    </tr>
+</div>
+{% endblock %}

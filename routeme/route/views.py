@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect,HttpResponse
 from django.core.urlresolvers import reverse
-from forms import CreateRouteForm, SearchRouteForm, StartEndPointForm
+from forms import CreateRouteForm, SearchRouteForm, StartEndPointForm,UpdateRouteForm
 from models import RouteInformation,RouteRequest
 from message.models import Message
 from django.contrib.gis.geos import LineString, Point
@@ -22,12 +22,90 @@ def index(request):
         return HttpResponseRedirect("/email/login")
 
     routeInfo = RouteInformation.objects.filter(owner = request.user)
-    routeRequest = QuerySet(RouteRequest)
-    for i in routeInfo:
-	routeRequest = routeRequest | RouteRequest.objects.filter(route = i)
-    return render_to_response("route/index.html",{'title':'Routeme','routeInfos':routeInfo, 'routeRequest':routeRequest, "user":request.user})
+    myRequest = RouteRequest.objects.filter(person = request.user)    
+    if routeInfo:
+    	routeRequest = RouteRequest.objects.filter(route__in = routeInfo)    
+    else:
+        routeRequest = None
+    return render_to_response("route/index.html",{'title':'Driverforme','routeInfos':routeInfo,'myRequests':myRequest, 'routeRequest':routeRequest, "user":request.user})
 
 
+
+@login_required
+def showRouteDetail(request, routeId):
+    if request.method == "POST":
+	form = UpdateRouteForm(request.POST)
+	if form.is_valid():
+	    routeInfo = RouteInformation.objects.get(id=routeId)
+	    routeInfo.date = form.cleaned_data['date']
+	    routeInfo.time = form.cleaned_data['time']
+	    routeInfo.arrivalTime = form.cleaned_data['arrivalTime']
+	    routeInfo.vehicle = form.cleaned_data['vehicle']
+	    routeInfo.capacity = form.cleaned_data['capacity']
+	    routeInfo.baggage = form.cleaned_data['baggage']
+	    routeInfo.pet = form.cleaned_data['pet']
+	    routeInfo.save()
+	    return HttpResponseRedirect("/showroutedetail/"+str(routeInfo.id))
+	return HttpResponseRedirect("/")
+    else: 
+    	routeInfo = RouteInformation.objects.get(id=routeId)
+   	if routeInfo.owner == request.user:
+    	    routeRequest = RouteRequest.objects.filter(route = routeInfo)
+	    initial_data = {
+		'start' :routeInfo.start,
+		'end' :routeInfo.end,
+		'date' : routeInfo.date,
+		'time' : routeInfo.time,
+		'arrivalTime' : routeInfo.arrivalTime,
+		'vehicle' : routeInfo.vehicle,
+		'capacity' : routeInfo.capacity,
+		'baggage' : routeInfo.baggage,
+		'pet' : routeInfo.pet
+	   }
+	    form = UpdateRouteForm(initial=initial_data)
+    	    return render_to_response("route/routedetail.html",{'title':'driveforme','map':1,'form':form,'routeInfo':routeInfo,\
+						'routeRequest':routeRequest,'user':request.user})
+        else:
+	    return HttpResponseRedirect('/')
+
+@login_required
+def leave(request, requestId):
+    myRequest = RouteRequest.objects.get(id=requestId)
+    route = myRequest.route
+   
+    myRequest.delete() #delete request and increase route capacity.
+    route.capacity +=1
+    route.save()
+
+    #Send Message to route owner about that
+    message = Message.objects.create_message(request.user, route.owner, "Route", "%s left from your route \
+		which is on %s and from %s to %s." % \
+		(request.user.get_full_name(), route.date, route.start, route.end))
+
+    return HttpResponseRedirect(reverse('index'))    
+
+
+@login_required
+def confirm(request, requestId):
+   myRequest = RouteRequest.objects.get(id=requestId)
+   route = myRequest.route
+
+   myRequest.status = 3 #Confirmed
+   myRequest.save()
+   
+   #TODO this experience point must depends on requested person's distance between start and end points. 
+   route.owner.userprofile.experience += 10 #increase user experience point.
+   route.owner.userprofile.save()
+
+   #Send Message to route owner about that 
+   #TODO more user friendly message content will be good
+   message = Message.objects.create_message(request.user, route.owner, "Route", "%s confirmed route \
+                which is on %s and from %s to %s." % \
+                (request.user.get_full_name(), route.date, route.start, route.end))
+
+   return HttpResponseRedirect(reverse('index'))
+
+@login_required
 def requestReject(request,requestId):
     if request.method == "POST":
 	routeRequest = RouteRequest.objects.get(id=requestId)
@@ -39,6 +117,7 @@ def requestReject(request,requestId):
 	return HttpResponseRedirect('/')
     return HttpResponseRedirect('/')
 
+@login_required
 def requestConfirm(request,requestId):
     if request.method == "POST":
 	routeRequest = RouteRequest.objects.get(id=requestId)
@@ -60,7 +139,7 @@ def requestConfirm(request,requestId):
 def returnRoute(request,routeId):
     l = RouteInformation.objects.get(id=routeId).route.json
     print "returna geliyor"
-    return render_to_response("route/listRoute.html",{'title':'Routeme','l':l,'map':1, "user":request.user})
+    return render_to_response("route/listRoute.html",{'title':'Driveforme','l':l,'map':1, "user":request.user})
 
 
 @login_required
@@ -92,6 +171,7 @@ def saveRouteRequest(request):
 	    return HttpResponseRedirect('/')
 	return HttpResponseRedirect('/searchroute')
     return HttpResponseRedirect('/')
+
 @login_required
 def listRoute(request):
     if request.method=="POST":
@@ -119,7 +199,7 @@ def listRoute(request):
 		route = route.filter(pet=pet).filter(baggage=baggage).filter(capacity__gt=0)
 	    # if route:
             form = StartEndPointForm()
-            return render_to_response("route/listRoute.html",{'title':'Routeme','form':form,'routes':enumerate(route, 1),'map':1, "user":request.user})
+            return render_to_response("route/listRoute.html",{'title':'Driveforme','form':form,'routes':enumerate(route, 1),'map':1, "user":request.user})
     
     return HttpResponseRedirect('searchroute')
 
@@ -127,7 +207,7 @@ def listRoute(request):
 @login_required
 def searchRoute(request):
     form = SearchRouteForm()
-    data = { 'map': 1, "form": form, 'title':'Routeme',"user":request.user}
+    data = { 'map': 1, "form": form, 'title':'Driveforme',"user":request.user}
     return render_to_response("route/searchRoute.html", data)
 
 @login_required
@@ -146,6 +226,8 @@ def createRoute(request):
 
             lineString = LineString(pointList)
             routeInformation = RouteInformation.objects.create(
+			start = form.cleaned_data['start'],
+			end = form.cleaned_data['end'],
                         date = form.cleaned_data['date'],
                         time = form.cleaned_data['time'],
                         arrivalTime = form.cleaned_data['arrivalTime'],
@@ -161,6 +243,6 @@ def createRoute(request):
     else:
         form = CreateRouteForm()
    
-    data = { 'map': 1, "form": form, 'title':'Routeme',"user":request.user}
+    data = { 'map': 1, "form": form, 'title':'Driveforme',"user":request.user}
     return render_to_response("route/createRoute.html", data)
 

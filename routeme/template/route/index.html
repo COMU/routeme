@@ -7,15 +7,17 @@
 		<ul class="nav nav-tabs">
 		    <li class="active"><a data-toggle="tab" href="#request">Requests</a></li>
 		    <li><a data-toggle="tab" href="#myroute">My Routes</a></li>
+		    <li><a data-toggle="tab" href="#myrequest">My Request</a></li>
 		</ul>
 		<div class="tab-content">
 		    <div id="request" class="tab-pane active">
-			<table class="table" width=100%>	
+			<table class="table" width=100%>
+ 			{% if routeRequest %}	
 			{%for request in routeRequest%}
 			<tr>
 			    <td class="">
 				<img src="/static/images/{{ request.person.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
-				<span class="label label-info"> {{request.person.first_name}} {{request.person.last_name}}</span>
+				<span class="label"><a href="#" user="u{{request.person.id}}" class="user {{request.person.id}}">{{request.person.first_name}} {{request.person.last_name}}</a></span>
     			   	</br><strong>Date: </strong> {{request.route.date}}
 				</br><strong>Start Address: </strong> {{request.startadress}}
 				</br><strong>Stop Address: </strong> {{request.stopadress}}
@@ -38,21 +40,92 @@
 			    </td>
 			</tr>
 			{%endfor%}
+			{% else %}
+			     <div class="alert alert-warning">
+				 No route request found.
+			     </div>
+			{% endif %}
 			</table>
 		    </div>
 		    <div id="myroute" class="tab-pane">
 		   	<table class="table" width="100%">
 			{%if routeInfos %}
 			{%for routeInfo in routeInfos %}
+			    <div>
 			    <tr>
 				<td>
-				    <span class="label label-success">{{routeInfo.owner.first_name}} {{routeInfo.owner.last_name}}</span>
+						
+				    <strong>Date: </strong>{{routeInfo.date}}
+				    </br>	
+				    <strong>Start Address: </strong>{{routeInfo.start}}
+				    </br>
+				    <strong>End Address: </strong>{{routeInfo.end}}
+				    </br>
+				    <form method="get" class="pull-right" action="{% url show-route-detail routeInfo.id %}">
+                                    	<input type="submit" class="btn-danger" value="Show Detail">
+                                    </form>
+
+			        </td>
+				
+
+			    </tr>
+			    </div>
+		    	{% endfor %}
+			{% else %}
+			    <div class="alert alert-warning">
+                                 No route found. Click button and create a route! 
+				 <a href="{% url create-route %}" class="btn" >Create Route</a>
+                            </div>
+			{% endif %}
+			</table>
+		    </div>
+
+		    <div id="myrequest" class="tab-pane">
+			<table class="table" width="100%">
+			{%if myRequests %}
+			{%for myRequest in myRequests %}
+			    <tr>
+				<td>
+				    <img src="/static/images/{{ myRequest.route.owner.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
+				    <span class="label"><a href="#" user="u{{myRequest.route.owner.id}}"class="user {{myRequest.route.owner.id}}">{{myRequest.route.owner.first_name}} {{myRequest.route.owner.last_name}}</a></span>
+				    </br>
+				    <strong>Date: </strong>{{myRequest.route.date}}
+				    </br>	
+				    <strong>Start Address: </strong>{{myRequest.route.start}}
+				    </br>
+				    <strong>End Address: </strong>{{myRequest.route.end}}
+				    </br>
+				    <strong>Status: </strong>{%ifequal myRequest.status 0 %}<span class="label label-success">Approved</span>{%endifequal%}
+							     {%ifequal myRequest.status 1 %}<span class="label label-warning">Waiting</span>{%endifequal%}
+							     {%ifequal myRequest.status 2 %}<span class="label label-important">Rejected</span>{%endifequal%}
+							     {%ifequal myRequest.status 3 %}<span class="label label-inverse">Confirmed</span>{%endifequal%}
+			            </br>
+					{% ifequal myRequest.status 0 %}
+				    	    <form method="post" class="pull-right" action="{% url confirm-route myRequest.id %}">
+				               <input type="submit" class="btn-success" value="Confirm">
+					    </form>
+					{% endifequal %}
+
+					{% ifnotequal myRequest.status 3 %}
+					    <form method="post" class="pull-right" action="{% url leave-route myRequest.id %}">
+				                <input type="submit" class="btn-danger" value="Leave From Route">
+					    </form>
+ 					{% endifnotequal %}
+  				
+					<form method="get" class="pull-right" action="{% url  inbox-to myRequest.route.owner.username %}#newMessage">
+				            <input type="submit" class="btn-primary" value="Send Message To Route Owner">
+			           	</form>
 				</td>
 				
 
 			    </tr>
 		    	{% endfor %}
-			{%endif%}
+			{% else %}
+			    <div class="alert alert-warning">
+                                 No route request found. Click button and search where you want to go! 
+				 <a href="{% url search-route %}" class="btn" >Search Route</a>
+                            </div>
+			{% endif %}
 			</table>
 		    </div>
 		</div>

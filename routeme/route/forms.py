@@ -11,6 +11,7 @@ class StartEndPointForm(forms.Form):
     startaddress = forms.CharField(max_length=200,widget = forms.Textarea(attrs={'rows':4, 'cols':40}))
     stopaddress = forms.CharField(max_length=200,widget = forms.Textarea(attrs={'rows':4, 'cols':40}))
     messagecontent = forms.CharField(max_length=200)
+
 class SearchRouteForm(forms.Form):
     where = forms.CharField(label="where")
     to = forms.CharField(label="to")
@@ -20,8 +21,21 @@ class SearchRouteForm(forms.Form):
     baggage = forms.BooleanField(required=False)
     pet = forms.BooleanField(required=False) 
 
+class UpdateRouteForm(forms.Form):
+    start = forms.CharField(widget = forms.TextInput(attrs={'readonly':'readonly'}))
+    end = forms.CharField(widget = forms.TextInput(attrs={'readonly':'readonly'}))
+    date = forms.DateField()
+    time = forms.TimeField()
+    arrivalTime = forms.CharField(max_length = 10)
+    vehicle = forms.CharField(widget = Select(choices = [("Car","Car"), ("Truck", "Truck")]))
+    capacity = forms.IntegerField(widget = Select(choices = [(x, str(x)) for x in range(1, 10)]))
+    baggage = forms.BooleanField(required=False)
+    pet = forms.BooleanField(required=False)
+
 class CreateRouteForm(forms.Form):
     route = forms.CharField(widget = forms.HiddenInput())
+    start = forms.CharField(widget = forms.HiddenInput())
+    end = forms.CharField(widget = forms.HiddenInput())
     date = forms.DateField()
     time = forms.TimeField()
     arrivalTime = forms.CharField(max_length = 10)
