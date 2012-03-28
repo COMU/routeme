@@ -17,9 +17,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME':'driveforme.db',                      # Or path to database file if using sqlite3.
-        'USER': 'driveforme',                      # Not used with sqlite3.
-        'PASSWORD':'driveformeroute',                  # Not used with sqlite3.
+        'NAME':'routeme.db',                      # Or path to database file if using sqlite3.
+        'USER': 'routeme',                      # Not used with sqlite3.
+        'PASSWORD':'sss',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -157,10 +157,10 @@ DEFAULT_PASSWORD = 'b90f83f387b20a704b65d1dbf94736a9b8864507'
 DEFAULT_EMAIL = 'default@routeme.com'
 
 AUTHENTICATION_BACKENDS = (
-    'facebook.auth.FacebookBackend',
     #'google.auth.GoogleAuthBackend',
     'twitter_app.auth.TwitterAuthBackend',
     'foursq.auth.FoursqAuthBackend',
+    'facebook.auth.FacebookBackend',
     'django.contrib.auth.backends.ModelBackend'
 )
 
