@@ -107,6 +107,7 @@ var sayac=0;
 var geocoder;
 function selectStartPoint(routeId,n){
  	//TODO code may be more efficent
+
 	google.maps.event.addListener(map, "click", function (e) {
 	if(sayac<3){
 	    var lat = e.latLng.lat();
@@ -135,7 +136,9 @@ function selectStartPoint(routeId,n){
 	   	     if (status == google.maps.GeocoderStatus.OK){
 		        if(result[1]){
 			   alert(result[1].formatted_address);
-		  	   sayac=sayac+1;
+		  	    $("#gobutton").attr('disabled', false);
+
+			   sayac=sayac+1;
 			   $('#'+n).find('#id_stopaddress').val(result[1].formatted_address);	  
 			   $('#'+n).find('#id_routeowner').val(routeId); 
 		        }

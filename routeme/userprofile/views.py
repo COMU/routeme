@@ -108,7 +108,7 @@ def logout(request):
 
 def signup(request):
     if request.method == "POST":
-        form = UserForm(request.POST)
+        form = UserForm(request.POST,request.FILES)
         if form.is_valid():
             user = User(email = form.cleaned_data['email'])
             user.first_name = form.cleaned_data['firstName']
@@ -117,12 +117,21 @@ def signup(request):
             user.set_password(form.cleaned_data['password'])
             user.is_active = False
             user.save()
-
-            userProfile = UserProfile.objects.get_or_create(user = user,
+	    userProfile,created = UserProfile.objects.get_or_create(user = user,
                             birthdate = form.cleaned_data['birthdate'],
                             gender = form.cleaned_data['gender'],
-			    profilePhoto = 'images/default.png'
-				)
+                            profilePhoto = 'images/default.png'
+                )
+	    if request.FILES:
+		photo = request.FILES['photo']
+                userProfile.profilePhoto.save(str(photo)+".jpg",photo)
+                userProfile.save()
+                image = Image.open(userProfile.profilePhoto.path)
+                image = image.resize((96, 96), Image.ANTIALIAS)
+                image.save(userProfile.profilePhoto.path,"jpeg")
+                userProfile.save()
+
+
 	    registration = Registration.objects.create_registration(user)
             registration.send_activation_mail()
             messages.add_message(request, messages.WARNING, 'Activation mail sent.')	
