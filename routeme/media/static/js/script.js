@@ -51,7 +51,7 @@ function saveResultAsStr(result){
     hours = parseInt(seconds / 3600);
     mins = parseInt((seconds - (hours * 3600)) / 60);
     $('#id_arrivalTime').val(hours + ":" + mins);
-    $('#id_arrivalTime').attr("readonly", "readonly");
+    //$('#id_arrivalTime').attr("readonly", "readonly");
     var route = [];
 
     for(var i = 0; i < legs.steps.length; i++){
@@ -245,6 +245,7 @@ $(document).ready(function (){
     $("#id_date").datepicker({dateFormat: 'yy-mm-dd', minDate: 0 });//when user click textfield jquery-ui this is createRoute's date.
     $("#id_birthdate").datepicker({dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true});//when user click textfield jquery-ui
     $("#id_time").timepicker({timeFormat:'hh:mm'});//datepicker or timepicker will be displayed on screen.
+    $("#id_arrivalTime").timepicker({timeFormat:'hh:mm'});//datepicker or timepicker will be displayed on screen.
 
    
 });
