@@ -126,7 +126,7 @@ def requestConfirm(request,requestId):
 	routeRequest.route.save()
 	routeRequest.save()
 	subject = "Route Request Confirm"
-	content = "Your request is confirmed by "+routeRequest.person.first_name
+	content = "Your request is confirmed by "+request.user.first_name
 	Message.objects.create_message(request.user,routeRequest.person,subject,content) 
 	print routeRequest.status
 	return HttpResponseRedirect('/')
