@@ -226,7 +226,7 @@ function showRouteOnMap(){
     travelMode: google.maps.TravelMode.DRIVING
   };
   drawRoute(request, directionDisplay);
-  setCreateRouteFormStatus(false);
+  enableCreateRouteForm(false);
 }
 
 function updateRoute(formId){
@@ -246,16 +246,27 @@ $(document).ready(function (){
     $("#id_birthdate").datepicker({dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true});//when user click textfield jquery-ui
     $("#id_time").timepicker({timeFormat:'hh:mm'});//datepicker or timepicker will be displayed on screen.
     $("#id_arrivalTime").timepicker({timeFormat:'hh:mm'});//datepicker or timepicker will be displayed on screen.
-    setCreateRouteFormStatus(true);//disable create route form until user click #show
-
+    addPlacesAutoComplete("where");    
+    addPlacesAutoComplete("to");    
+    disableCreateRouteForm();//disable create route form until user click #show
    
 });
 
 
-function setCreateRouteFormStatus(status){
-    $('#createRouteForm :input').attr('disabled', status);
-    $('#createRouteForm :select').attr('disabled', status);
-    $('#createRouteForm :submit').attr('disabled', status);
+function addPlacesAutoComplete(id){
+    var input = document.getElementById(id);
+    autocomplete = new google.maps.places.Autocomplete(input);
+}
+
+function enableCreateRouteForm(){
+    $('#createRouteForm :input').attr('disabled', false);
+    $('#createRouteForm :select').attr('disabled', false);
+    $('#createRouteForm :submit').attr('disabled', false);
+}
+function disableCreateRouteForm(){
+    $('#createRouteForm :input').attr('disabled', true);
+    $('#createRouteForm :select').attr('disabled', true);
+    $('#createRouteForm :submit').attr('disabled', true);
 }
 
 
