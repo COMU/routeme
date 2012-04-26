@@ -8,14 +8,17 @@
     </div>
     <div class="row">
         <div class="span8">
-             <fieldset><legend> Start and End Points</legend>
+	   <div class="alert alert-block">
+    		<h4 class="alert-heading">Warning!</h4>
+            	First enter start point and end point then click Show Route On Map.        
+	   </div>
+           <fieldset><legend> Start and End Points</legend>
            <form action="" method="get" class ="form-inline well">
               <label for="where"> Where : </label>
               <input type = "text" id = "where" />
               <label for="to"> To : </label>
               <input type = "text" id = "to" />
               <input type = "button" id = "show" value = "Show Route On Map"/>
-              <p class="help-block">First enter start point and end point
            </form>
              </fieldset>
         </div>
@@ -23,7 +26,7 @@
     <div class="row">
     <div id="formWrapper" class = "span8">
       <fieldset><legend>Route Informations</legend>
-      <form action = {% url route.views.createRoute %} method="post" class="well">
+      <form action = {% url route.views.createRoute %} method="post" class="well" id="createRouteForm">
       {{ field.errors }}
       <table>
         {{ form.as_table }}

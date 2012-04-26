@@ -226,6 +226,7 @@ function showRouteOnMap(){
     travelMode: google.maps.TravelMode.DRIVING
   };
   drawRoute(request, directionDisplay);
+  setCreateRouteFormStatus(false);
 }
 
 function updateRoute(formId){
@@ -239,17 +240,23 @@ function sendRequest(id, n){
 }
 
 $(document).ready(function (){
-    $("#createRouteSubmit").attr('disabled', true);//diabled button to save route without directions.
     $("#show").click(showRouteOnMap);
     $("#sroute").click(searchRoute);
     $("#id_date").datepicker({dateFormat: 'yy-mm-dd', minDate: 0 });//when user click textfield jquery-ui this is createRoute's date.
     $("#id_birthdate").datepicker({dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true});//when user click textfield jquery-ui
     $("#id_time").timepicker({timeFormat:'hh:mm'});//datepicker or timepicker will be displayed on screen.
     $("#id_arrivalTime").timepicker({timeFormat:'hh:mm'});//datepicker or timepicker will be displayed on screen.
+    setCreateRouteFormStatus(true);//disable create route form until user click #show
 
    
 });
 
+
+function setCreateRouteFormStatus(status){
+    $('#createRouteForm :input').attr('disabled', status);
+    $('#createRouteForm :select').attr('disabled', status);
+    $('#createRouteForm :submit').attr('disabled', status);
+}
 
 
 $(document).ajaxSend(function(event, xhr, settings) {
