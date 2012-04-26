@@ -39,7 +39,7 @@ class CreateRouteForm(forms.Form):
     date = forms.DateField()
     time = forms.TimeField()
     arrivalTime = forms.CharField(max_length = 10)
-    vehicle = forms.CharField(widget = Select(choices = [("Car","Car"), ("Truck", "Truck")]))
+    vehicle = forms.CharField(widget = Select(choices = [("Car","Car"), ("Truck", "Truck"), ("Motorsiklet", "Motorsiklet")]))
     capacity = forms.IntegerField(widget = Select(choices = [(x, str(x)) for x in range(1, 10)]))
     baggage = forms.BooleanField(required=False)
     pet = forms.BooleanField(required=False)
