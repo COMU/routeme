@@ -12,7 +12,7 @@ from message.models import Message
 @login_required
 def friendship_request(request, user_id):
     from_user = request.user
-    to_user = User.objects.get(id = int(user_id[-1:]))
+    to_user = User.objects.get(id = int(user_id))
     
     if  from_user == to_user or Friendship.objects.requested(from_user, to_user):
 	print "No way!"
