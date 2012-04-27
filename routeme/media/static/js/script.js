@@ -246,18 +246,12 @@ $(document).ready(function (){
     $("#show").click(showRouteOnMap);
     $("#sroute").click(searchRoute);
     $("#id_date").datepicker({dateFormat: 'yy-mm-dd', minDate: 0 });//when user click textfield jquery-ui this is createRoute's date.
-<<<<<<< HEAD
-    $("#id_birthdate").datepicker({dateFormat: 'yy-mm-dd'});//when user click textfield jquery-ui
-    $("#id_time").timepicker({timeformat:'hh:m'});//datepicker or timepicker will be displayed on screen.
-
-=======
     $("#id_birthdate").datepicker({dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '1900:2012'});//when user click textfield jquery-ui
     $("#id_time").timepicker({timeFormat:'hh:mm'});//datepicker or timepicker will be displayed on screen.
     $("#id_arrivalTime").timepicker({timeFormat:'hh:mm'});//datepicker or timepicker will be displayed on screen.
     addPlacesAutoComplete("where");    
     addPlacesAutoComplete("to");    
     disableCreateRouteForm();//disable create route form until user click #show
->>>>>>> bf00664a28795be094aec5535b6cdd346cb4d442
    
 });
 
