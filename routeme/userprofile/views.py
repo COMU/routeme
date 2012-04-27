@@ -33,12 +33,15 @@ def update(request):
                 firstname = form.cleaned_data['firstName']
                 lastname = form.cleaned_data['lastName']
                 email = form.cleaned_data['email']
+ 		gender = form.cleaned_data['gender']
                 user_profile = UserProfile.objects.get(user=request.user)
 
                 request.user.first_name = firstname
                 request.user.last_name = lastname
                 request.user.username = email
                 request.user.email = email
+                request.user.userprofile.gender = gender
+		request.user.userprofile.save()
                 if request.FILES:
                         photo = request.FILES['photo']
                         user_profile.profilePhoto.save(str(request.user.id)+".jpg",photo)
@@ -57,7 +60,8 @@ def update(request):
         initial_data = {
                 'email': request.user.email,
                 'firstName':request.user.first_name,
-                'lastName':request.user.last_name
+                'lastName':request.user.last_name,
+		'gender': request.user.userprofile.gender
         }
         form = UserUpdateForm(initial=initial_data)
 
