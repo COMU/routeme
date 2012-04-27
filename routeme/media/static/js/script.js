@@ -244,7 +244,7 @@ $(document).ready(function (){
     $("#sroute").click(searchRoute);
     $("#id_date").datepicker({dateFormat: 'yy-mm-dd', minDate: 0 });//when user click textfield jquery-ui this is createRoute's date.
     $("#id_birthdate").datepicker({dateFormat: 'yy-mm-dd'});//when user click textfield jquery-ui
-    $("#id_time").timepicker({timeFormat: 'h:m'});//datepicker or timepicker will be displayed on screen.
+    $("#id_time").timepicker({timeformat:'hh:m'});//datepicker or timepicker will be displayed on screen.
 
    
 });
