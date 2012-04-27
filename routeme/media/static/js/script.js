@@ -51,7 +51,7 @@ function saveResultAsStr(result){
     hours = parseInt(seconds / 3600);
     mins = parseInt((seconds - (hours * 3600)) / 60);
     $('#id_arrivalTime').val(hours + ":" + mins);
-    $('#id_arrivalTime').attr("readonly", "readonly");
+    //$('#id_arrivalTime').attr("readonly", "readonly");
     var route = [];
 
     for(var i = 0; i < legs.steps.length; i++){
@@ -107,6 +107,7 @@ var sayac=0;
 var geocoder;
 function selectStartPoint(routeId,n){
  	//TODO code may be more efficent
+
 	google.maps.event.addListener(map, "click", function (e) {
 	if(sayac<3){
 	    var lat = e.latLng.lat();
@@ -135,7 +136,9 @@ function selectStartPoint(routeId,n){
 	   	     if (status == google.maps.GeocoderStatus.OK){
 		        if(result[1]){
 			   alert(result[1].formatted_address);
-		  	   sayac=sayac+1;
+		  	    $("#gobutton").attr('disabled', false);
+
+			   sayac=sayac+1;
 			   $('#'+n).find('#id_stopaddress').val(result[1].formatted_address);	  
 			   $('#'+n).find('#id_routeowner').val(routeId); 
 		        }
@@ -226,6 +229,7 @@ function showRouteOnMap(){
     travelMode: google.maps.TravelMode.DRIVING
   };
   drawRoute(request, directionDisplay);
+  enableCreateRouteForm(false);
 }
 
 function updateRoute(formId){
@@ -239,16 +243,40 @@ function sendRequest(id, n){
 }
 
 $(document).ready(function (){
-    $("#createRouteSubmit").attr('disabled', true);//diabled button to save route without directions.
     $("#show").click(showRouteOnMap);
     $("#sroute").click(searchRoute);
     $("#id_date").datepicker({dateFormat: 'yy-mm-dd', minDate: 0 });//when user click textfield jquery-ui this is createRoute's date.
+<<<<<<< HEAD
     $("#id_birthdate").datepicker({dateFormat: 'yy-mm-dd'});//when user click textfield jquery-ui
     $("#id_time").timepicker({timeformat:'hh:m'});//datepicker or timepicker will be displayed on screen.
 
+=======
+    $("#id_birthdate").datepicker({dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true, yearRange: '1900:2012'});//when user click textfield jquery-ui
+    $("#id_time").timepicker({timeFormat:'hh:mm'});//datepicker or timepicker will be displayed on screen.
+    $("#id_arrivalTime").timepicker({timeFormat:'hh:mm'});//datepicker or timepicker will be displayed on screen.
+    addPlacesAutoComplete("where");    
+    addPlacesAutoComplete("to");    
+    disableCreateRouteForm();//disable create route form until user click #show
+>>>>>>> bf00664a28795be094aec5535b6cdd346cb4d442
    
 });
 
+
+function addPlacesAutoComplete(id){
+    var input = document.getElementById(id);
+    autocomplete = new google.maps.places.Autocomplete(input);
+}
+
+function enableCreateRouteForm(){
+    $('#createRouteForm :input').attr('disabled', false);
+    $('#createRouteForm :select').attr('disabled', false);
+    $('#createRouteForm :submit').attr('disabled', false);
+}
+function disableCreateRouteForm(){
+    $('#createRouteForm :input').attr('disabled', true);
+    $('#createRouteForm :select').attr('disabled', true);
+    $('#createRouteForm :submit').attr('disabled', true);
+}
 
 
 $(document).ajaxSend(function(event, xhr, settings) {

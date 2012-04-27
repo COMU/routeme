@@ -20,6 +20,7 @@ class UserUpdateForm(forms.Form):
     firstName = forms.CharField(max_length = 30, widget=forms.TextInput(attrs={'title':"FirstName", 'placeholder': "First Name"}))
     lastName = forms.CharField(max_length = 30, widget = forms.TextInput(attrs = {'title':"LastName",'placeholder': "Last Name"}))
     email = forms.EmailField(widget = forms.TextInput(attrs={'placeholder':'Email'}))
+    gender = forms.ChoiceField(choices = GENDER_CHOICES)
 
 
 

@@ -10,7 +10,7 @@ class StartEndPointForm(forms.Form):
     routeowner = forms.CharField(widget = forms.HiddenInput())
     startaddress = forms.CharField(max_length=200,widget = forms.Textarea(attrs={'rows':4, 'cols':40}))
     stopaddress = forms.CharField(max_length=200,widget = forms.Textarea(attrs={'rows':4, 'cols':40}))
-    messagecontent = forms.CharField(max_length=200)
+    messagecontent = forms.CharField(max_length=200,required=False)
 
 class SearchRouteForm(forms.Form):
     where = forms.CharField(label="where")
@@ -39,7 +39,7 @@ class CreateRouteForm(forms.Form):
     date = forms.DateField()
     time = forms.TimeField()
     arrivalTime = forms.CharField(max_length = 10)
-    vehicle = forms.CharField(widget = Select(choices = [("Car","Car"), ("Truck", "Truck")]))
+    vehicle = forms.CharField(widget = Select(choices = [("Car","Car"), ("Truck", "Truck"), ("Motorsiklet", "Motorsiklet")]))
     capacity = forms.IntegerField(widget = Select(choices = [(x, str(x)) for x in range(1, 10)]))
     baggage = forms.BooleanField(required=False)
     pet = forms.BooleanField(required=False)

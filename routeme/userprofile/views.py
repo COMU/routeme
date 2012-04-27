@@ -33,12 +33,15 @@ def update(request):
                 firstname = form.cleaned_data['firstName']
                 lastname = form.cleaned_data['lastName']
                 email = form.cleaned_data['email']
+ 		gender = form.cleaned_data['gender']
                 user_profile = UserProfile.objects.get(user=request.user)
 
                 request.user.first_name = firstname
                 request.user.last_name = lastname
                 request.user.username = email
                 request.user.email = email
+                request.user.userprofile.gender = gender
+		request.user.userprofile.save()
                 if request.FILES:
                         photo = request.FILES['photo']
                         user_profile.profilePhoto.save(str(request.user.id)+".jpg",photo)
@@ -57,7 +60,8 @@ def update(request):
         initial_data = {
                 'email': request.user.email,
                 'firstName':request.user.first_name,
-                'lastName':request.user.last_name
+                'lastName':request.user.last_name,
+		'gender': request.user.userprofile.gender
         }
         form = UserUpdateForm(initial=initial_data)
 
@@ -80,6 +84,7 @@ def login(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+            print username, password
             user=authenticate(username=username,password=password)
 	    
             try:
@@ -107,7 +112,7 @@ def logout(request):
 
 def signup(request):
     if request.method == "POST":
-        form = UserForm(request.POST)
+        form = UserForm(request.POST,request.FILES)
         if form.is_valid():
             user = User(email = form.cleaned_data['email'])
             user.first_name = form.cleaned_data['firstName']
@@ -116,12 +121,21 @@ def signup(request):
             user.set_password(form.cleaned_data['password'])
             user.is_active = False
             user.save()
-
-            userProfile = UserProfile.objects.get_or_create(user = user,
+	    userProfile,created = UserProfile.objects.get_or_create(user = user,
                             birthdate = form.cleaned_data['birthdate'],
                             gender = form.cleaned_data['gender'],
-			    profilePhoto = 'images/default.png'
-				)
+                            profilePhoto = 'images/default.png'
+                )
+	    if request.FILES:
+		photo = request.FILES['photo']
+                userProfile.profilePhoto.save(str(photo)+".jpg",photo)
+                userProfile.save()
+                image = Image.open(userProfile.profilePhoto.path)
+                image = image.resize((96, 96), Image.ANTIALIAS)
+                image.save(userProfile.profilePhoto.path,"jpeg")
+                userProfile.save()
+
+
 	    registration = Registration.objects.create_registration(user)
             registration.send_activation_mail()
             messages.add_message(request, messages.WARNING, 'Activation mail sent.')	
