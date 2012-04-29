@@ -65,7 +65,7 @@
     		    </div>
 		    <td><input id="selectPointButton{{n}}" type="button" disabled="disabled" value="Select Point on Route" onClick="selectStartPoint({{r.id}},{{n}})"></td>
 				
-    		    <td><a href="#{{n}}" id="gobutton" disabled="true" data-toggle="modal" class="btn">Go</a></td>
+    		    <td><input id="gobutton{{n}}" type="button" disabled="disabled" value="Go" onClick="showModal({{n}})"></td>
                </tr>
             {% endfor %}
 	  </table>

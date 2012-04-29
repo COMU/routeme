@@ -94,6 +94,12 @@ function searchRoute(){
 }
 
 
+function showModal(modalId){
+
+    $('#'+modalId).modal("show");
+
+}
+
 function removeRenderers(){
     if (directionRenderers.length != 0){
         for(var i=0; i < directionRenderers.length; i++){
@@ -136,7 +142,7 @@ function selectStartPoint(routeId,n){
 	   	     if (status == google.maps.GeocoderStatus.OK){
 		        if(result[1]){
 			   alert(result[1].formatted_address);
-		  	    $("#gobutton").attr('disabled', false);
+		  	    $("#gobutton"+n).attr('disabled', false);
 
 			   sayac=sayac+1;
 			   $('#'+n).find('#id_stopaddress').val(result[1].formatted_address);	  
