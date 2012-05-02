@@ -96,7 +96,7 @@ def login(request):
                 if user.is_active:
                     auth_login(request,user)
                 else:
-                    return render_to_response('email_app/login.html',{'title':'Login', 'form'   :LoginForm()})
+                    return render_to_response('email_app/login.html',{'title':'Login', 'form' :LoginForm(), 'sys_messages': sys_messages})
             else:
                 return render_to_response('email_app/login.html',{'title':'Login', 'form':LoginForm()})
             return HttpResponseRedirect('/')
@@ -104,7 +104,8 @@ def login(request):
             return render_to_response('email_app/login.html',{'title':'Login', 'form':LoginForm()})
     else:
 	sys_messages = messages.get_messages(request)
-        return render_to_response('email_app/login.html',{'title':'Login', 'sys_messages':sys_messages, 'form':LoginForm()})
+        return render_to_response('email_app/login.html',{'title':'Login', 'sys_messages':sys_messages, 'form':LoginForm()},
+		context_instance=RequestContext(request, ))
 
 def logout(request):
     user_logout(request)

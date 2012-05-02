@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login as djangoLogin
 
@@ -36,6 +37,10 @@ class LoginBackend(object):
 
     def login(self, profile, related_name, **user_kwargs):
 
+      if self._request.user and self._request.user.is_authenticated():
+        already_logged_user = self._request.user
+      else:
+        already_logged_user = None
 
       try:
           #if related_name == "foursq_profile":
@@ -44,14 +49,29 @@ class LoginBackend(object):
           #    print profile
           userprofile = profile.getUserProfile()
           user = userprofile.user
+          if already_logged_user:
+            messages.add_message(self._request, messages.ERROR,
+                                 "This external account has already "
+                                 "been used before. Merging profiles "
+                                 "is not yet possible! Switched to "
+                                 "this account now!")
       except UserProfile.DoesNotExist:
-          user = User(**user_kwargs)
-          user.password = settings.DEFAULT_PASSWORD
-          user.save()
-          kwargs = {related_name: profile}
-          userprofile = UserProfile(user=user, **kwargs)
-          userprofile.last_login_backend_name = related_name
-          userprofile.save()
+          if already_logged_user:
+            user = already_logged_user
+            userprofile = user.get_profile()
+            setattr(userprofile, related_name, profile)
+            userprofile.save()
+            messages.add_message(self._request, messages.SUCCESS,
+                                 "Activated new external account!")
+          else:
+            user = User(**user_kwargs)
+            user.password = settings.DEFAULT_PASSWORD
+            user.save()
+
+            kwargs = {related_name: profile}
+            userprofile = UserProfile(user=user, **kwargs)
+            userprofile.last_login_backend_name = related_name
+            userprofile.save()
       #djangoLogin(self._request,user)
 
-      return userprofile.user
+      return user

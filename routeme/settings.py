@@ -5,7 +5,7 @@ AUTH_PROFILE_MODULE = 'userprofile.UserProfile'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-BASE_URL = 'http://www.drivefor.me'
+BASE_URL = 'http://127.0.0.1:8000'
 
 
 ADMINS = (
@@ -18,9 +18,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME':'driveforme.db',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD':'',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'USER': 'driveforme',                      # Not used with sqlite3.
+        'PASSWORD':'driveformeroute',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }

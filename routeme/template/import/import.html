@@ -1,0 +1,24 @@
+<div>
+    <a href="/foursq/auth/"><img src="/static/images/foursquare-logo.png"></a></br>
+    {% if foursq_profile_activated %}
+ 	<a href="{% url contact_list 'foursquare'%}"><span class="label label-success">Import Contacts</a>
+    {% else %}
+ 	<a href="#"><span class="label">Not Activated</a>
+    {% endif %}
+   
+    <hr>
+    <a href="/facebook/login/"><img src="/static/images/facebook-logo.jpg"></a></br>
+    {% if facebook_profile_activated %}
+ 	<a href="{% url contact_list 'facebook'%}"><span class="label label-success">Import Contacts</a>
+    {% else %}
+ 	<a href="#"><span class="label">Not Activated</a>
+    {% endif %}
+    <hr>
+    <a href="/twitter/auth/"><img src="/static/images/twitter-logo.png"></a></br>
+    {% if twitter_profile_activated %}
+ 	<a href="{% url contact_list 'twitter'%}"><span class="label label-success">Import Contacts</a>
+    {% else %}
+ 	<a href="#"><span class="label">Not Activated</a>
+    {% endif %}
+    <hr>
+</div>

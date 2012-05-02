@@ -35,10 +35,20 @@ var setRequests = function (){
     	});
     });
 }
+
+var friendImport = function(){
+    $.get("/contact/import/", function(data){
+	$('#import').html(data.html);
+    });
+}
+
 $(document).ready(function(){
     $('.user').popover({html: true});
     setRequests();
+    friendImport();
 });
+
+
 /*
 $(document).ready(function(){
     $('.user').hover(function(){

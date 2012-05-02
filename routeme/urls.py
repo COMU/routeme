@@ -13,6 +13,7 @@ urlpatterns = patterns('routeme',
     url(r'^facebook/', include('facebook.urls')),
     url(r'^message/', include('message.urls')),
     url(r'^friend/', include('friend.urls')),
+    url(r'^contact/', include('contact_importer.urls')),
     # url(r'^$', 'routeme.views.home', name='home'),
     # url(r'^routeme/', include('routeme.foo.urls')),
 
