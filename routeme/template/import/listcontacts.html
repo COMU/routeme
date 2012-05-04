@@ -8,7 +8,7 @@
 		<tr>
 		    <td><img src="/static/images/{{ friend.profilePhoto.url}}" style="width:40px;height:40px"></td>
 		    <td>{{ friend.user.first_name }} {{ friend.user.last_name }} </td>
-		    <td><a url="/friend/request/{{friend.user.first_name}}/">Send Request</a></td>
+		    <td><a href="/friend/request/{{friend.user.id}}/">Send Request</a></td>
 		</tr>
             {% endfor %}
 	</table>
