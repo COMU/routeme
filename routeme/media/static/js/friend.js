@@ -9,7 +9,7 @@
 }*/
 
 function friendshipRequest(userId){
- 	$.get("/friend/request/" + userId, function(data){
+ 	$.get("/friend/request/" + userId + "/", function(data){
 	    //$('#dialog').dialog('close');
             $.get("/friend/showStatus/u" + userId, function(data){
                 $('[user]').each(function(){
