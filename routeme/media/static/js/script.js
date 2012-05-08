@@ -113,7 +113,7 @@ var sayac=0;
 var geocoder;
 function selectStartPoint(routeId,n){
  	//TODO code may be more efficent
-
+	alert("Before Select the Start Point!");
 	google.maps.event.addListener(map, "click", function (e) {
 	if(sayac<3){
 	    var lat = e.latLng.lat();
