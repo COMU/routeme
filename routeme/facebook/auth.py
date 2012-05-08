@@ -50,7 +50,7 @@ class FacebookBackend:
           fb_mail = fb_profile['email']
           user = backend.login(
             facebook_profile, related_name='facebook_profile',
-            username=fb_profile['email'], email=fb_profile['email'])
+            username=fb_profile['email'],first_name = fb_profile['first_name'], last_name = fb_profile['last_name'], email=fb_profile['email'])
         except:
           import sys
           print "error ", sys.exc_info()[0]
