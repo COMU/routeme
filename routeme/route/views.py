@@ -17,6 +17,7 @@ from django.template.loader import render_to_string
 from django.db.models.manager import QuerySet
 from django.db.models import Q
 from datetime import date as today
+from friend.models import Friendship
 
 def index(request):
     if not request.user.is_authenticated():
@@ -202,6 +203,10 @@ def listRoute(request):
 		route = route.filter(Q(pet=pet)|Q(pet= not pet)).filter(Q(baggage=baggage) | Q(baggage=not baggage)).filter(capacity__gt=0)
 	    else:
 		route = route.filter(pet=pet).filter(baggage=baggage).filter(capacity__gt=0)
+	    for r in route:
+		if r.private:
+		    if not Friendship.objects.areFriends(request.user, r.owner):
+			route.remove(r)
 	    # if route:
             form = StartEndPointForm()
             return render_to_response("route/listRoute.html",{'title':'Driveforme','form':form,'routes':enumerate(route, 1),'map':1, "user":request.user})
@@ -248,6 +253,7 @@ def createRoute(request):
                         capacity = form.cleaned_data['capacity'],
                         baggage = form.cleaned_data['baggage'],
                         pet = form.cleaned_data['pet'],
+ 			private = form.cleaned_data['private'],
                         route = lineString,
                         owner = request.user
                     )

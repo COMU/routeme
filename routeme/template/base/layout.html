@@ -4,7 +4,13 @@
 <div class = "navbar navbar-fixed-top">
   <div class = "navbar-inner">
    <div class = "container">
+     <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+        <span class="icon-bar"></span>
+ 	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+     </a>
      <a class="brand" href="{% url route.views.index %}"><img src = "/static/img/icon-route.png">driveforme</a>
+     <div class="nav-collapse">
      <ul class = "nav pull-right">
         <li><a href = "{% url message.views.inbox %}"><i class="icon-comment icon-white"></i>Messages
              
@@ -31,6 +37,7 @@
 	    </ul>
         </li>
       </ul>
+      </div>
    </div>
   </div>
 </div>

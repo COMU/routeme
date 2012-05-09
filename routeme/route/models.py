@@ -30,7 +30,7 @@ class RouteInformation(models.Model):
      owner = models.ForeignKey(User, related_name = "owner")
      start = models.CharField(max_length=50)
      end = models.CharField(max_length=50)
-
+     private = models.BooleanField()
      objects = models.GeoManager()
 
 
