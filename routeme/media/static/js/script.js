@@ -16,6 +16,7 @@ function initializeMap(){
   var latlng;
   if (google.loader.ClientLocation != null){
       latlng = new google.maps.LatLng(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);
+      setOfferRouteUrl(latlng);
   }else{
       latlng = new google.maps.LatLng(39.57, 32.51);
   }
@@ -31,6 +32,10 @@ function initializeMap(){
 
   directionDisplay.setMap(map);
   geocoder = new google.maps.Geocoder();
+}
+
+function setOfferRouteUrl(latlng){
+  $('#offer').attr('href', "/offer?lat=" + latlng.lat() + "&lng=" + latlng.lng());
 }
 
 function drawRoute(request, directionDisplay){

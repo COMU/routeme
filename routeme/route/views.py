@@ -208,6 +208,14 @@ def listRoute(request):
     
     return HttpResponseRedirect('searchroute')
 
+@login_required
+def offerRoute(request):
+    lat = request.GET['lat']
+    lng = request.GET['lng']
+   
+    point = Point(float(lat),float(lng))
+    route = RouteInformation.objects.filter(route__distance_lt = (point, D(km=10)))
+    return render_to_response("route/listRoute.html",{'title':'Driveforme', 'routes':enumerate(route, 1),'map':1, "user":request.user})
 
 @login_required
 def searchRoute(request):
