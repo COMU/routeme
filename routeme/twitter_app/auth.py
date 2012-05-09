@@ -10,7 +10,8 @@ from routeme.google.models import GoogleProfile
 from routeme.userprofile.models import UserProfile
 from routeme.twitter_app.models import TwitterProfile
 import settings
-
+import urllib
+import Image
 
 class TwitterAuthBackend(object):
   def authenticate(self, request, credentials):
@@ -38,6 +39,19 @@ class TwitterAuthBackend(object):
     user = backend.login(
         twitter_profile, related_name='twitter_profile',
         username=twitter_screenname, email=settings.DEFAULT_EMAIL)
+
+    userProfile,created = UserProfile.objects.get_or_create(user = user,
+                            profilePhoto = 'images/default.png'
+                )
+    urllib.urlretrieve (credentials['profile_image_url'],
+                   '/'.join(userProfile.profilePhoto.path.split('/')[:-1])+"/"+str(user.id)+".jpg" )
+    userProfile.profilePhoto='images/'+str(user.id)+".jpg"
+    image = Image.open(userProfile.profilePhoto.path)
+    image = image.resize((96, 96), Image.ANTIALIAS)
+    image.save(userProfile.profilePhoto.path,"jpeg")
+
+    userProfile.save()
+
     return user
 
 
