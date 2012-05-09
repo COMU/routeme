@@ -262,6 +262,8 @@ $(document).ready(function (){
     $("#id_arrivalTime").timepicker({timeFormat:'hh:mm'});//datepicker or timepicker will be displayed on screen.
     addPlacesAutoComplete("where");    
     addPlacesAutoComplete("to");    
+    addPlacesAutoComplete("id_where");    
+    addPlacesAutoComplete("id_to");    
     disableCreateRouteForm();//disable create route form until user click #show
    
 });
