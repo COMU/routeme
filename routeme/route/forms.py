@@ -17,7 +17,7 @@ class SearchRouteForm(forms.Form):
     to = forms.CharField(label="to")
     start = forms.CharField(widget = forms.HiddenInput())
     end = forms.CharField(widget = forms.HiddenInput())
-    date = forms.DateField()
+    date = forms.DateField(required=False)
     baggage = forms.BooleanField(required=False)
     pet = forms.BooleanField(required=False) 
 
