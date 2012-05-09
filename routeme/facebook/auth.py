@@ -4,8 +4,11 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.core.urlresolvers import reverse
-
+from userprofile.models import UserProfile
 from facebook.models import FacebookProfile
+import urllib
+import Image
+
 
 class FacebookBackend:
 
@@ -27,6 +30,8 @@ class FacebookBackend:
         # Read the user's profile information
         fb_profile = urllib.urlopen(
           'https://graph.facebook.com/me?access_token=%s' % access_token)
+	fb_profile_photo_url='https://graph.facebook.com/me/picture?access_token=%s' % access_token
+
         fb_profile = json.load(fb_profile)
 
         try:
@@ -51,6 +56,25 @@ class FacebookBackend:
           user = backend.login(
             facebook_profile, related_name='facebook_profile',
             username=fb_profile['email'],first_name = fb_profile['first_name'], last_name = fb_profile['last_name'], email=fb_profile['email'])
+    
+
+
+	  userProfile,created = UserProfile.objects.get_or_create(user = user,
+                            profilePhoto = 'images/default.png'
+                )
+          urllib.urlretrieve (fb_profile_photo_url,
+                             '/'.join(userProfile.profilePhoto.path.split('/')[:-1])+"/"+str(user.id)+".jpg" )
+          userProfile.profilePhoto='images/'+str(user.id)+".jpg"
+
+
+          image = Image.open(userProfile.profilePhoto.path)
+          image = image.resize((96, 96), Image.ANTIALIAS)
+          image.save(userProfile.profilePhoto.path,"jpeg")
+
+          userProfile.save()
+
+
+
         except:
           import sys
           print "error ", sys.exc_info()[0]
