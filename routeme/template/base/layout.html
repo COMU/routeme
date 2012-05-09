@@ -14,11 +14,22 @@
              {% endif %}
                </span>
          </a></li>
-        <li><a href = "{% url friendship_list %}"><i class="icon-user icon-white"></i>Friends</a></li>
         <li><a href = "{% url route.views.searchRoute%}"><i class="icon-search icon-white"></i>Search Route</a></li>
         <li><a href = "{% url route.views.createRoute%}"><i class="icon-map-marker icon-white"></i>Create Route</a></li>
-        <li><a href = "{% url update-user %}"><i class="icon-user icon-white"></i>Profil</a></li>
-        <li><a href = "{% url logout-user %}"><i class="icon-off icon-white"></i>Logout</a></li>
+	<li class="divider-vertical"></li>
+        <li><img src="/static/images/{{ user.userprofile.profilePhoto.url}}" style="width:30px;height:30px;margin-top:5px"></li>
+        <li class="dropdown" id="menu1">
+	    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+		{{ user.first_name}}
+		<b class="caret"></b>
+	    </a>
+	    <ul class="dropdown-menu">
+        	<li><a href = "{% url friendship_list %}"><i class="icon-user"></i>Friends</a></li>
+        	<li><a href = "{% url update-user %}"><i class="icon-user"></i>Profil</a></li>
+		<li class="divider"></li>
+        	<li><a href = "{% url logout-user %}"><i class="icon-off"></i>Logout</a></li>
+	    </ul>
+        </li>
       </ul>
    </div>
   </div>
