@@ -43,3 +43,4 @@ class CreateRouteForm(forms.Form):
     capacity = forms.IntegerField(widget = Select(choices = [(x, str(x)) for x in range(1, 10)]))
     baggage = forms.BooleanField(required=False)
     pet = forms.BooleanField(required=False)
+    private = forms.BooleanField(required=False)
