@@ -203,10 +203,12 @@ def listRoute(request):
 		route = route.filter(Q(pet=pet)|Q(pet= not pet)).filter(Q(baggage=baggage) | Q(baggage=not baggage)).filter(capacity__gt=0)
 	    else:
 		route = route.filter(pet=pet).filter(baggage=baggage).filter(capacity__gt=0)
+
+            route = list(route)
 	    for r in route:
 		if r.private:
 		    if not Friendship.objects.areFriends(request.user, r.owner):
-			route.remove(r)
+			route.remove(r)			
 	    # if route:
             form = StartEndPointForm()
             return render_to_response("route/listRoute.html",{'title':'Driveforme','form':form,'routes':enumerate(route, 1),'map':1, "user":request.user})
