@@ -18,6 +18,7 @@ urlpatterns = patterns('userprofile.views',
     url(r'logout/$',"logout", name = "logout-user"),
     url(r'username/$',"get_username", name = "username"),
     url(r'update/$',"update",name = "update-user"),
+    url(r'profile/(?P<userId>\d+)/$',"viewprofile", name = "view-profile"),
     url(r'activate/(?P<key>\w+)/$',"activate",name = "activate-user"),
 )
 

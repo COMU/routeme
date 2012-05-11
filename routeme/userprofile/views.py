@@ -25,6 +25,19 @@ def error404(request):
 def index(request):
     return render_to_response("email_app/index.html")
 
+
+@login_required
+def viewprofile(request,userId):
+  user = User.objects.get(id=userId)
+  data={
+           'title':"Profile",
+           'img': user.userprofile.profilePhoto.url,
+           'user': user
+   }
+
+  return render_to_response("email_app/profile.html", data)
+
+
 @login_required
 def update(request):
   if request.method == "POST":
