@@ -21,7 +21,7 @@ def friendship_request(request, user_id):
 	content = from_user.get_full_name() + " sent a friendship request to you."
 	message = Message.objects.create_message(from_user, to_user, "Friendship Request", content)
     
-    return render_to_response("email_app/index.html")
+    return HttpResponseRedirect(reverse('index'))
 
 @login_required
 def show_status(request, user_id):
