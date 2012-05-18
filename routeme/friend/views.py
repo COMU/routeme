@@ -52,7 +52,7 @@ def list(request):
     requests = Friendship.objects.getRequestsToUser(request.user)
     friends = Friendship.objects.getFriends(request.user)
     #unread_message_count = Message.objects.count_unread(request.user)
-    return render_to_response("friend/list.html", {'requests':requests, 'friends':friends, 'user': request.user})  
+    return render_to_response("friend/list.html", {'requests':requests, 'friends':friends, 'user': request.user, 'title': 'Friends'})  
 
 @login_required
 def accept(request, request_id):

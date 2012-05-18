@@ -49,7 +49,7 @@ def inbox(request, username = None):
 	data = {'to': username}
         form = MessageForm(initial=data)
     
-    return render_to_response("message/inbox.html", {'messages': messages,'form': form, 'user': request.user})
+    return render_to_response("message/inbox.html", {'messages': messages,'form': form, 'user': request.user, 'title':"Messages"})
 
 @login_required
 def mark_read(request):
