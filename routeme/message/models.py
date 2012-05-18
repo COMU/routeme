@@ -30,7 +30,7 @@ class Message(models.Model):
     from_user = models.ForeignKey(User, related_name = "from_user")
     to_user = models.ForeignKey(User, related_name = "to_user")
     subject = models.CharField(max_length = 100)
-    message = models.CharField(max_length = 500)
+    message = models.CharField(max_length = 1000)
     date_time = models.DateTimeField(auto_now_add = True, blank = True)
     read = models.BooleanField(default = False, blank = True)
     objects = MessageManager() 
