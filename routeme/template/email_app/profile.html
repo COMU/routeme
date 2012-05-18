@@ -8,29 +8,50 @@
       <div class="span1 offset1"> <img src="/static/images/{{ user.userprofile.profilePhoto.url}}" style="width:60px;height:60px"></div>
       <div class="span3"><h2>{{user.first_name}} {{user.last_name}}</h2></div>
   </div>
+  <div class="row">
+	<div class="span6 offset1">
+	
+	   <table>
+               <tr>
+                   <td><strong>Username  </strong></td><td>:{{user.username}}</td>
+	       </tr>
+	       <tr>
+		   <td><strong>Email </strong></td><td>:{{user.email}}</td>
+	       </tr>
+	       <tr>
+              	   <td><strong>Birth Date </strong></td><td>:{{user.userprofile.birthdate}}</td>
+	       </tr>
+               <tr>
+                   <td><strong>Gender </strong></td><td>:{{user.userprofile.gender}}</td>
+	
+               </tr>
+               <tr>
+               	   <td><hr></td>
+               </tr>
+           </table>
+
+
+
+
+
+
+	</div>
+
+  </div>
   </br></br></br>
 
   <div class="row">
       <div class="span4 offset1">
-	<fieldset><legend>Routes</legend>
-
+	<fieldset><legend><h2><strong>Routes</strong></h2></legend></fieldset>
 	    <table>
 	    {%for routeInfo in routes %}
-                     <tr>
-                          <td>
-			
-                              <strong>Date: </strong>{{routeInfo.date}}
-                              </br>
-                              <strong>Start Address: </strong>{{routeInfo.start}}
-                              </br>
-                              <strong>End Address: </strong>{{routeInfo.end}}
-                              </br>
+                  <tr><td><strong>Date </strong>:{{routeInfo.date}}</td></tr>
+                  <tr><td><strong>Start Address </strong>:{{routeInfo.start}}</td></tr>
+                  <tr><td><strong>End Address </strong>:{{routeInfo.end}}</td></tr>
 
-                          </td>
-		     </tr>
-		     <tr>
-			<td><legend></legend></td>
-                     </tr>
+		<tr>
+			<td><hr></td>
+                </tr>
             {% endfor %}
             </table>
 
@@ -39,6 +60,7 @@
 
 </div>
   <div class="span4">
+	<div>{% include "include/profil.html" %}</div>
   </div>
 
 </div>

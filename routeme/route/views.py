@@ -220,7 +220,7 @@ def offerRoute(request):
     lng = request.GET['lng']
    
     point = Point(float(lat),float(lng))
-    route = RouteInformation.objects.filter(route__distance_lt = (point, D(km=10)), date__lte=today.today())
+    route = RouteInformation.objects.filter(route__distance_lt = (point, D(km=10)), date__gte=today.today())
     return render_to_response("route/listRoute.html",{'title':'Driveforme', 'routes':enumerate(route, 1),'map':1, "user":request.user})
 
 @login_required
