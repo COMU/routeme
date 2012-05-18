@@ -206,8 +206,7 @@ def listRoute(request):
 
             route = list(route)
 	    for r in route:
-		if r.private:
-		    if not Friendship.objects.areFriends(request.user, r.owner):
+		if (r.private and not Friendship.objects.areFriends(request.user, r.owner)) or (r.owner == request.user):
 			route.remove(r)			
 	    # if route:
             form = StartEndPointForm()
