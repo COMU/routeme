@@ -33,7 +33,7 @@
 				{% for friend in friends %}
 				    <td>
 					    <img src="/static/images/{{ friend.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
-                                            <span class="label"> {{ friend.first_name}} {{friend.last_name}}</span>
+                                            <span class="label"> <a href="/email/profile/{{friend.id}}">{{ friend.first_name}} {{friend.last_name}}</a></span>
 				    </td>
 				{% endfor %}
 			    </tr>	
