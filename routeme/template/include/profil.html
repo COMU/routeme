@@ -1,2 +1,14 @@
-<img src="/static/images/{{ user.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
-<a href="/email/update">{{user.first_name}} {{user.last_name}}</a>
+     <ul class = "nav nav-tabs nav-stacked">
+	<li><a href = "/"><i class="icon-home "></i>Home</a></li>
+        <li><a href = "{% url message.views.inbox %}"><i class="icon-comment "></i>Messages
+             
+               <span {{ unread|yesno:"class=label,"}} id="unread">
+             {%if unread %}
+                {{unread}}
+             {% endif %}
+               </span>
+         </a></li>
+	<li><a href = "{% url friendship_list %}"><i class="icon-user"></i>Friends</a></li>
+        <li><a href = "{% url route.views.searchRoute%}"><i class="icon-search "></i>Search Route</a></li>
+        <li><a href = "{% url route.views.createRoute%}"><i class="icon-map-marker "></i>Create Route</a></li>
+     </ul>
