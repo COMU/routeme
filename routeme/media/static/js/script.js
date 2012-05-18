@@ -35,7 +35,6 @@ function initializeMap(){
 }
 
 function setOfferRouteUrl(latlng){
-  alert("/offer?lat=" + latlng.lat() + "&lng=" + latlng.lng());
   $('#offer').attr('href', "/offer?lat=" + latlng.lat() + "&lng=" + latlng.lng());
 }
 

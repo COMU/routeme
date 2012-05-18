@@ -8,6 +8,8 @@ from django.shortcuts import render_to_response
 from forms import MessageForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from friend.models import Friendship
 
 @login_required
 def unread_count(request):
@@ -30,7 +32,19 @@ def inbox(request, username = None):
             return HttpResponseRedirect("/message/inbox")
   
     messages = Message.objects.get_all(request.user)
-    form = MessageForm()
+    paginator = Paginator(messages, 10)
+    
+    page = 1
+    if request.GET.has_key('page'):
+	page = int(request.GET.get('page'))
+
+    messages = paginator.page(page)
+    friends = Friendship.objects.getFriends(request.user)
+    kvargs = []    
+    for friend in friends:
+        kvargs.append((friend.get_full_name(), friend.username))
+    form = MessageForm(initial = {'to': kvargs})
+
     if username:
 	data = {'to': username}
         form = MessageForm(initial=data)
