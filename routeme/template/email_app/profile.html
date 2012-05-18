@@ -42,6 +42,7 @@
 
   <div class="row">
       <div class="span4 offset1">
+	{%if routes%}
 	<fieldset><legend><h2><strong>Routes</strong></h2></legend></fieldset>
 	    <table>
 	    {%for routeInfo in routes %}
@@ -52,9 +53,13 @@
 		<tr>
 			<td><hr></td>
                 </tr>
-            {% endfor %}
+        
+	    {% endfor %}
+	
             </table>
-
+        {%else%}	
+		<span class="label label-warning">Don't Have any Route</span>
+	{%endif%}
       </div>
   </div>
 
