@@ -58,7 +58,9 @@
                                 </div>
                         	<div class="modal-body">
                                     <h3> {{message.subject}} </h3>
+				    {% autoescape off %}
 				    <p> {{ message.message}} </p>
+				    {% endautoescape %}
                         	</div>
                         	<div class="modal-footer">
 				    <a href="#" class="btn" data-dismiss = "modal">Close</a>

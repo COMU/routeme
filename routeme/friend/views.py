@@ -19,8 +19,11 @@ def friendship_request(request, user_id):
     else:
 	friendship = Friendship.objects.create(from_user=from_user, to_user=to_user, status='3')
 	content = from_user.get_full_name() + " sent a friendship request to you."
-	message = Message.objects.create_message(from_user, to_user, "Friendship Request", content)
-    
+        html = r"<br><a href='/friend/accept/%s' class='btn btn-primary'>Accept</a><a href='/friend/reject/%s' class='btn btn-warning'>Reject</a>" % (friendship.id, friendship.id) 
+        
+        
+	message = Message.objects.create_message(from_user, to_user, "Friendship Request", content + html)
+	    
     return HttpResponseRedirect(reverse('index'))
 
 @login_required
