@@ -17,7 +17,8 @@ import Image
 from message.models import Message
 from django.contrib import messages
 from django.template import RequestContext
-
+from route.models import RouteInformation
+from friend.models import Friendship
 def error404(request):
     return render_to_response("email_app/404.html")
 
@@ -29,10 +30,18 @@ def index(request):
 @login_required
 def viewprofile(request,userId):
   user = User.objects.get(id=userId)
+  routes = RouteInformation.objects.filter(owner = user)
+  routes = list(routes)
+  for r in routes:
+      if r.private:
+          if not Friendship.objects.areFriends(request.user, r.owner):
+              routes.remove(r)
+  
   data={
            'title':"Profile",
            'img': user.userprofile.profilePhoto.url,
-           'user': user
+           'user': user,
+	   'routes':routes
    }
 
   return render_to_response("email_app/profile.html", data)
