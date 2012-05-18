@@ -190,7 +190,7 @@ def listRoute(request):
             start=Point(float(start[0]),float(start[1]))
             print end
             print start
-            route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10)))
+            route = RouteInformation.objects.filter(route__distance_lt = (start, D(km=10))).filter(route__distance_lt=(end,D(km=10))).filter(~Q(owner = request.user))
 	    if date:
 		route = route.filter(date=date)
 	    else:
@@ -206,7 +206,7 @@ def listRoute(request):
 
             route = list(route)
 	    for r in route:
-		if (r.private and not Friendship.objects.areFriends(request.user, r.owner)) or (r.owner == request.user):
+		if r.private and not Friendship.objects.areFriends(request.user, r.owner):
 			route.remove(r)			
 	    # if route:
             form = StartEndPointForm()
