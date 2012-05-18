@@ -12,6 +12,24 @@
     	     </ul>
     	     <div class="tab-content">
     		<div id="inbox" class="tab-pane active">
+			    <div>
+                                <ul class="pager">                                 
+       				{% if messages.has_previous %}
+				     <li>
+            			     <a href="?page={{ messages.previous_page_number }}">previous</a>
+				     </li>
+        			{% endif %}
+				<li>
+            			    <span class="label label-success">Page {{ messages.number }} of {{ messages.paginator.num_pages }}.</span>
+				</li>
+
+        		        {% if messages.has_next %}
+				<li>
+            			<a href="?page={{ messages.next_page_number }}">next</a>
+				</li>
+        		        {% endif %}
+				</ul>
+			    </div>
 		    <table class = "table table-striped" id = "messageTable">
 			<thead>
 			    <tr>
@@ -21,8 +39,8 @@
 			    </tr>
 			</thead>
 			<tbody>
-                        {% if messages %}
-			    {% for message in messages %}
+                        {% if messages.object_list %}
+			    {% for message in messages.object_list %}
                             <tr id = "{{ message.id }}" {{ message.read|yesno:",style=font-weight:bold class=well"}}>
 				<td> <img src="/static/images/{{ message.from_user.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
 					{{ message.from_user.first_name}} {{ message.from_user.last_name}} 
@@ -56,6 +74,7 @@
 			{% endif%}
 			</tbody>
 		    </table>
+		
 		</div>
     		<div id="newMessage" class="tab-pane">
                     <form method="post" action = {% url message.views.inbox %} id="newMessage">

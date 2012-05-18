@@ -8,6 +8,7 @@ from django.shortcuts import render_to_response
 from forms import MessageForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required
 def unread_count(request):
@@ -30,6 +31,15 @@ def inbox(request, username = None):
             return HttpResponseRedirect("/message/inbox")
   
     messages = Message.objects.get_all(request.user)
+    paginator = Paginator(messages, 10)
+    
+    page = 1
+    if request.GET.has_key('page'):
+	page = int(request.GET.get('page'))
+
+    messages = paginator.page(page)
+    
+
     form = MessageForm()
     if username:
 	data = {'to': username}
