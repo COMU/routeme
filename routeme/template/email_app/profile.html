@@ -1,0 +1,46 @@
+{% extends "base/layout.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="span8">
+  </br></br></br>
+  <div class="row">
+      <div class="span1 offset1"> <img src="/static/images/{{ user.userprofile.profilePhoto.url}}" style="width:60px;height:60px"></div>
+      <div class="span3"><h2>{{user.first_name}} {{user.last_name}}</h2></div>
+  </div>
+  </br></br></br>
+
+  <div class="row">
+      <div class="span4 offset1">
+	<fieldset><legend>Routes</legend>
+
+	    <table>
+	    {%for routeInfo in routes %}
+                     <tr>
+                          <td>
+			
+                              <strong>Date: </strong>{{routeInfo.date}}
+                              </br>
+                              <strong>Start Address: </strong>{{routeInfo.start}}
+                              </br>
+                              <strong>End Address: </strong>{{routeInfo.end}}
+                              </br>
+
+                          </td>
+		     </tr>
+		     <tr>
+			<td><legend></legend></td>
+                     </tr>
+            {% endfor %}
+            </table>
+
+      </div>
+  </div>
+
+</div>
+  <div class="span4">
+  </div>
+
+</div>
+{% endblock %}
+
