@@ -32,15 +32,8 @@
 		 	    <tr>
 				{% for friend in friends %}
 				    <td>
-					{% ifequal friend.from_user user %}
-					    <img src="/static/images/{{ friend.to_user.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
-                                	    <span class="label"> {{friend.to_user.first_name}} {{friend.to_user.last_name}}</span>   		
-					{% endifequal %}
-
-					{% ifequal friend.to_user user %}
-					    <img src="/static/images/{{ friend.from_user.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
-                                            <span class="label"> {{ friend.from_user.first_name}} {{friend.from_user.last_name}}</span>
-					{% endifequal %}
+					    <img src="/static/images/{{ friend.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
+                                            <span class="label"> {{ friend.first_name}} {{friend.last_name}}</span>
 				    </td>
 				{% endfor %}
 			    </tr>	

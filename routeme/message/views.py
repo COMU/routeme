@@ -42,9 +42,9 @@ def inbox(request, username = None):
     friends = Friendship.objects.getFriends(request.user)
     kvargs = []    
     for friend in friends:
-        kvargs.append((friend.get_full_name(), friend.username))
-    form = MessageForm(initial = {'to': kvargs})
-
+        kvargs.append((friend.username, friend.get_full_name()))
+    form = MessageForm(kvargs)
+    print len(kvargs)
     if username:
 	data = {'to': username}
         form = MessageForm(initial=data)
