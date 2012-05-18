@@ -13,16 +13,17 @@
 	
 	   <table>
                <tr>
-                   <td>
-                       <strong>Username : </strong>{{user.username}}
-                       </br>
-		       <strong>Email: </strong>{{user.email}}
-                       </br>
-                       <strong>Birth Date: </strong>{{user.userprofile.birthdate}}
-                       </br>
-                       <strong>Gender: </strong>{{user.userprofile.gender}}
-                       </br>
-                   </td>
+                   <td><strong>Username  </strong></td><td>:{{user.username}}</td>
+	       </tr>
+	       <tr>
+		   <td><strong>Email </strong></td><td>:{{user.email}}</td>
+	       </tr>
+	       <tr>
+              	   <td><strong>Birth Date </strong></td><td>:{{user.userprofile.birthdate}}</td>
+	       </tr>
+               <tr>
+                   <td><strong>Gender </strong></td><td>:{{user.userprofile.gender}}</td>
+	
                </tr>
                <tr>
                	   <td><hr></td>
@@ -44,17 +45,10 @@
 	<fieldset><legend><h2><strong>Routes</strong></h2></legend></fieldset>
 	    <table>
 	    {%for routeInfo in routes %}
-		<tr>
-                          <td>	
-                              <strong>Date: </strong>{{routeInfo.date}}
-                              </br>
-                              <strong>Start Address: </strong>{{routeInfo.start}}
-                              </br>
-                              <strong>End Address: </strong>{{routeInfo.end}}
-                              </br>
+                  <tr><td><strong>Date </strong>:{{routeInfo.date}}</td></tr>
+                  <tr><td><strong>Start Address </strong>:{{routeInfo.start}}</td></tr>
+                  <tr><td><strong>End Address </strong>:{{routeInfo.end}}</td></tr>
 
-                          </td>
-		</tr>
 		<tr>
 			<td><hr></td>
                 </tr>
