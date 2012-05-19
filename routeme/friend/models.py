@@ -16,7 +16,8 @@ class FriendShipManager(models.Manager):
 	    self.filter(from_user=user2, to_user=user1, status='1').count() > 0:
 		return True
 	return False
-    
+
+	 
     def requested(self, user1, user2):
 	if self.filter(from_user=user1, to_user=user2, status="3").count() > 0 or \
     	    self.filter(from_user=user2, to_user=user1, status='3').count() > 0:

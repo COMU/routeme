@@ -29,19 +29,22 @@ def index(request):
 
 @login_required
 def viewprofile(request,userId):
-  user = User.objects.get(id=userId)
-  routes = RouteInformation.objects.filter(owner = user)
+  ouser = User.objects.get(id=userId)
+  routes = RouteInformation.objects.filter(owner = ouser)
   routes = list(routes)
   for r in routes:
       if r.private:
           if not Friendship.objects.areFriends(request.user, r.owner):
               routes.remove(r)
-  
+
+  areFriend = Friendship.objects.areFriends(ouser,request.user)
   data={
            'title':"Profile",
-           'img': user.userprofile.profilePhoto.url,
-           'user': user,
-	   'routes':routes
+           'img': ouser.userprofile.profilePhoto.url,
+           'ouser': ouser,
+	   'routes':routes,
+	   'user':request.user,
+	   'areFriend':areFriend
    }
 
   return render_to_response("email_app/profile.html", data)

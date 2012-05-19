@@ -5,24 +5,31 @@
   <div class="span8">
   </br></br></br>
   <div class="row">
-      <div class="span1 offset1"> <img src="/static/images/{{ user.userprofile.profilePhoto.url}}" style="width:60px;height:60px"></div>
-      <div class="span3"><h2>{{user.first_name}} {{user.last_name}}</h2></div>
+      <div class="span1 offset1"> <img src="/static/images/{{ ouser.userprofile.profilePhoto.url}}" style="width:60px;height:60px"></div>
+      <div class="span3"><h2>{{ouser.first_name}} {{user.last_name}}</h2></div>
+      <div class="span2 offset1">
+	{%if areFriend %}
+		<span class="label label-success">Friends</span>
+	{%else%}
+	        <input type="button" class="btn-primary friendShipRequest" onclick="friendshipRequest({{ouser.id}})" value="Add Friend"/>	
+	{%endif%}
+      </div>
   </div>
   <div class="row">
 	<div class="span6 offset1">
 	
 	   <table>
                <tr>
-                   <td><strong>Username  </strong></td><td>:{{user.username}}</td>
+                   <td><strong>Username  </strong></td><td>:{{ouser.username}}</td>
 	       </tr>
 	       <tr>
-		   <td><strong>Email </strong></td><td>:{{user.email}}</td>
+		   <td><strong>Email </strong></td><td>:{{ouser.email}}</td>
 	       </tr>
 	       <tr>
-              	   <td><strong>Birth Date </strong></td><td>:{{user.userprofile.birthdate}}</td>
+              	   <td><strong>Birth Date </strong></td><td>:{{ouser.userprofile.birthdate}}</td>
 	       </tr>
                <tr>
-                   <td><strong>Gender </strong></td><td>:{{user.userprofile.gender}}</td>
+                   <td><strong>Gender </strong></td><td>:{{ouser.userprofile.gender}}</td>
 	
                </tr>
                <tr>
