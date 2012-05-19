@@ -37,14 +37,19 @@ def viewprofile(request,userId):
           if not Friendship.objects.areFriends(request.user, r.owner):
               routes.remove(r)
 
-  areFriend = Friendship.objects.areFriends(ouser,request.user)
+  if Friendship.objects.requested(request.user,ouser):
+	status = 1
+  elif Friendship.objects.areFriends(request.user, ouser):
+	status = 2
+  else:
+	status = 3
   data={
            'title':"Profile",
            'img': ouser.userprofile.profilePhoto.url,
            'ouser': ouser,
 	   'routes':routes,
 	   'user':request.user,
-	   'areFriend':areFriend
+	   'status':status
    }
 
   return render_to_response("email_app/profile.html", data)

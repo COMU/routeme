@@ -8,9 +8,13 @@
       <div class="span1 offset1"> <img src="/static/images/{{ ouser.userprofile.profilePhoto.url}}" style="width:60px;height:60px"></div>
       <div class="span3"><h2>{{ouser.first_name}} {{user.last_name}}</h2></div>
       <div class="span2 offset1">
-	{%if areFriend %}
+	{%if status == 1 %}
 		<span class="label label-success">Friends</span>
-	{%else%}
+	{%endif%}
+	{% if status == 2 %}
+		<span class="label label-success">Sent Friend Request</span>
+	{%endif%}
+	{%if status == 3%}
 	        <input type="button" class="btn-primary friendShipRequest" onclick="friendshipRequest({{ouser.id}})" value="Add Friend"/>	
 	{%endif%}
       </div>
