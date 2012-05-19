@@ -15,7 +15,7 @@
 			     {% for request in requests %}
 			     <td>	
 				<img src="/static/images/{{ request.from_user.userprofile.profilePhoto.url}}" style="width:40px;height:40px">
-                             	<span class="label"> {{request.from_user.first_name}} {{request.from_user.last_name}}</span>
+                             	<span class="label"><a href="/email/profile/{{request.from_user.id}}"> {{request.from_user.first_name}} {{request.from_user.last_name}}</a></span>
 			     <form action="{% url friendship_reject request.id %}" class="pull-right" method="POST">
 				<input type="submit" class="btn-danger " value="Reject">
 			     </form>
