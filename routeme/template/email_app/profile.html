@@ -8,15 +8,15 @@
       <div class="span1 offset1"> <img src="/static/images/{{ ouser.userprofile.profilePhoto.url}}" style="width:60px;height:60px"></div>
       <div class="span3"><h2>{{ouser.first_name}} {{user.last_name}}</h2></div>
       <div class="span2 offset1">
-	{%if status == 1 %}
+	{%ifequal status 1 %}
+		<span class="label label-warning">Waiting</span>
+	{% endifequal %}
+	{% ifequal status 2 %}
 		<span class="label label-success">Friends</span>
-	{%endif%}
-	{% if status == 2 %}
-		<span class="label label-success">Sent Friend Request</span>
-	{%endif%}
-	{%if status == 3%}
+	{%endifequal%}
+	{%ifequal status 3 %}
 	        <input type="button" class="btn-primary friendShipRequest" onclick="friendshipRequest({{ouser.id}})" value="Add Friend"/>	
-	{%endif%}
+	{%endifequal%}
       </div>
   </div>
   <div class="row">

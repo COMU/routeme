@@ -30,9 +30,9 @@ class FacebookBackend:
         # Read the user's profile information
         fb_profile = urllib.urlopen(
           'https://graph.facebook.com/me?access_token=%s' % access_token)
-	fb_profile_photo_url='https://graph.facebook.com/me/picture?access_token=%s' % access_token
 
         fb_profile = json.load(fb_profile)
+	photo_url = "https://graph.facebook.com/" + str(fb_profile['id'])  +"/picture?type=large&access_token=" + access_token
 
         try:
           # Try and find existing user
@@ -62,7 +62,7 @@ class FacebookBackend:
 	  userProfile,created = UserProfile.objects.get_or_create(user = user,
                             profilePhoto = 'images/default.png'
                 )
-          urllib.urlretrieve (fb_profile_photo_url,
+          urllib.urlretrieve (photo_url,
                              '/'.join(userProfile.profilePhoto.path.split('/')[:-1])+"/"+str(user.id)+".jpg" )
           userProfile.profilePhoto='images/'+str(user.id)+".jpg"
 
